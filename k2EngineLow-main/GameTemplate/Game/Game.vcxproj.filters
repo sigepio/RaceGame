@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="system">
+      <UniqueIdentifier>{22dd8095-74f9-46df-81a1-36675a040b1f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="stdafx.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="system\system.cpp">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="Test.cpp" />
+    <ClCompile Include="BackGround.cpp" />
+    <ClCompile Include="Title.cpp" />
+    <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="GameCamera.cpp" />
+    <ClCompile Include="CarBase.cpp" />
+    <ClCompile Include="TimeTrialMode.cpp" />
+    <ClCompile Include="Car_RB6.cpp" />
+    <ClCompile Include="Lighting.cpp" />
+    <ClCompile Include="FrontWheelBase.cpp" />
+    <ClCompile Include="RightFrontWheel.cpp" />
+    <ClCompile Include="LeftFrontWheel.cpp" />
+    <ClCompile Include="RightRearWheel.cpp" />
+    <ClCompile Include="LeftRearWheel.cpp" />
+    <ClCompile Include="CarAFormula.cpp" />
+    <ClCompile Include="WorldMode.cpp" />
+    <ClCompile Include="MyGarage.cpp" />
+    <ClCompile Include="RaceMenu.cpp" />
+    <ClCompile Include="MainRaceManager.cpp" />
+    <ClCompile Include="Car_AE86.cpp" />
+    <ClCompile Include="Car_Oreca07.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h" />
+    <ClInclude Include="system\system.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="Test.h" />
+    <ClInclude Include="BackGround.h" />
+    <ClInclude Include="Title.h" />
+    <ClInclude Include="Menu.h" />
+    <ClInclude Include="GameCamera.h" />
+    <ClInclude Include="CarBase.h" />
+    <ClInclude Include="TimeTrialMode.h" />
+    <ClInclude Include="Car_RB6.h" />
+    <ClInclude Include="Lighting.h" />
+    <ClInclude Include="FrontWheelBase.h" />
+    <ClInclude Include="RightFrontWheel.h" />
+    <ClInclude Include="LeftFrontWheel.h" />
+    <ClInclude Include="RightRearWheel.h" />
+    <ClInclude Include="LeftRearWheel.h" />
+    <ClInclude Include="CarAFormula.h" />
+    <ClInclude Include="WorldMode.h" />
+    <ClInclude Include="MyGarage.h" />
+    <ClInclude Include="RaceMenu.h" />
+    <ClInclude Include="MainRaceManager.h" />
+    <ClInclude Include="Car_AE86.h" />
+    <ClInclude Include="CarData.h" />
+    <ClInclude Include="Car_Oreca07.h" />
+  </ItemGroup>
+</Project>
