@@ -30,6 +30,7 @@ struct VehicleInfo {
 	float FrontSpringRate;					//フロントバネレート[N/m]
 	float RearSpringRate;					//リアバネレート[N/m]
 	float AirResistanceCoefficient;			//空気抵抗係数
+	float MaxGear;							//最大ギア数
 };
 
 //シミュレート結果

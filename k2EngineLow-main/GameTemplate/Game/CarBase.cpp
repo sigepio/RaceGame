@@ -119,14 +119,15 @@ void CarBase::Update() {
 
 void CarBase::Set() {
 	//ƒJƒƒ‰
-	m_gamecamera->SetTarget(m_frontwheelbase->GetPosition()+ m_PlayerPosition);
-	m_timetrialmode->SetPosition(m_frontwheelbase->GetPosition() + m_PlayerPosition);
+	m_gamecamera->SetTarget(m_frontwheelbase->GetPosition());
+	m_timetrialmode->SetPosition(m_frontwheelbase->GetPosition());
 }
 
 void CarBase::Move() {
 	m_PlayerRotation = m_frontwheelbase->GetRotation();
 	m_PlayerCarModel.SetRotation(m_frontwheelbase->GetRotation());
-	m_PlayerCarModel.SetPosition(m_frontwheelbase->GetPosition()+ m_PlayerPosition);
+	m_PlayerPosition = m_frontwheelbase->GetPosition();
+	m_PlayerCarModel.SetPosition(m_PlayerPosition);
 	m_PlayerCarModel.Update();
 }
 

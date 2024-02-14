@@ -39,7 +39,11 @@ void FrontWheelBase::Update() {
 	m_throttle = 0.0f;
 
 	//Rボタン
+	throttle_input = 0.0f;
 	throttle_input = g_pad[0]->GetRTrigger();
+	if (throttle_input != 0.0f) {
+		throttle_input = 255.0f / throttle_input;
+	}
 
 	//Lボタン
 	brake_input = g_pad[0]->GetLTrigger();
@@ -80,6 +84,8 @@ void FrontWheelBase::Update() {
 	currentRPM = ReturnSimulationResults.CurrentRPM;
 	Acceleration_DecelerationForce = ReturnSimulationResults.AllForce;
 	AccelerationVector = ReturnSimulationResults.Acceleration;
+
+	m_characterController.SetPosition({ m_FrontWheelPosition.x ,0.0f,m_FrontWheelPosition.z });
 }
 
 void FrontWheelBase::Handling() {
@@ -132,7 +138,7 @@ void FrontWheelBase::Move() {
 	//座標を教える。
 	m_FrontWheelPosition = m_characterController.Execute(m_MoveSpeed, 1.0f / 60.0f);
 	m_characterController.SetPosition({ m_FrontWheelPosition.x ,0.0f,m_FrontWheelPosition.z });
-				
+	
 }
 
 Vector4 FrontWheelBase::Acceleration() {

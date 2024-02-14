@@ -108,7 +108,7 @@ namespace nsK2EngineLow {
 		}
 		else {
 			xInputState.Gamepad.bLeftTrigger = 0;
-			m_ltrigger = 0;
+			m_ltrigger = 0.0f;
 		}
 
 		//右トリガー(入力量取得可能)
@@ -117,7 +117,7 @@ namespace nsK2EngineLow {
 		}
 		else {
 			xInputState.Gamepad.bRightTrigger = 0;
-			m_rtrigger = 0;
+			m_rtrigger = 0.0f;
 		}
 		if ((xInputState.Gamepad.sThumbLX < INPUT_DEADZONE &&
 			xInputState.Gamepad.sThumbLX > -INPUT_DEADZONE) &&

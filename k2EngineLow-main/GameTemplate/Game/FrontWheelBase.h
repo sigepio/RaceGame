@@ -127,7 +127,7 @@ protected:
 	Vector3 AccelerationVector = Vector3::Zero;
 	Vector3 Acceleration_DecelerationForce = Vector3::Zero; //加減速力(前のフレームの車にかかるすべての力)[N]
 	Vector3 WindDirectionVector = Vector3::Zero;			//風の向きベクトル [m/s]
-	Vector3 FrontWheelOrientationVector = Vector3::Zero;
+	Vector3 FrontWheelOrientationVector = {0.0f,0.0f,1.0f};
 
 	Quaternion OriginRotation;
 	Quaternion m_FrontWheelRotation;

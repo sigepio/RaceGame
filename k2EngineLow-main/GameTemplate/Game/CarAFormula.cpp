@@ -135,6 +135,7 @@ float calculate_speed(float torque, float wheel_speed, int gear, float gear_rati
     //    // エンジンのトルクが必要なトルクに満たない場合は、車速を0にする
     //    return 0.0;
     //}
+    return 0.0f;
 }
 
 Vector4 CarAFormula::CarSpeed(std::vector<std::vector<float>> data, const float SHIFT_UP_RPM_ADJUST,const float SHIFT_DOWN_RPM_ADJUST, float currentRPM, float velocity, float mass, float wheelRadius, float grade, float throttle_input, std::vector<float> GEAR_RATIOS, float currentGear,int MaxGear,float AirPressure,float FinalGearRatio,float Transmission_Efficiency,float acceleration) {
@@ -191,33 +192,7 @@ Vector4 CarAFormula::CarSpeed(std::vector<std::vector<float>> data, const float 
         velocity = 0.0f;
     }
 
-    // シフトアップ処理
-    if (g_pad[0]->IsTrigger(enButtonA) && currentGear < MaxGear) {
-        // シフトアップ前の回転数を調整
-        currentRPM -= SHIFT_UP_RPM_ADJUST;
-
-        // シフトアップ
-        currentGear++;
-
-        // ギア比を更新
-        GEAR_RATIOS[currentGear - 1] = GEAR_RATIOS[currentGear - 2];
-    }
-
-    // 減速処理
-    if (g_pad[0]->IsTrigger(enButtonX) && currentGear > 1) {
-        // 減速前の回転数を調整
-        currentRPM += SHIFT_DOWN_RPM_ADJUST;
-
-        // シフトダウン
-        currentGear--;
-
-        // ギア比を更新
-        GEAR_RATIOS[currentGear - 1] = GEAR_RATIOS[currentGear];
-    }
-
-    if (currentRPM >= 8000) {
-        currentRPM -= 500.0f;
-    }
+    
 
     //// 加速処理
     //float acceleration = (wheelTorque / wheelRadius - mass * 9.81 * grade) / mass;
@@ -263,20 +238,15 @@ SimulationResults CarAFormula::CarSimulation(
                     Vector3 FrontWheelOrientationVector	   	//前輪向きを表現している単位ベクトル
 ) {
     //ステップ0:準備フェーズ
+
+    
+
     //エンジントルクを線形補完で計算
     float engineTorque = EngineTorque(CurrentRPM, vehicleinfo.data);
+    engineTorque *= AcceleratorOpening * 2.5f;
 
-    //リターン用の構造体の宣言
-    SimulationResults simulationresults;
-
-
-    //ステップ1:トラクションの計算
-    Vector3 Ftraction = Vector3::Zero;
-
-    Ftraction = FrontWheelOrientationVector * engineTorque * AcceleratorOpening * vehicleinfo.GEAR_RATIOS[CurrentGear - 1] * vehicleinfo.FinalGearRatio * 0.95 / vehicleinfo.TireRadius;
-
-
-
+    
+    
     //ステップ2:空気抵抗の計算
     float Faero = 0.0f;
 
@@ -303,19 +273,14 @@ SimulationResults CarAFormula::CarSimulation(
 
     //ステップ3:転がり抵抗を計算
     //総転がり抵抗
-    Vector3 Frr = Vector3::Zero;
+    float Frr = 0.0f;
 
     //各タイヤの転がり抵抗
-    Vector3 Frrfo = Vector3::Zero;      //フロントアウト
-    Vector3 Frrfi = Vector3::Zero;      //フロントイン
-    Vector3 Frrro = Vector3::Zero;      //リアアウト
-    Vector3 Frrri = Vector3::Zero;      //リアイン
+    float Frrfo = 0.0f;      //フロントアウト
+    float Frrfi = 0.0f;      //フロントイン
+    float Frrro = 0.0f;      //リアアウト
+    float Frrri = 0.0f;      //リアイン
 
-    //トラクションとは逆向きの単位ベクトル
-    Vector3 ReverseTraction = Vector3::Zero;
-
-    ReverseTraction = Ftraction * -1.0f;
-    ReverseTraction.Normalize();
 
     //タイヤにかかる荷重を計算
     //各タイヤの荷重変数
@@ -337,23 +302,90 @@ SimulationResults CarAFormula::CarSimulation(
     float magnitudeOfSpeed = 0.0f;
     magnitudeOfSpeed = sqrt(pow(VelocityVector.x, 2.0) + pow(VelocityVector.y, 2.0) + pow(VelocityVector.z, 2.0));
 
-    Wfo = vehicleinfo.mass * ((((vehicleinfo.RearWheelFromCenterOfGravity - (vehicleinfo.CenterOfGravityFromTheGround * PitchAngle)) / vehicleinfo.WheelBase)) - ((1 / 9.81) * (vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.WheelBase) * (AccelerationInTheDirectionOfTravel / cos(PitchAngle)))) * ((1 / 2) - ((vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.TreadWidth) * (RollAngle - (1 / 9.81) * (pow(magnitudeOfSpeed,2.0)/SteeringAngle))));
-    Wfi = vehicleinfo.mass * ((((vehicleinfo.RearWheelFromCenterOfGravity - (vehicleinfo.CenterOfGravityFromTheGround * PitchAngle)) / vehicleinfo.WheelBase)) - ((1 / 9.81) * (vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.WheelBase) * (AccelerationInTheDirectionOfTravel / cos(PitchAngle)))) * ((1 / 2) + ((vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.TreadWidth) * (RollAngle - (1 / 9.81) * (pow(magnitudeOfSpeed, 2.0) / SteeringAngle))));
-    Wro = vehicleinfo.mass * (1.0 - (((vehicleinfo.RearWheelFromCenterOfGravity - (vehicleinfo.CenterOfGravityFromTheGround * PitchAngle)) / vehicleinfo.WheelBase)) + ((1 / 9.81) * (vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.WheelBase) * (AccelerationInTheDirectionOfTravel / cos(PitchAngle)))) * ((1 / 2) - ((vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.TreadWidth) * (RollAngle - (1 / 9.81) * (pow(magnitudeOfSpeed, 2.0) / SteeringAngle))));
-    Wri = vehicleinfo.mass * (1.0 - (((vehicleinfo.RearWheelFromCenterOfGravity - (vehicleinfo.CenterOfGravityFromTheGround * PitchAngle)) / vehicleinfo.WheelBase)) + ((1 / 9.81) * (vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.WheelBase) * (AccelerationInTheDirectionOfTravel / cos(PitchAngle)))) * ((1 / 2) -+ ((vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.TreadWidth) * (RollAngle - (1 / 9.81) * (pow(magnitudeOfSpeed, 2.0) / SteeringAngle))));
+    Wfo = vehicleinfo.mass * ((((vehicleinfo.RearWheelFromCenterOfGravity - (vehicleinfo.CenterOfGravityFromTheGround * PitchAngle)) / vehicleinfo.WheelBase)) - ((1 / 9.81) * (vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.WheelBase) * (AccelerationInTheDirectionOfTravel / cos(PitchAngle)))) * ((1 / 2) - ((vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.TreadWidth) * (RollAngle - (1 / 9.81) * (pow(magnitudeOfSpeed,2.0)/ TurningRadius))));
+    Wfi = vehicleinfo.mass * ((((vehicleinfo.RearWheelFromCenterOfGravity - (vehicleinfo.CenterOfGravityFromTheGround * PitchAngle)) / vehicleinfo.WheelBase)) - ((1 / 9.81) * (vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.WheelBase) * (AccelerationInTheDirectionOfTravel / cos(PitchAngle)))) * ((1 / 2) + ((vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.TreadWidth) * (RollAngle - (1 / 9.81) * (pow(magnitudeOfSpeed, 2.0) / TurningRadius))));
+    Wro = vehicleinfo.mass * (1.0 - (((vehicleinfo.RearWheelFromCenterOfGravity - (vehicleinfo.CenterOfGravityFromTheGround * PitchAngle)) / vehicleinfo.WheelBase)) + ((1 / 9.81) * (vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.WheelBase) * (AccelerationInTheDirectionOfTravel / cos(PitchAngle)))) * ((1 / 2) - ((vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.TreadWidth) * (RollAngle - (1 / 9.81) * (pow(magnitudeOfSpeed, 2.0) / TurningRadius))));
+    Wri = vehicleinfo.mass * (1.0 - (((vehicleinfo.RearWheelFromCenterOfGravity - (vehicleinfo.CenterOfGravityFromTheGround * PitchAngle)) / vehicleinfo.WheelBase)) + ((1 / 9.81) * (vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.WheelBase) * (AccelerationInTheDirectionOfTravel / cos(PitchAngle)))) * ((1 / 2) -+ ((vehicleinfo.CenterOfGravityFromTheGround / vehicleinfo.TreadWidth) * (RollAngle - (1 / 9.81) * (pow(magnitudeOfSpeed, 2.0) / TurningRadius))));
 
     
-    Frrfo = ReverseTraction * 0.015/*転がり抵抗係数(アスファルト)*/ * Wfo;
-    Frrfi = ReverseTraction * 0.015/*転がり抵抗係数(アスファルト)*/ * Wfi;
-    Frrro = ReverseTraction * 0.015/*転がり抵抗係数(アスファルト)*/ * Wro;
-    Frrri = ReverseTraction * 0.015/*転がり抵抗係数(アスファルト)*/ * Wri;
+    Frrfo = 0.015/*転がり抵抗係数(アスファルト)*/ * Wfo;
+    Frrfi = 0.015/*転がり抵抗係数(アスファルト)*/ * Wfi;
+    Frrro = 0.015/*転がり抵抗係数(アスファルト)*/ * Wro;
+    Frrri = 0.015/*転がり抵抗係数(アスファルト)*/ * Wri;
 
     Frr = Frrfo + Frrfi + Frrro + Frrri;
 
 
 
+    
+
+
+    //ステップ8:制動力を計算
+    float Fb = 0.0f;
+
+    //トラクションとは逆向きの単位ベクトル(今回はステップ3の時に作成した変数ReverseTractionを使用する)
+    Fb = (BrakePressure / 255.0f) * vehicleinfo.MaximumBrakingForce;
+
+
+    // シフトアップ処理
+    if (g_pad[0]->IsTrigger(enButtonA) && CurrentGear < vehicleinfo.MaxGear) {
+        // シフトアップ
+        CurrentGear++;
+    }
+
+    // 減速処理
+    if (g_pad[0]->IsTrigger(enButtonX) && CurrentGear > 1) {
+        // シフトダウン
+        CurrentGear--;
+    }
+
+    float T2 = 0.0f;
+
+    float Gearlost = 0.0f;
+
+    if (AcceleratorOpening == 0.0f) {
+        if (VelocityVector.x > 0.0f || VelocityVector.y > 0.0f || VelocityVector.z > 0.0f) {
+            //エンジンブレーキトルクの計算
+            float EBT = 0.0f;
+            EBT = 0.076f * CurrentRPM;
+
+            //エンジン総トルクの計算
+
+            engineTorque = (engineTorque)-EBT - Faero - Frr - Fb;
+
+
+        }
+
+    }
+
+    //エンジンの角速度の計算
+    float E_Vel = 0.0f;
+    E_Vel = ((2.0f * M_PI) / 60.0f) * CurrentRPM;
+
+    E_Vel += engineTorque / 1.0/*慣性モーメント(エンジンの回りにくさ)今回は1.0に設定・調整*/ * (1.0f / 60.0f);
+    float NewRPM = E_Vel * 60.0f / 2.0f / M_PI;
+
+
+    if (NewRPM < 1500.0f) {
+        NewRPM = 1500.0f;
+    }
+
+    if (CurrentRPM >= 9000.0f) {
+        CurrentRPM = 8500.0f;
+    }
+
+    //リターン用の構造体の宣言
+    SimulationResults simulationresults;
+
+
+    //ステップ1:トラクションの計算
+    Vector3 Ftraction = Vector3::Zero;
+
+    Ftraction = FrontWheelOrientationVector * engineTorque * vehicleinfo.GEAR_RATIOS[CurrentGear - 1] * vehicleinfo.FinalGearRatio * 0.95 / vehicleinfo.TireRadius;
+
+
     //ステップ6:遠心力の計算
-    float CentrifugalForce = (vehicleinfo.mass / 9.81) * (pow(magnitudeOfSpeed, 2.0) / SteeringAngle);
+    float CentrifugalForce = (vehicleinfo.mass / 9.81) * (pow(magnitudeOfSpeed, 2.0) / TurningRadius);
 
 
 
@@ -374,19 +406,9 @@ SimulationResults CarAFormula::CarSimulation(
     RightAngleVector = VelocityVector;
     RightAngleVector.Normalize();
 
-    double RightAngle = M_PI / 2; // 90度をラジアンに変換
-    RightAngleVector.x = RightAngleVector.x * cos(RightAngle) + RightAngleVector.z * sin(RightAngle);
-    RightAngleVector.z = -RightAngleVector.x * sin(RightAngle) + RightAngleVector.z * cos(RightAngle);
+    RightAngleVector.Cross(Vector3(0, 1, 0));
 
-    Fcf = RightAngleVector * 0.4/*(これは一時的なものであり修正必須)*/;
-
-
-    //ステップ8:制動力を計算
-    Vector3 Fb = Vector3::Zero;
-
-    //トラクションとは逆向きの単位ベクトル(今回はステップ3の時に作成した変数ReverseTractionを使用する)
-
-    Fb = ReverseTraction * BrakePressure * vehicleinfo.MaximumBrakingForce;
+    Fcf = RightAngleVector * (0.4 * SteeringAngle)/*(これは一時的なものであり修正必須)*/;
 
 
     //ステップ9:クルマにかかる力を計算
@@ -419,7 +441,7 @@ SimulationResults CarAFormula::CarSimulation(
     Vector3 NewAcceleration = Vector3::Zero;
 
     //すべての車にかかる力を合算させる
-    Vector3 AllForce = Ftraction  + Frr  + Fb + Fcf;
+    Vector3 AllForce = Ftraction  + Fcf;
     //遠心力は合算されていないが実際は合算が必要
     //Faeroである空気抵抗は実際はベクトル化されていなければならないが、現在はスカラーのため一時的な解決方法
     /*AllForce.x = AllForce.x - Faero;
@@ -432,23 +454,29 @@ SimulationResults CarAFormula::CarSimulation(
     //ステップ11:速度を計算
     Vector3 NewVelocityVector = Vector3::Zero;
 
-    NewVelocityVector = VelocityVector + (NewAcceleration * (1/60));
-
+    NewVelocityVector = (NewAcceleration * (1.0f/60.0f));       //[m/s]
+    NewVelocityVector += VelocityVector;
+    if (NewAcceleration.x == 0.0f && NewAcceleration.y == 0.0f, NewAcceleration.z == 0.0f) {
+        NewVelocityVector = Vector3::Zero;
+    }
 
     //ステップ12:位置を計算
     Vector3 NewPosition = Vector3::Zero;
-    
-    NewPosition = Position + (NewVelocityVector * (1 / 60));
+    NewPosition = Position + (NewVelocityVector * (1.0f / 6.0f));
 
 
     //ステップ13:エンジン回転数を再計算
     //速度の大きさの計算
-    float NewmagnitudeOfSpeed = 0.0f;
-    NewmagnitudeOfSpeed = sqrt(pow(NewVelocityVector.x, 2.0) + pow(NewVelocityVector.y, 2.0) + pow(NewVelocityVector.z, 2.0));
+    //float NewmagnitudeOfSpeed = 0.0f;
+    //NewmagnitudeOfSpeed = sqrt(pow(NewVelocityVector.x, 2.0) + pow(NewVelocityVector.y, 2.0) + pow(NewVelocityVector.z, 2.0));
 
-    float NewRPM = 0.0f;
-    NewRPM = NewmagnitudeOfSpeed / (2.0f * M_PI * vehicleinfo.TireRadius) * 60.0f * vehicleinfo.GEAR_RATIOS[CurrentGear] * vehicleinfo.FinalGearRatio;
+    //NewmagnitudeOfSpeed = NewmagnitudeOfSpeed * 60.0f/*これは現状のFPS*/ * 60.0f * 60.0f / 1000.0f;
 
+    //float NewRPM = 0.0f;
+    //NewRPM = NewmagnitudeOfSpeed / (2.0f * M_PI * vehicleinfo.TireRadius) * 60.0f * vehicleinfo.GEAR_RATIOS[CurrentGear] * vehicleinfo.FinalGearRatio + 1500.0f;
+    //if (NewRPM <= 1500.0f) {
+    //    NewRPM = 1500.0f;
+    //}
 
     //ステップ14:リターンする変数たちをまとめる
     simulationresults.Position = NewPosition;

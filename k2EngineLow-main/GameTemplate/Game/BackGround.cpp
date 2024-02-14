@@ -17,7 +17,7 @@ bool BackGround::Start()
 
 
 	//モデルを読み込む。
-	m_groundModel->Init("Assets/modelData/course/Yatabe.tkm", false);
+	m_groundModel->Init("Assets/modelData/course/test_track.tkm", false);
 	
 	//モデルを更新する。
 	m_groundModel->Update();
