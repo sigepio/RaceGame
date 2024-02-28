@@ -5,6 +5,8 @@
 #include <map>
 #include <iostream>
 #include <vector>
+#define _USE_MATH_DEFINES
+#include <math.h>
 
 
 #include "CarBase.h"
@@ -119,6 +121,14 @@ void CarBase::Update() {
 
 void CarBase::Set() {
 	//ƒJƒƒ‰
+	/*CameraRAngle = m_frontwheelbase->Get_DVector().Dot(ResetVector) / (m_frontwheelbase->Get_DVector().Length() * ResetVector.Length());
+	CameraRAngle = acos(CameraRAngle);
+	CameraRAngle *= -1.0f;*/
+	Vector3 test = Calc(m_frontwheelbase->GetRotation());
+	float ANGLE = test.y * -1.0f * M_PI / 180.0f;
+	m_gamecamera->SetRAngle(ANGLE);
+	
+	m_gamecamera->SetDi(m_frontwheelbase->Get_DVector());
 	m_gamecamera->SetTarget(m_frontwheelbase->GetPosition());
 	m_timetrialmode->SetPosition(m_frontwheelbase->GetPosition());
 }

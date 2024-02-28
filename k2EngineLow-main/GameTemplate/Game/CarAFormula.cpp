@@ -84,6 +84,9 @@ float EngineTorque(float rpm, std::vector<std::vector<float>> data) {
     int i = 0;
     while (data[i][0] <= rpm) {
         i++;
+        if (i == 40) {
+            break;
+        }
     }
     float t = data[i][1] + ((rpm - data[i - 1][0]) * (data[i - 1][0] - data[i][0])) / (data[i][0] - data[i - 1][1]);
     return t;
@@ -392,10 +395,10 @@ SimulationResults CarAFormula::CarSimulation(
     //ステップ7:コーナリングパワーを計算
     Vector3 Fcf = Vector3::Zero;
 
-    //横滑り角の計算
+    ////横滑り角の計算
     float SideslipAngle = 0.0f;
 
-    //前フレームの速度の単位ベクトルの計算
+    ////前フレームの速度の単位ベクトルの計算
     Vector3 UnitVectorOfVelocityOfPreviousFrame = Vector3::Zero;
     UnitVectorOfVelocityOfPreviousFrame = VelocityVector;
     UnitVectorOfVelocityOfPreviousFrame.Normalize();
@@ -408,7 +411,7 @@ SimulationResults CarAFormula::CarSimulation(
 
     RightAngleVector.Cross(Vector3(0, 1, 0));
 
-    Fcf = RightAngleVector * (0.4 * SteeringAngle)/*(これは一時的なものであり修正必須)*/;
+    Fcf = RightAngleVector * (40.0f * 9.807f * SteeringAngle)/*(これは一時的なものであり修正必須)*/;
 
 
     //ステップ9:クルマにかかる力を計算
@@ -441,7 +444,7 @@ SimulationResults CarAFormula::CarSimulation(
     Vector3 NewAcceleration = Vector3::Zero;
 
     //すべての車にかかる力を合算させる
-    Vector3 AllForce = Ftraction  + Fcf;
+    Vector3 AllForce = (Ftraction  /*+ Fcf*/);
     //遠心力は合算されていないが実際は合算が必要
     //Faeroである空気抵抗は実際はベクトル化されていなければならないが、現在はスカラーのため一時的な解決方法
     /*AllForce.x = AllForce.x - Faero;
@@ -454,7 +457,7 @@ SimulationResults CarAFormula::CarSimulation(
     //ステップ11:速度を計算
     Vector3 NewVelocityVector = Vector3::Zero;
 
-    NewVelocityVector = (NewAcceleration * (1.0f/60.0f));       //[m/s]
+    NewVelocityVector = (NewAcceleration * (1.0f/6.0f));       //[m/s]
     NewVelocityVector += VelocityVector;
     if (NewAcceleration.x == 0.0f && NewAcceleration.y == 0.0f, NewAcceleration.z == 0.0f) {
         NewVelocityVector = Vector3::Zero;

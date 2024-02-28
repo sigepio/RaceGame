@@ -101,6 +101,7 @@ protected:
 	Vector3 m_RightFrontWheelLocalPosition = { 0.0f,0.0f,0.0f };	//右フロントタイヤのローカル座標
 	Vector3 m_LeftRearWheelLocalPosition = { 0.0f,0.0f,0.0f };		//左リアタイヤのローカル座標
 	Vector3 m_RightRearWheelLocalPosition = { 0.0f,0.0f,0.0f };		//右リアタイヤのローカル座標
+	Vector3 ResetVector = { 0.0f,0.0f,1.0f };
 
 	Quaternion m_PlayerRotation;									//プレイヤーローテーション
 
@@ -137,6 +138,7 @@ protected:
 	float AirPressure;							//タイヤ空気圧
 	float FinalGearRatio;						//ファイナルギア
 	float Transmission_Efficiency;				//伝達効率
+	float CameraRAngle = 0.0f;
 
 	std::vector<std::vector<float>> data;
 

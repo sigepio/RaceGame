@@ -48,6 +48,12 @@ void FrontWheelBase::Update() {
 	//Lボタン
 	brake_input = g_pad[0]->GetLTrigger();
 
+	//ステアリングの切った量の取得
+	Vector3 stickL;
+	stickL.x = g_pad[0]->GetLStickXF();
+
+	DegreeOfRotationOfTheHandle = stickL.x * -1.0f * 10.0f;
+
 	//計算結果を受け取る構造体の宣言
 	SimulationResults ReturnSimulationResults;
 
@@ -77,7 +83,7 @@ void FrontWheelBase::Update() {
 		FrontWheelOrientationVector
 		);
 	
-	m_FrontWheelPosition = ReturnSimulationResults.Position;
+	m_FrontWheelPosition  = ReturnSimulationResults.Position;
 	VelocityVector = ReturnSimulationResults.VelocityVector;
 	PitchAngle = ReturnSimulationResults.PitchAngle;
 	RollAngle = ReturnSimulationResults.RollAngle;
@@ -85,7 +91,30 @@ void FrontWheelBase::Update() {
 	Acceleration_DecelerationForce = ReturnSimulationResults.AllForce;
 	AccelerationVector = ReturnSimulationResults.Acceleration;
 
+	DifferenceVector = m_FrontWheelPosition-PastVector;
+	DifferenceVector.Normalize();
+
+	//プレイヤーの正面ベクトルを正規化
+	m_FrontWheelForward.Normalize();
+
+	if (stickL.x != 0.0f)
+	{
+		//if (WheelRemit.y >= -30.0f && WheelRemit.y <= 30.0f) {
+		m_FrontWheelForward.x = m_FrontWheelForward.x * cos(stickL.x * -0.05) - m_FrontWheelForward.z * sin(stickL.x * -0.05);
+		m_FrontWheelForward.z = m_FrontWheelForward.x * sin(stickL.x * -0.05) + m_FrontWheelForward.z * cos(stickL.x * -0.05);
+
+		m_FrontWheelRotation.SetRotationY(atan2(m_FrontWheelForward.x, m_FrontWheelForward.z));
+		//}
+	}
+
+	PastVector = m_FrontWheelPosition;
+	Vector3 m_moveSpeed = g_vec3Zero;
+
+	m_moveSpeed = m_FrontWheelForward * VelocityVector.z;
+	m_FrontWheelPosition = m_characterController.Execute(m_moveSpeed, 1.0f / 3.0f);
 	m_characterController.SetPosition({ m_FrontWheelPosition.x ,0.0f,m_FrontWheelPosition.z });
+
+
 }
 
 void FrontWheelBase::Handling() {

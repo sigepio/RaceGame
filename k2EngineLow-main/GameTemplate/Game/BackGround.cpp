@@ -17,14 +17,14 @@ bool BackGround::Start()
 
 
 	//モデルを読み込む。
-	m_groundModel->Init("Assets/modelData/course/test_track.tkm", false);
+	m_groundModel->Init("Assets/modelData/course/Sebring.tkm", false);
 	
 	//モデルを更新する。
 	m_groundModel->Update();
 	//静的物理オブジェクトを作成。
-	m_physicsStaticObject.CreateFromModel(m_groundModel->GetModel(), m_groundModel->GetModel().GetWorldMatrix());
+	//m_physicsStaticObject.CreateFromModel(m_groundModel->GetModel(), m_groundModel->GetModel().GetWorldMatrix());
 	// 当たり判定を有効化する。
-	PhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
+	//PhysicsWorld::GetInstance()->EnableDrawDebugWireFrame();
 
 	//m_courseparts = NewGO<CourseParts>(0, "courseparts");
 	return true;

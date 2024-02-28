@@ -108,8 +108,8 @@ Car_Oreca07::Car_Oreca07() {
 	m_NowCar = Oreca07;
 
 	//各タイヤのローカル座標設定
-	m_LeftFrontWheelLocalPosition = { -23.0f,5.0f,55.0f };		//左フロント
-	m_RightFrontWheelLocalPosition = { 23.0f,5.0f,55.0f };		//右フロント
+	m_LeftFrontWheelLocalPosition = { -28.0f,10.0f,55.0f };		//左フロント
+	m_RightFrontWheelLocalPosition = { 28.0f,10.0f,55.0f };		//右フロント
 	m_LeftRearWheelLocalPosition = { -23.0f,5.0f,-73.0f };		//左リア
 	m_RightRearWheelLocalPosition = { 23.0f,5.0f,-73.0f };		//右リア
 }

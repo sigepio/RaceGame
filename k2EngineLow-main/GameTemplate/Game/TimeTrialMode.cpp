@@ -27,7 +27,7 @@ bool TimeTrialMode::Start() {
 
 	m_skyCube->SetLuminance(1.0f);
 	m_skyCube->SetType((EnSkyCubeType)m_skyCubeType);
-	m_skyCube->SetScale(4000.0f);
+	m_skyCube->SetScale(5000.0f);
 
 	m_background = NewGO<BackGround>(1, "background");
 	m_gamecamera = NewGO<GameCamera>(4, "gamecamera");

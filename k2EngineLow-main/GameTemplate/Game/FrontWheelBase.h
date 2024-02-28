@@ -33,7 +33,15 @@ public:
 	}
 
 	float Getm_Speed() {
-		return RSpeed;
+		return throttle_input;
+	}
+
+	Vector3 Get_Velocity() {
+		return VelocityVector;
+	}
+
+	Vector3 Get_DVector() {
+		return DifferenceVector;
 	}
 
 	
@@ -128,6 +136,8 @@ protected:
 	Vector3 Acceleration_DecelerationForce = Vector3::Zero; //加減速力(前のフレームの車にかかるすべての力)[N]
 	Vector3 WindDirectionVector = Vector3::Zero;			//風の向きベクトル [m/s]
 	Vector3 FrontWheelOrientationVector = {0.0f,0.0f,1.0f};
+	Vector3 PastVector = Vector3::Zero;
+	Vector3 DifferenceVector = Vector3::Zero;
 
 	Quaternion OriginRotation;
 	Quaternion m_FrontWheelRotation;
