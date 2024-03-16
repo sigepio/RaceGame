@@ -135,6 +135,9 @@ Bloom.cpp
 また、ギア比による抵抗の変化も存在しているため、タイヤの半径をギア比とデファレンシャル比で割ったものを前述の抵抗に割っている.
 
 $$ Resistance=(Faero+Fr+Fgrade+Fbrake)\times\displaystyle\frac{TireRadius}{GearRatio\times DifferentialRatio\times 0.95}$$
+
+<br>
+
 $$Resistance:抵抗$$ 
 $$Faero:空気抵抗$$ 
 $$Fr:転がり抵抗$$ 
@@ -151,6 +154,9 @@ $$DifferentialRatio:デファレンシャル比$$
 これを単純化すると以下のような計算式になる.
 
 $$ Faero=0.5\times Cd\times FrontProjectedArea \times ρ \times v^2 $$
+
+<br>
+
 $$Faero:空気抵抗$$ 
 $$Cd:ドラッグ係数$$ 
 $$FrontProjectedArea:正面投影面積$$ 
@@ -161,6 +167,9 @@ $$v:進行方向における自動車の空気に対する相対速度 $$
 <br>ちなみに 0℃，1 atm の状況での空気の密度 ρ は 1.293 kg/m3である．
 
 $$ ρ=\displaystyle\frac{1.293\times AtmosphericPressure}{1 + Temperature ÷ 273.15}\times (1-\displaystyle\frac{0.378\times WaterVaporPressure}{AtmosphericPressure}) $$
+
+<br>
+
 $$ρ:空気の密度 $$ 
 $$AtmosphericPressure:大気圧$$ 
 $$Temperature:気温$$ 
@@ -175,6 +184,9 @@ $$WaterVaporPressure:水蒸気圧$$
 <br>これを計算するのは困難なので，以下のような計算で求めている.
 
 $$ Fr=μ\times mass\times g $$
+
+<br>
+
 $$Fr:転がり抵抗 $$ 
 $$μ:転がり抵抗係数$$ 
 $$mass:車両重量$$ 
@@ -184,7 +196,11 @@ $$g:重力加速度$$
 * * *
 #### 登坂抵抗
 登坂抵抗は、以下のような計算で求めている.
+
 $$ Fgrade=mass\times g\times \sin(θ) $$
+
+<br>
+
 $$Fgrade:登坂抵抗 $$ 
 $$mass:車両重量$$ 
 $$g:重力加速度$$ 
@@ -192,7 +208,11 @@ $$θ:勾配$$
 * * *
 #### ブレーキによる抵抗
 ブレーキは、ブレーキペダルの踏み込み度合いにより変化するため以下のような計算で求めている.
+
 $$ Fbrake=MaximumBrakingForce\times BrakePressure$$
+
+<br>
+
 $$Fbrake:ブレーキ $$ 
 $$MaximumBrakingForce:最大制動力$$ 
 $$BrakePressure:ブレーキペダルの踏み込み度合い$$ 
@@ -232,13 +252,18 @@ float EngineTorque(float rpm, std::vector<std::vector<float>> data) {
 
 #### 3.エンジン回転数
 エンジントルクからエンジン回転数の計算を行うため以下の計算で求めている.
+
 $$ Evel+=\displaystyle\frac{T}{l\times dt} $$
 $$ Erpm=Evel\times \displaystyle\frac{60}{2÷ π}$$
+
+<br>
+
 $$E_Vel:エンジンの角速度 $$ 
 $$T:エンジントルク$$ 
 $$l:慣性モーメント$$ 
 $$ dt:微小時間 $$
-しかし、シフトチェンジの際、エンジン回転数がおかしくなる問題が生じたため、シフトチェンジ時のみ以下の計算式を適応しています。
+しかし、シフトチェンジの際、エンジン回転数がおかしくなる問題が生じたため、シフトチェンジ時のみ以下の計算式を適応している.
+
 $$ Ntire= \displaystyle\frac{VelocityVector}{2π\times TireRadius}\times 60$$
 $$ RPM=Ntire\times GearRatio\times DifferentialRatio $$
 
