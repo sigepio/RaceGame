@@ -134,7 +134,7 @@ Bloom.cpp
 ![alt text](抵抗図-1.png)
 また、ギア比による抵抗の変化も存在しているため、タイヤの半径をギア比とデファレンシャル比で割ったものを前述の抵抗に割っている.
 
-$$ Resistance=(Faero+Fr+Fgrade+Fbrake)\times\displaystyle\frac{TireRadius}{GearRatio\times DifferentialRatio\times 0.95}$$
+$$ Resistance=(Faero+Fr+Fgrade+Fbrake)\times\displaystyle\frac{TireRadius}{GearRatio\times DifferentialRatio\times 0.95}$$ 
 
 <br>
 
@@ -153,14 +153,18 @@ $$DifferentialRatio:デファレンシャル比$$
 ![alt text](aerodynamic-drag-factor-1.jpg)
 これを単純化すると以下のような計算式になる.
 
-$$ Faero=0.5\times Cd\times FrontProjectedArea \times ρ \times v^2 $$
+$$ Faero=0.5\times Cd\times FrontProjectedArea \times ρ \times v^2 $$ 
 
 <br>
 
 $$Faero:空気抵抗$$ 
+
 $$Cd:ドラッグ係数$$ 
+
 $$FrontProjectedArea:正面投影面積$$ 
+
 $$ρ:空気の密度 $$ 
+
 $$v:進行方向における自動車の空気に対する相対速度 $$ 
 
 空気の密度は以下の式で計算できる．
@@ -171,8 +175,11 @@ $$ ρ=\displaystyle\frac{1.293\times AtmosphericPressure}{1 + Temperature ÷ 273
 <br>
 
 $$ρ:空気の密度 $$ 
+
 $$AtmosphericPressure:大気圧$$ 
+
 $$Temperature:気温$$ 
+
 $$WaterVaporPressure:水蒸気圧$$ 
 
 ドラッグ係数は、おおよその自動車の平均である、0.3を使用.
@@ -188,8 +195,11 @@ $$ Fr=μ\times mass\times g $$
 <br>
 
 $$Fr:転がり抵抗 $$ 
+
 $$μ:転がり抵抗係数$$ 
+
 $$mass:車両重量$$ 
+
 $$g:重力加速度$$ 
 
 転がり抵抗係数は、アスファルトの0.015としている.
@@ -202,9 +212,13 @@ $$ Fgrade=mass\times g\times \sin(θ) $$
 <br>
 
 $$Fgrade:登坂抵抗 $$ 
+
 $$mass:車両重量$$ 
+
 $$g:重力加速度$$ 
+
 $$θ:勾配$$ 
+
 * * *
 #### ブレーキによる抵抗
 ブレーキは、ブレーキペダルの踏み込み度合いにより変化するため以下のような計算で求めている.
@@ -214,9 +228,13 @@ $$ Fbrake=MaximumBrakingForce\times BrakePressure$$
 <br>
 
 $$Fbrake:ブレーキ $$ 
+
 $$MaximumBrakingForce:最大制動力$$ 
+
 $$BrakePressure:ブレーキペダルの踏み込み度合い$$ 
+
 * * *
+
 また、抵抗の単位はN(ニュートン)である.
 <br>しかし、トルクの単位はNm(ニュートン毎メートル)のため、変換が必要である.
 <br>そのため、すべて抵抗に対してタイヤ半径を乗算している.
@@ -253,25 +271,37 @@ float EngineTorque(float rpm, std::vector<std::vector<float>> data) {
 #### 3.エンジン回転数
 エンジントルクからエンジン回転数の計算を行うため以下の計算で求めている.
 
-$$ Evel+=\displaystyle\frac{T}{l\times dt} $$
+$$ Evel+=\displaystyle\frac{T}{l\times dt} $$ 
+
 $$ Erpm=Evel\times \displaystyle\frac{60}{2÷ π}$$
 
 <br>
 
 $$E_Vel:エンジンの角速度 $$ 
+
 $$T:エンジントルク$$ 
+
 $$l:慣性モーメント$$ 
-$$ dt:微小時間 $$
+
+$$ dt:微小時間 $$ 
+
 しかし、シフトチェンジの際、エンジン回転数がおかしくなる問題が生じたため、シフトチェンジ時のみ以下の計算式を適応している.
 
-$$ Ntire= \displaystyle\frac{VelocityVector}{2π\times TireRadius}\times 60$$
-$$ RPM=Ntire\times GearRatio\times DifferentialRatio $$
+$$ Ntire= \displaystyle\frac{VelocityVector}{2π\times TireRadius}\times 60$$ 
 
-$$Ntire:タイヤ回転数$$
+$$ RPM=Ntire\times GearRatio\times DifferentialRatio $$ 
+
+
+$$Ntire:タイヤ回転数$$ 
+
 $$VelocityVector:速度$$ 
+
 $$RPM:エンジン回転数$$ 
+
 $$TireRadius:タイヤ半径$$ 
+
 $$GearRatio:ギア比$$ 
+
 $$DifferentialRatio:デファレンシャル比$$ 
 
 ***
@@ -280,7 +310,8 @@ $$DifferentialRatio:デファレンシャル比$$
 <br>一般的な単位はm/sであるが、今回はcm/sとして計算する.
 <br>また、モデルのスケールの関係上スケールスピード0.4として計算する.
 
-$$ Velocity=\displaystyle\frac{RPM}{(60\times GearRatio\times DifferentialRatio)\times (TireRadius\times 2π)\times 0.4\times 100} $$
+$$ Velocity=\displaystyle\frac{RPM}{(60\times GearRatio\times DifferentialRatio)\times (TireRadius\times 2π)\times 0.4\times 100} $$ 
+
 
 
 ## 今後実装していきたいもの
