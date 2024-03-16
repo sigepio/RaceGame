@@ -37,7 +37,7 @@ public:
 	}
 
 	Vector3 Get_Velocity() {
-		return VelocityVector;
+		return m_FrontWheelForward;
 	}
 
 	Vector3 Get_DVector() {
@@ -131,13 +131,13 @@ protected:
 	Vector3 gearposition;
 	Vector3 speedposition;
 	Vector3 meterposition;
-	Vector3 VelocityVector = Vector3::Zero;
-	Vector3 AccelerationVector = Vector3::Zero;
+	
 	Vector3 Acceleration_DecelerationForce = Vector3::Zero; //加減速力(前のフレームの車にかかるすべての力)[N]
-	Vector3 WindDirectionVector = Vector3::Zero;			//風の向きベクトル [m/s]
+	
 	Vector3 FrontWheelOrientationVector = {0.0f,0.0f,1.0f};
 	Vector3 PastVector = Vector3::Zero;
-	Vector3 DifferenceVector = Vector3::Zero;
+	Vector3 DifferenceVector = { 0.0f,0.0f,1.0f };
+	Vector3 LastDVector = Vector3::Zero;
 
 	Quaternion OriginRotation;
 	Quaternion m_FrontWheelRotation;
@@ -155,6 +155,17 @@ protected:
 	SpriteRender needleRender;
 	SpriteRender speedneedleRender;
 
+	SpriteRender UIBace;
+	SpriteRender RPMGage;
+	SpriteRender RPMCover;
+	SpriteRender ThrottleGage;
+	SpriteRender BrakeGage;
+
+
+	FontRender RPMFont;
+	FontRender VelocityFont;
+	FontRender GearFont;
+
 	SoundSource* engine;
 	SoundSource* engine_s;
 
@@ -169,7 +180,7 @@ protected:
 	float m_brake;
 	float m_accelerator;
 	float m_move;
-
+	float RPMGagescale = 0.0f;
 
 	float Speed = 0.0f;								//時速
 	float RSpeed = 0.0f;							//リターンされた速度
@@ -201,7 +212,9 @@ protected:
 	float WaterVaporPressure = 0.0231f;			//水蒸気圧 [atm]
 	float RollingResistanceCoefficient = 0.02f;	//路面の転がり抵抗係数
 	float CoefficientOfFriction = 1.2f;			//路面とタイヤとの摩擦係数
-
+	float WindDirectionVector = 0.0f;			//風の向きベクトル [m/s]
+	float VelocityVector = 0.0f;
+	float AccelerationVector = 0.0f;
 
 	float acceleration = 0;
 	

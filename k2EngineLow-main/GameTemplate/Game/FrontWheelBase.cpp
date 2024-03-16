@@ -4,9 +4,11 @@
 #include "LeftFrontWheel.h"
 #include "sound/SoundEngine.h"
 #include "CarAFormula.h"
+#include <math.h>
+
 
 FrontWheelBase::FrontWheelBase() {
-	m_characterController.Init(70.0f, 150.0f, m_FrontWheelPosition);
+	m_characterController.Init(20.0f, 30.0f, m_FrontWheelPosition);
 }
 
 FrontWheelBase::~FrontWheelBase() {
@@ -21,6 +23,25 @@ bool FrontWheelBase::Start() {
 	
 	g_soundEngine->ResistWaveFileBank(3, "Assets/sound/FD3S_idling_v2.wav");
 	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/FD3S_3000RPM.wav");
+
+	UIBace.Init("Assets/sprite/UI/RaceUIBase.DDS", 1600.f, 900.0f);
+
+	RPMGage.Init("Assets/sprite/UI/RPMGage.DDS", 446.0f, 13.0f);
+	RPMGage.SetPosition(-222.11538461538453f, -261.0f, 0.0f);
+	RPMGage.SetPivot(0.0f, 0.5f);
+	RPMGage.Update();
+
+	RPMCover.Init("Assets/sprite/UI/RPMGageCover.DDS", 1600.0f, 900.0f);
+	ThrottleGage.Init("Assets/sprite/UI/ThrottleGage.DDS", 20.0f, 131.0f);
+	ThrottleGage.SetPosition(283.0f, -389.75f, 0.0f);
+	ThrottleGage.SetPivot(0.5f, 0.0f);
+	ThrottleGage.Update();
+	
+	BrakeGage.Init("Assets/sprite/UI/BrakeGage.DDS", 20.0f, 131.0f);
+	BrakeGage.SetPosition(-283.0f, -389.75f, 0.0f);
+	BrakeGage.SetPivot(0.5f, 0.0f);
+	BrakeGage.Update();
+
 	engine = NewGO<SoundSource>(0);
 	engine_s = NewGO<SoundSource>(0);
 	engine_s->Init(8);
@@ -41,12 +62,12 @@ void FrontWheelBase::Update() {
 	//Rボタン
 	throttle_input = 0.0f;
 	throttle_input = g_pad[0]->GetRTrigger();
-	if (throttle_input != 0.0f) {
-		throttle_input = 255.0f / throttle_input;
-	}
+	throttle_input = throttle_input / 255.0f;
+	
 
 	//Lボタン
 	brake_input = g_pad[0]->GetLTrigger();
+	brake_input = brake_input / 255.0f;
 
 	//ステアリングの切った量の取得
 	Vector3 stickL;
@@ -88,11 +109,20 @@ void FrontWheelBase::Update() {
 	PitchAngle = ReturnSimulationResults.PitchAngle;
 	RollAngle = ReturnSimulationResults.RollAngle;
 	currentRPM = ReturnSimulationResults.CurrentRPM;
-	Acceleration_DecelerationForce = ReturnSimulationResults.AllForce;
+	currentGear = ReturnSimulationResults.CurrentGear;
 	AccelerationVector = ReturnSimulationResults.Acceleration;
 
-	DifferenceVector = m_FrontWheelPosition-PastVector;
-	DifferenceVector.Normalize();
+	//float Velocity = sqrt(pow(VelocityVector.x, 2.0) + pow(VelocityVector.y, 2.0) + pow(VelocityVector.z, 2.0));
+	RPMGagescale = (currentRPM - 6000.0f) / 2200.0f;
+	if (RPMGagescale <= 0.0f) {
+		RPMGagescale = 0.0f;
+	}
+	RPMGage.SetScale(RPMGagescale, 1.0f, 0.0f);
+	RPMGage.Update();
+	ThrottleGage.SetScale(1.0f, throttle_input, 0.0f);
+	BrakeGage.SetScale(1.0f, brake_input, 0.0f);
+	ThrottleGage.Update();
+	BrakeGage.Update(); 
 
 	//プレイヤーの正面ベクトルを正規化
 	m_FrontWheelForward.Normalize();
@@ -107,14 +137,40 @@ void FrontWheelBase::Update() {
 		//}
 	}
 
-	PastVector = m_FrontWheelPosition;
+	
 	Vector3 m_moveSpeed = g_vec3Zero;
+	//上下の移動速度を退避させる
+	float y = m_moveSpeed.y;
+	m_moveSpeed = m_FrontWheelForward * VelocityVector;
+	m_moveSpeed.y = y - 980.0f * g_gameTime->GetFrameDeltaTime(); // 重力
+	if (m_characterController.IsOnGround()) {
+		//地面についた。
+		m_moveSpeed.y = 0.0f;
+	}
+	m_FrontWheelPosition = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
+	
+	LastDVector = DifferenceVector;
 
-	m_moveSpeed = m_FrontWheelForward * VelocityVector.z;
-	m_FrontWheelPosition = m_characterController.Execute(m_moveSpeed, 1.0f / 3.0f);
-	m_characterController.SetPosition({ m_FrontWheelPosition.x ,0.0f,m_FrontWheelPosition.z });
+	DifferenceVector = m_FrontWheelPosition - PastVector;
+	if (DifferenceVector.x == 0.0f, DifferenceVector.y == 0.0f, DifferenceVector.z == 0.0f) {
+		DifferenceVector = LastDVector;
+	}
+	DifferenceVector.Normalize();
+	PastVector = m_FrontWheelPosition;
+	//m_characterController.SetPosition({ m_FrontWheelPosition.x ,0.0f,m_FrontWheelPosition.z });
 
+	wchar_t Velocity[256];
+	swprintf_s(Velocity, 256, L"%.0f\n", VelocityVector*3600.0f*2.5f/1000.0f/100.0f);
+	VelocityFont.SetPosition(-130.0f, -330.0f, 0.0f);
+	VelocityFont.SetPivot(0.0f, 0.5f);
 
+	wchar_t Gear[256];
+	swprintf_s(Gear, 256, L"%.0f\n", currentGear);
+	GearFont.SetPosition(50.0f, -325.0f, 0.0f);
+	GearFont.SetScale(1.5f);
+
+	VelocityFont.SetText(Velocity);
+	GearFont.SetText(Gear);
 }
 
 void FrontWheelBase::Handling() {
@@ -181,7 +237,7 @@ Vector4 FrontWheelBase::Acceleration() {
 	m_brake = g_pad[0]->GetLTrigger();
 
 	Vector4 GetMember = { 0,0,0,0 };
-	GetMember = m_caraformula->CarSpeed(data, SHIFT_UP_RPM_ADJUST, SHIFT_DOWN_RPM_ADJUST, currentRPM, velocity, mass, wheelRadius, grade, throttle_input, GEAR_RATIOS, currentGear, MaxGear,AirPressure,FinalGearRatio,Transmission_Efficiency,acceleration);
+	//GetMember = m_caraformula->CarSpeed(data, SHIFT_UP_RPM_ADJUST, SHIFT_DOWN_RPM_ADJUST, currentRPM, velocity, mass, wheelRadius, grade, throttle_input, GEAR_RATIOS, currentGear, MaxGear,AirPressure,FinalGearRatio,Transmission_Efficiency,acceleration);
 
 	//if (Speed > 320.0f) {
 	//	Speed = 320;
@@ -285,5 +341,11 @@ Vector4 FrontWheelBase::Acceleration() {
 }
 
 void FrontWheelBase::Render(RenderContext& rc) {
-	
+	VelocityFont.Draw(rc);
+	GearFont.Draw(rc);
+	UIBace.Draw(rc);
+	RPMGage.Draw(rc);
+	RPMCover.Draw(rc);
+	ThrottleGage.Draw(rc);
+	BrakeGage.Draw(rc);
 }

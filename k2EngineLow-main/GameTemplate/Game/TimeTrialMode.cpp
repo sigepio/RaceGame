@@ -41,12 +41,12 @@ bool TimeTrialMode::Start() {
 	TimeUIRender.SetPosition(m_TimeUIPosition);
 	TimeUIRender.Update();
 
-	FastestLapsRender.Init("Assets/sprite/FastestLap.DDS", 1632.0f, 918.0f);
+	/*FastestLapsRender.Init("Assets/sprite/FastestLap.DDS", 1632.0f, 918.0f);
 	m_FastestLapsPosition = { Vector3(700.0f, 360.0f, 0.0f) };
 	FastestLapsRender.SetPosition(m_FastestLapsPosition);
-	FastestLapsRender.Update();
+	FastestLapsRender.Update();*/
 
-	StartRender.Init("Assets/modelData/course/track1.tkm", false);
+	//StartRender.Init("Assets/modelData/course/track1.tkm", false);
 	
 	return true;
 }
@@ -84,7 +84,7 @@ void TimeTrialMode::Update() {
 		
 		wchar_t FTime[256];
 		swprintf_s(FTime, 256, L"%d:%.3f\n", FastestLapTimemin, FastestLapTimesec);
-		FTimeFont.SetPosition(750.0f, 500.0f, 0.0f);
+		FTimeFont.SetPosition(750.0f, -300.0f, 0.0f);
 
 
 		FTimeFont.SetText(FTime);
@@ -98,9 +98,9 @@ void TimeTrialMode::Update() {
 
 void TimeTrialMode::Render(RenderContext& rc) {
 	
-	StartRender.Draw(rc);
+	//StartRender.Draw(rc);
 	TimeUIRender.Draw(rc);
-	FastestLapsRender.Draw(rc);
+	/*FastestLapsRender.Draw(rc);*/
 	FTimeFont.Draw(rc);
 	TimeFont.Draw(rc);
 }

@@ -59,6 +59,7 @@ private:
 	Vector3 m_toCameraPos = Vector3::Zero;			//注視点から視点に向かうベクトル
 	Vector3 m_target = Vector3::Zero;
 	Vector3 DP = g_vec3Zero;
+	Vector3 LastDP = { 0.0f,0.0f,1.0f };
 
 	Quaternion CarRotation;
 	float RAngle = 0.0f;

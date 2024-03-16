@@ -7,7 +7,7 @@ cbuffer cb : register(b0)
     float4x4 mvp;       // MVP行列
     float4 mulColor;    // 乗算カラー
 };
-
+ 
 struct VSInput
 {
     float4 pos : POSITION;

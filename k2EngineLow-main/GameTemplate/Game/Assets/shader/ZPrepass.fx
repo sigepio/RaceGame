@@ -19,6 +19,7 @@ struct SVSIn
     SSkinVSIn skinVert;             //スキン用のデータ。
 };
 
+
 // ピクセルシェーダーへの入力
 struct SPSIn
 {

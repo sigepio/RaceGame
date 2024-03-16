@@ -36,11 +36,11 @@ struct VehicleInfo {
 //シミュレート結果
 struct SimulationResults {
     Vector3 Position;						//位置ベクトル[m]
-    Vector3 VelocityVector;					//速度ベクトル[m/s]
+    float VelocityVector;					//速度ベクトル[m/s]
     float PitchAngle;						//ピッチ角度[rad]
     float RollAngle;						//ロール角度[rad]
     float CurrentRPM;						//エンジンの回転数 [rpm]
-    Vector3 AllForce;                       //加減速力[N]
-	Vector3 Acceleration;					//加速度
+	float CurrentGear;						//ギア
+	float Acceleration;						//加速度
 };
 

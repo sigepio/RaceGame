@@ -1,47 +1,48 @@
 
 ///////////////////////////////////////
-// \‘¢‘ÌB
+// ï¿½\ï¿½ï¿½ï¿½ÌB
 ///////////////////////////////////////
 
-// ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚Ö‚Ì“ü—Í
+// ï¿½sï¿½Nï¿½Zï¿½ï¿½ï¿½Vï¿½Fï¿½[ï¿½_ï¿½[ï¿½Ö‚Ì“ï¿½ï¿½ï¿½
 struct SPSIn
 {
-	float4 pos : SV_POSITION;       //À•WB
-	float3 normal : NORMAL;         //–@üB
-	float3 tangent  : TANGENT;      //ÚƒxƒNƒgƒ‹B
-	float3 biNormal : BINORMAL;     //]ƒxƒNƒgƒ‹B
-	float2 uv : TEXCOORD0;          //UVÀ•WB
-	float3 worldPos : TEXCOORD1;    // ƒ[ƒ‹ƒhÀ•W
+	float4 pos : SV_POSITION;       //ï¿½ï¿½ï¿½Wï¿½B
+	float3 normal : NORMAL;         //ï¿½@ï¿½ï¿½ï¿½B
+	float3 tangent  : TANGENT;      //ï¿½Úƒxï¿½Nï¿½gï¿½ï¿½ï¿½B
+	float3 biNormal : BINORMAL;     //ï¿½]ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½B
+	float2 uv : TEXCOORD0;          //UVï¿½ï¿½ï¿½Wï¿½B
+	float3 worldPos : TEXCOORD1;    // ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½W
 };
 cbuffer SkyCubeCb : register(b1)
 {
-    float luminance;	// –¾‚é‚³B
+    float luminance;	// ï¿½ï¿½ï¿½é‚³ï¿½B
 };
 
+
 ///////////////////////////////////////
-// ’¸“_ƒVƒF[ƒ_[‚Ì‹¤’Êˆ—‚ğƒCƒ“ƒNƒ‹[ƒh‚·‚éB
+// ï¿½ï¿½ï¿½_ï¿½Vï¿½Fï¿½[ï¿½_ï¿½[ï¿½Ì‹ï¿½ï¿½Êï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Cï¿½ï¿½ï¿½Nï¿½ï¿½ï¿½[ï¿½hï¿½ï¿½ï¿½ï¿½B
 ///////////////////////////////////////
 #include "ModelVSCommon.h"
 
 ///////////////////////////////////////
-// ƒVƒF[ƒ_[ƒŠƒ\[ƒX
+// ï¿½Vï¿½Fï¿½[ï¿½_ï¿½[ï¿½ï¿½ï¿½\ï¿½[ï¿½X
 ///////////////////////////////////////
-Texture2D<float4> g_albedo : register(t0);      //ƒAƒ‹ƒxƒhƒ}ƒbƒv
-Texture2D<float4> g_normal : register(t1);      //–@üƒ}ƒbƒv
-Texture2D<float4> g_spacular : register(t2);    //ƒXƒyƒLƒ…ƒ‰ƒ}ƒbƒv
+Texture2D<float4> g_albedo : register(t0);      //ï¿½Aï¿½ï¿½ï¿½xï¿½hï¿½}ï¿½bï¿½v
+Texture2D<float4> g_normal : register(t1);      //ï¿½@ï¿½ï¿½ï¿½}ï¿½bï¿½v
+Texture2D<float4> g_spacular : register(t2);    //ï¿½Xï¿½yï¿½Lï¿½ï¿½ï¿½ï¿½ï¿½}ï¿½bï¿½v
 TextureCube<float4> g_skyCubeMap : register(t10);
 
 ///////////////////////////////////////
-// ƒTƒ“ƒvƒ‰[ƒXƒe[ƒg
+// ï¿½Tï¿½ï¿½ï¿½vï¿½ï¿½ï¿½[ï¿½Xï¿½eï¿½[ï¿½g
 ///////////////////////////////////////
 sampler g_sampler : register(s0);
 
 
 ////////////////////////////////////////////////
-// ŠÖ”’è‹`B
+// ï¿½Öï¿½ï¿½ï¿½`ï¿½B
 ////////////////////////////////////////////////
 
-// –@üƒ}ƒbƒv‚©‚ç–@ü‚ğæ“¾B
+// ï¿½@ï¿½ï¿½ï¿½}ï¿½bï¿½vï¿½ï¿½ï¿½ï¿½@ï¿½ï¿½ï¿½ï¿½ï¿½æ“¾ï¿½B
 float3 GetNormalFromNormalMap(float3 normal, float3 tangent, float3 biNormal, float2 uv)
 {
 	float3 binSpaceNormal = g_normal.SampleLevel(g_sampler, uv, 0.0f).xyz;
@@ -52,19 +53,19 @@ float3 GetNormalFromNormalMap(float3 normal, float3 tangent, float3 biNormal, fl
 	return newNormal;
 }
 
-// ƒ‚ƒfƒ‹—p‚Ì’¸“_ƒVƒF[ƒ_[‚ÌƒGƒ“ƒgƒŠ[ƒ|ƒCƒ“ƒg
+// ï¿½ï¿½ï¿½fï¿½ï¿½ï¿½pï¿½Ì’ï¿½ï¿½_ï¿½Vï¿½Fï¿½[ï¿½_ï¿½[ï¿½ÌƒGï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½|ï¿½Cï¿½ï¿½ï¿½g
 SPSIn VSMainCore(SVSIn vsIn, float4x4 mWorldLocal, uniform bool isUsePreComputedVertexBuffer)
 {
 	SPSIn psIn;
-	// ’¸“_À•W‚ğƒ[ƒ‹ƒhÀ•WŒn‚É•ÏŠ·‚·‚éB
+	// ï¿½ï¿½ï¿½_ï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Wï¿½nï¿½É•ÏŠï¿½ï¿½ï¿½ï¿½ï¿½B
     psIn.pos = CalcVertexPositionInWorldSpace(vsIn.pos, mWorldLocal, isUsePreComputedVertexBuffer);
 
-	// ’¸“_ƒVƒF[ƒ_[‚©‚çƒ[ƒ‹ƒhÀ•W‚ğo—Í
+	// ï¿½ï¿½ï¿½_ï¿½Vï¿½Fï¿½[ï¿½_ï¿½[ï¿½ï¿½ï¿½çƒï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Wï¿½ï¿½ï¿½oï¿½ï¿½
 	psIn.worldPos = (float3)psIn.pos;
-	psIn.pos = mul(mView, psIn.pos); // ƒ[ƒ‹ƒhÀ•WŒn‚©‚çƒJƒƒ‰À•WŒn‚É•ÏŠ·
-	psIn.pos = mul(mProj, psIn.pos); // ƒJƒƒ‰À•WŒn‚©‚çƒXƒNƒŠ[ƒ“À•WŒn‚É•ÏŠ·
+	psIn.pos = mul(mView, psIn.pos); // ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½ï¿½Wï¿½nï¿½ï¿½ï¿½ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½nï¿½É•ÏŠï¿½
+	psIn.pos = mul(mProj, psIn.pos); // ï¿½Jï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½nï¿½ï¿½ï¿½ï¿½Xï¿½Nï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½ï¿½ï¿½Wï¿½nï¿½É•ÏŠï¿½
 
-	// ƒ[ƒ‹ƒh‹óŠÔ‚Ì–@üAÚƒxƒNƒgƒ‹A]ƒxƒNƒgƒ‹‚ğŒvZ‚·‚éB
+	// ï¿½ï¿½ï¿½[ï¿½ï¿½ï¿½hï¿½ï¿½Ô‚Ì–@ï¿½ï¿½ï¿½Aï¿½Úƒxï¿½Nï¿½gï¿½ï¿½ï¿½Aï¿½]ï¿½xï¿½Nï¿½gï¿½ï¿½ï¿½ï¿½ï¿½vï¿½Zï¿½ï¿½ï¿½ï¿½B
 	CalcVertexNormalTangentBiNormalInWorldSpace(
 		psIn.normal,
 		psIn.tangent,
@@ -82,7 +83,7 @@ SPSIn VSMainCore(SVSIn vsIn, float4x4 mWorldLocal, uniform bool isUsePreComputed
 }
 
 /// <summary>
-/// ƒsƒNƒZƒ‹ƒVƒF[ƒ_[‚ÌƒGƒ“ƒgƒŠ[ŠÖ”B
+/// ï¿½sï¿½Nï¿½Zï¿½ï¿½ï¿½Vï¿½Fï¿½[ï¿½_ï¿½[ï¿½ÌƒGï¿½ï¿½ï¿½gï¿½ï¿½ï¿½[ï¿½Öï¿½ï¿½B
 /// </summary>
 float4 PSMain(SPSIn psIn) : SV_Target0
 {

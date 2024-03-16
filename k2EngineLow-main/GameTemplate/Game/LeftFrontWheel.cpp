@@ -14,12 +14,12 @@ LeftFrontWheel::~LeftFrontWheel() {
 
 bool LeftFrontWheel::Start() {
 	m_frontwheelbase = FindGO<FrontWheelBase>("frontwheelbase");
-	m_FrontWheelModel.Init("Assets/modelData/Car/LMP2_Left.tkm");
+	
 
 	switch (m_NowCar)
 	{
 	case AE86:
-		
+		m_FrontWheelModel.Init("Assets/modelData/Car/LMP2_Left.tkm");
 		break;
 	default:
 		break;

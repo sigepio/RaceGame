@@ -47,7 +47,7 @@ SPSIn VSMain(SVSIn vsIn)
     psIn.normal = mul(mWorld, vsIn.normal);
     return psIn;
 }
-
+ 
 /// <summary>
 /// シャドウマップ描画用のピクセルシェーダー
 /// </summary>
