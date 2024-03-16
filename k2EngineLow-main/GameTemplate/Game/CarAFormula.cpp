@@ -111,7 +111,7 @@ SimulationResults CarAFormula::CarSimulation(
     //ドラッグ係数
     float Cd = 0.3f;
 
-    Faero = 0.5 * Cd * FrontProjectedArea * ρ * pow(Velocity, 1.5f);
+    Faero = 0.5 * Cd * FrontProjectedArea * ρ * pow(Velocity, 1.85f);
     Faero *= vehicleinfo.TireRadius;
 
 
@@ -130,7 +130,7 @@ SimulationResults CarAFormula::CarSimulation(
 
     //ブレーキ
     float Fbrake = 0.0f;
-    Fbrake = vehicleinfo.MaximumBrakingForce * BrakePressure * vehicleinfo.TireRadius;
+    Fbrake = (vehicleinfo.MaximumBrakingForce*(10.0f * ((vehicleinfo.MaxGear / CurrentGear)/ vehicleinfo.MaxGear))) * BrakePressure * vehicleinfo.TireRadius;
     
     //変速
     // シフトアップ処理
@@ -160,7 +160,7 @@ SimulationResults CarAFormula::CarSimulation(
         E_Vel = ((2.0f * M_PI) / 60.0f) * CurrentRPM;
 
 
-        E_Vel += engineTorque / 2.0/*慣性モーメント(エンジンの回りにくさ)今回は1.0に設定・調整*/ * (1.0f / 60.0f);
+        E_Vel += engineTorque / 1.0/*慣性モーメント(エンジンの回りにくさ)今回は1.0に設定・調整*/ * (1.0f / 60.0f);
         NewRPM = E_Vel * 60.0f / 2.0f / M_PI;
     }
     else {
@@ -174,7 +174,7 @@ SimulationResults CarAFormula::CarSimulation(
     }
     //レブリミット
     if (NewRPM >= 8200.0f) {
-        NewRPM = 8200.0f;
+        NewRPM = 8000.0f;
     }
     if (NewRPM <= 0.0f) {
         NewRPM = 0.0f;
