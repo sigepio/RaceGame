@@ -159,6 +159,7 @@ SimulationResults CarAFormula::CarSimulation(
         float E_Vel = 0.0f;
         E_Vel = ((2.0f * M_PI) / 60.0f) * CurrentRPM;
 
+
         E_Vel += engineTorque / 2.0/*慣性モーメント(エンジンの回りにくさ)今回は1.0に設定・調整*/ * (1.0f / 60.0f);
         NewRPM = E_Vel * 60.0f / 2.0f / M_PI;
     }
