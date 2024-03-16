@@ -139,13 +139,21 @@ $$ Resistance=(Faero+Fr+Fgrade+Fbrake)\times\displaystyle\frac{TireRadius}{GearR
 <br>
 
 $$Resistance:抵抗$$ 
+
 $$Faero:空気抵抗$$ 
+
 $$Fr:転がり抵抗$$ 
+
 $$Fgrade:登坂抵抗$$ 
+
 $$Fbrake:ブレーキ$$ 
+
 $$TireRadius:タイヤ半径$$ 
+
 $$GearRatio:ギア比$$ 
+
 $$DifferentialRatio:デファレンシャル比$$ 
+
 * * *
 #### 各種抵抗の計算
 #### 空気抵抗
@@ -279,6 +287,8 @@ $$ Erpm=Evel\times \displaystyle\frac{60}{2÷ π}$$
 
 $$E_Vel:エンジンの角速度 $$ 
 
+$$Erpm:エンジン回転数$$ 
+
 $$T:エンジントルク$$ 
 
 $$l:慣性モーメント$$ 
@@ -312,7 +322,15 @@ $$DifferentialRatio:デファレンシャル比$$
 
 $$ Velocity=\displaystyle\frac{RPM}{(60\times GearRatio\times DifferentialRatio)\times (TireRadius\times 2π)\times 0.4\times 100} $$ 
 
+$$Velocity:速度$$ 
 
+$$RPM:エンジン回転数$$ 
+
+$$TireRadius:タイヤ半径$$ 
+
+$$GearRatio:ギア比$$ 
+
+$$DifferentialRatio:デファレンシャル比$$ 
 
 ## 今後実装していきたいもの
 ### 車両運動モデルの実装
