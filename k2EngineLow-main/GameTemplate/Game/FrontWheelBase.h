@@ -44,7 +44,9 @@ public:
 		return DifferenceVector;
 	}
 
-	
+	float GetTireRotation() {
+		return VelocityVector * 3600.0f * 2.5f / 1000.0f / 100.0f;
+	}
 
 	//ê›íËånä÷êî
 
@@ -120,6 +122,8 @@ public:
 	void Setvehicle_info(VehicleInfo Setvehicle_info) {
 		vehicle_info = Setvehicle_info;
 	}
+
+
 
 protected:
 	Vector3 m_FrontWheelPosition = Vector3::Zero;
@@ -218,6 +222,7 @@ protected:
 
 	float acceleration = 0;
 	
+	float EngineSound = 0.0f;
 	float IdolingRPM;
 
 	std::vector<std::vector<float>> data;

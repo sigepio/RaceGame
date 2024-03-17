@@ -14,12 +14,11 @@ LeftFrontWheel::~LeftFrontWheel() {
 
 bool LeftFrontWheel::Start() {
 	m_frontwheelbase = FindGO<FrontWheelBase>("frontwheelbase");
-	
-
+	m_FrontWheelModel.Init("Assets/modelData/Car/LMP2_Left.tkm");
 	switch (m_NowCar)
 	{
 	case AE86:
-		m_FrontWheelModel.Init("Assets/modelData/Car/LMP2_Left.tkm");
+		
 		break;
 	default:
 		break;
@@ -125,12 +124,10 @@ void LeftFrontWheel::Move() {
 }
 
 void LeftFrontWheel::Rotation() {
-	if (m_frontwheelbase->Getm_Speed() != 0) {
-		m_FrontWheelLeftRotation.AddRotationDegX(m_frontwheelbase->Getm_Speed());
+		m_FrontWheelLeftRotation.AddRotationDegX(m_frontwheelbase->GetTireRotation());
 		m_FrontWheelRotation *= m_FrontWheelLeftRotation;
 		m_FrontWheelModel.SetRotation(m_FrontWheelRotation);
 		m_FrontWheelModel.Update();
-	}
 }
 
 void LeftFrontWheel::Render(RenderContext& rc) {

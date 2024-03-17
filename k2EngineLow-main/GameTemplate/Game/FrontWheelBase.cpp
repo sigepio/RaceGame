@@ -21,8 +21,8 @@ bool FrontWheelBase::Start() {
 
 	m_caraformula = FindGO<CarAFormula>("caraformula");
 	
-	g_soundEngine->ResistWaveFileBank(3, "Assets/sound/FD3S_idling_v2.wav");
-	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/FD3S_3000RPM.wav");
+	g_soundEngine->ResistWaveFileBank(3, "Assets/sound/Idling.wav");
+	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/6000RPM.wav");
 
 	UIBace.Init("Assets/sprite/UI/RaceUIBase.DDS", 1600.f, 900.0f);
 
@@ -159,6 +159,18 @@ void FrontWheelBase::Update() {
 	PastVector = m_FrontWheelPosition;
 	//m_characterController.SetPosition({ m_FrontWheelPosition.x ,0.0f,m_FrontWheelPosition.z });
 
+	//if (VelocityVector == 0.0f) {
+	//	engine = NewGO<SoundSource>(0);
+	//	engine->Init(3);
+	//	engine->Play(false);
+	//}
+	//else {
+	//	EngineSound = currentRPM / 6000.0f;
+	//	engine_s = NewGO<SoundSource>(0);
+	//	engine_s->Init(8);
+	//	engine_s->SetFrequencyRatio(EngineSound);
+	//	engine->Play(false);
+	//}
 	wchar_t Velocity[256];
 	swprintf_s(Velocity, 256, L"%.0f\n", VelocityVector*3600.0f*2.5f/1000.0f/100.0f);
 	VelocityFont.SetPosition(-130.0f, -330.0f, 0.0f);
