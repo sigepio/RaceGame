@@ -32,6 +32,8 @@ bool FrontWheelBase::Start() {
 	RPMGage.Update();
 
 	RPMCover.Init("Assets/sprite/UI/RPMGageCover.DDS", 1600.0f, 900.0f);
+	RPMCover.SetPosition(0.0f, -4.8f, 0.0f);
+	RPMCover.Update();
 	ThrottleGage.Init("Assets/sprite/UI/ThrottleGage.DDS", 20.0f, 131.0f);
 	ThrottleGage.SetPosition(283.0f, -389.75f, 0.0f);
 	ThrottleGage.SetPivot(0.5f, 0.0f);
