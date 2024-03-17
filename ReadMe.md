@@ -124,6 +124,9 @@ Bloom.cpp
 
 ## ゲーム内容
 自動車を走らせてタイムアタックするゲーム
+<br>プレイ映像
+<br>https://www.youtube.com/watch?v=4ikzdVohjXQ
+<br>※再生時画質が低くなるため、画質の変更をしてください.
 ## 操作説明
 ![alt text](操作説明-1-1.png)
 ## 技術紹介
