@@ -1,6 +1,7 @@
 #pragma once
 class SoundManage;
 class Menu;
+class TimeTrialMode;
 
 class Title:public IGameObject,Noncopyable
 {

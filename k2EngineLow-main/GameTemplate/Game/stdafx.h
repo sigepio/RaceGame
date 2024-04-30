@@ -42,5 +42,6 @@ struct SimulationResults {
     float CurrentRPM;						//エンジンの回転数 [rpm]
 	float CurrentGear;						//ギア
 	float Acceleration;						//加速度
+	float TurningAngle;						//旋回角度[rad]
 };
 

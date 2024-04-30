@@ -219,6 +219,7 @@ protected:
 	float WindDirectionVector = 0.0f;			//•—‚ÌŒü‚«ƒxƒNƒgƒ‹ [m/s]
 	float VelocityVector = 0.0f;
 	float AccelerationVector = 0.0f;
+	float TurningAngle;
 
 	float acceleration = 0;
 	

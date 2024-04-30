@@ -4,6 +4,7 @@
 #include "LeftFrontWheel.h"
 #include "sound/SoundEngine.h"
 #include "CarAFormula.h"
+#define _USE_MATH_DEFINES
 #include <math.h>
 
 
@@ -75,7 +76,7 @@ void FrontWheelBase::Update() {
 	Vector3 stickL;
 	stickL.x = g_pad[0]->GetLStickXF();
 
-	DegreeOfRotationOfTheHandle = stickL.x * -1.0f * 10.0f;
+	DegreeOfRotationOfTheHandle = stickL.x * vehicle_info.MaximumSteeringAngleOfTires;
 
 	//ŒvŽZŒ‹‰Ê‚ðŽó‚¯Žæ‚é\‘¢‘Ì‚ÌéŒ¾
 	SimulationResults ReturnSimulationResults;
@@ -131,14 +132,13 @@ void FrontWheelBase::Update() {
 
 	if (stickL.x != 0.0f)
 	{
-		//if (WheelRemit.y >= -30.0f && WheelRemit.y <= 30.0f) {
-		m_FrontWheelForward.x = m_FrontWheelForward.x * cos(stickL.x * -0.05) - m_FrontWheelForward.z * sin(stickL.x * -0.05);
-		m_FrontWheelForward.z = m_FrontWheelForward.x * sin(stickL.x * -0.05) + m_FrontWheelForward.z * cos(stickL.x * -0.05);
+		
+		m_FrontWheelForward.x = m_FrontWheelForward.x * cos(stickL.x * -0.025) - m_FrontWheelForward.z * sin(stickL.x * -0.025);
+		m_FrontWheelForward.z = m_FrontWheelForward.x * sin(stickL.x * -0.025) + m_FrontWheelForward.z * cos(stickL.x * -0.025);
 
 		m_FrontWheelRotation.SetRotationY(atan2(m_FrontWheelForward.x, m_FrontWheelForward.z));
-		//}
+		
 	}
-
 	
 	Vector3 m_moveSpeed = g_vec3Zero;
 	//ã‰º‚ÌˆÚ“®‘¬“x‚ð‘Þ”ð‚³‚¹‚é

@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Title.h"
 #include "Menu.h"
+#include "TimeTrialMode.h"
 Title::Title() {
 
 }
@@ -22,7 +23,8 @@ void Title::Update() {
 	m_PressStartSprite.SetMulColor(m_PressStartSpriteColor);
 	
 	if (g_pad[0]->IsTrigger(enButtonA)) {
-		Menu *m_menu = NewGO<Menu>(1, "menu");
+		TimeTrialMode* m_timetrialmode = NewGO<TimeTrialMode>(1, "timetrialmode");
+		//Menu *m_menu = NewGO<Menu>(1, "menu");
 		DeleteGO(this);
 	}
 	m_PressColorTime++;
