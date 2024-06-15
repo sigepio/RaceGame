@@ -6,7 +6,9 @@ public:
 	~CarAFormula();
 	bool Start();
 	void Update();
-
+	void SetGameEnd(bool m_GameEnd) {
+		GameEnd = m_GameEnd;
+	}
 	SimulationResults CarSimulation(
 					VehicleInfo vehicleinfo,				//車両の情報
 					Vector3 Position,						//位置ベクトル[m]
@@ -47,5 +49,7 @@ private:
 
 
 	const float g = 9.8;			// 重力加速度 (m/s^2)
+
+	bool GameEnd = false;
 };
 

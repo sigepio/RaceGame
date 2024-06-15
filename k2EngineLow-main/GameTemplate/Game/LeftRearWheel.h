@@ -24,6 +24,13 @@ public:
 	void SetLeftRearWheelLocalPosition(Vector3 m_leftrearwheellocalposition) {
 		m_LocalPosition = m_leftrearwheellocalposition;
 	}
+
+	void SetPauseState(int PauseState) {
+		m_PauseState = PauseState;
+	}
+	void SetGameEnd(bool m_GameEnd) {
+		GameEnd = m_GameEnd;
+	}
 private:
 	Vector3 m_FrontWheelPosition = Vector3::Zero;
 	Vector3 m_LocalPosition;
@@ -41,5 +48,8 @@ private:
 	ModelRender m_FrontWheelModel;
 
 	int m_NowCar=0;
+	int m_PauseState = 0;
+
+	bool GameEnd = false;
 };
 

@@ -16,12 +16,13 @@ bool Menu::Start() {
 }
 
 void Menu::Update() {
+	m_worldmode = NewGO<WorldMode>(0, "worldmode");
+	DeleteGO(this);
 	switch (SelectNow)
 	{
 	case 0:
 		if (g_pad[0]->IsTrigger(enButtonA)) {
-			m_worldmode = NewGO<WorldMode>(0, "worldmode");
-			DeleteGO(this);
+			
 		}
 		if (g_pad[0]->IsTrigger(enButtonRight)) {
 			SelectNow = 1;

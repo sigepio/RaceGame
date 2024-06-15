@@ -234,6 +234,7 @@
     <ClCompile Include="LeftFrontWheel.cpp" />
     <ClCompile Include="LeftRearWheel.cpp" />
     <ClCompile Include="Lighting.cpp" />
+    <ClCompile Include="Loading.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainRaceManager.cpp" />
     <ClCompile Include="Menu.cpp" />
@@ -254,6 +255,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackGround.h" />
+    <ClInclude Include="BGM.h" />
     <ClInclude Include="CarAFormula.h" />
     <ClInclude Include="CarBase.h" />
     <ClInclude Include="CarData.h" />
@@ -265,9 +267,11 @@
     <ClInclude Include="LeftFrontWheel.h" />
     <ClInclude Include="LeftRearWheel.h" />
     <ClInclude Include="Lighting.h" />
+    <ClInclude Include="Loading.h" />
     <ClInclude Include="MainRaceManager.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="MyGarage.h" />
+    <ClInclude Include="PageNum.h" />
     <ClInclude Include="RaceMenu.h" />
     <ClInclude Include="RightFrontWheel.h" />
     <ClInclude Include="RightRearWheel.h" />
@@ -275,6 +279,7 @@
     <ClInclude Include="system\system.h" />
     <ClInclude Include="Test.h" />
     <ClInclude Include="TimeTrialMode.h" />
+    <ClInclude Include="Tips.h" />
     <ClInclude Include="Title.h" />
     <ClInclude Include="WorldMode.h" />
   </ItemGroup>

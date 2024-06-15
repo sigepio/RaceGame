@@ -23,7 +23,9 @@ bool CarAFormula::Start() {
 }
 
 void CarAFormula::Update() {
-
+    if (GameEnd == true) {
+        DeleteGO(this);
+    }
 }
 
 // トルクカーブ情報を1 RPMごとに線形補完する関数

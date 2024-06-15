@@ -123,7 +123,13 @@ public:
 		vehicle_info = Setvehicle_info;
 	}
 
+	void SetPauseState(int PauseState) {
+		m_PauseState = PauseState;
+	}
 
+	void SetGameEnd(bool m_GameEnd) {
+		GameEnd = m_GameEnd;
+	}
 
 protected:
 	Vector3 m_FrontWheelPosition = Vector3::Zero;
@@ -179,6 +185,7 @@ protected:
 	CarAFormula* m_caraformula;
 
 	bool TurnRightState = false;
+	bool GameEnd = false;
 
 	float m_throttle;
 	float m_brake;
@@ -228,6 +235,8 @@ protected:
 
 	std::vector<std::vector<float>> data;
 	int Gear = 1;									//ÉMÉA
+
+	int m_PauseState = 0;
 
 	VehicleInfo vehicle_info;
 };

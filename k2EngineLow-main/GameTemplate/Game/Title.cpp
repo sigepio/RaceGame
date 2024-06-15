@@ -1,7 +1,9 @@
 #include "stdafx.h"
 #include "Title.h"
+#include "PageNum.h"
 #include "Menu.h"
 #include "TimeTrialMode.h"
+#include "Loading.h"
 Title::Title() {
 
 }
@@ -11,7 +13,11 @@ Title::~Title() {
 bool Title::Start() {
 	m_TitleSprite.Init("Assets/sprite/Title/Title_Logo.DDS", 960.0f, 540.0f);
 	m_PressStartSprite.Init("Assets/sprite/Title/Press_any_button.DDS", 1920.0f, 1080.0f);
+	m_FadeSprite.Init("Assets/Sprite/BlackOut.DDS", 1600.0f, 900.0f);
+	
 	m_PressStartSprite.SetMulColor(m_PressStartSpriteColor);
+	m_FadeSprite.SetMulColor(m_FadeColor);
+
 	return true;
 }
 void Title::Update() {
@@ -23,10 +29,24 @@ void Title::Update() {
 	m_PressStartSprite.SetMulColor(m_PressStartSpriteColor);
 	
 	if (g_pad[0]->IsTrigger(enButtonA)) {
-		TimeTrialMode* m_timetrialmode = NewGO<TimeTrialMode>(1, "timetrialmode");
-		//Menu *m_menu = NewGO<Menu>(1, "menu");
-		DeleteGO(this);
+		//TimeTrialMode* m_timetrialmode = NewGO<TimeTrialMode>(0, "timetrialmode");
+		FadeState = 1;
+		
 	}
+
+	if (FadeState == 1) {
+		if (FadeCount > 5) {
+			m_loading = NewGO<Loading>(10, "loading");
+			m_loading->SetWhereCome(TitlePage);
+			DeleteGO(this);
+		}
+		else {
+			m_FadeColor.w += 0.2f;
+			m_FadeSprite.SetMulColor(m_FadeColor);
+			FadeCount++;
+		}
+	}
+
 	m_PressColorTime++;
 	m_PressStartSprite.Update();
 }

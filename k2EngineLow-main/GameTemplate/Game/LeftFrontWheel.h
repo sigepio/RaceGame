@@ -15,7 +15,9 @@ public:
 	void SetForward(Vector3 forward) {
 		m_FrontWheelForwardCatch = forward;
 	}
-
+	void SetGameEnd(bool m_GameEnd) {
+		GameEnd = m_GameEnd;
+	}
 	//ê›íËånä÷êî
 
 	//é‘óºÉfÅ[É^ÇÃê›íË
@@ -27,6 +29,11 @@ public:
 	void SetLeftFrontWheelLocalPosition(Vector3 m_leftfrontwheellocalposition) {
 		m_LocalPosition = m_leftfrontwheellocalposition;
 	}
+
+	void SetPauseState(int PauseState) {
+		m_PauseState = PauseState;
+	}
+
 private:
 	Vector3 m_FrontWheelPosition = Vector3::Zero;
 	Vector3 m_LocalPosition;
@@ -45,5 +52,8 @@ private:
 	FrontWheelBase* m_frontwheelbase;
 	
 	int m_NowCar = 0;
+	int m_PauseState = 0;
+
+	bool GameEnd = false;
 };
 

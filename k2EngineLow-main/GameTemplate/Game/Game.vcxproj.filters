@@ -32,6 +32,7 @@
     <ClCompile Include="MainRaceManager.cpp" />
     <ClCompile Include="Car_AE86.cpp" />
     <ClCompile Include="Car_Oreca07.cpp" />
+    <ClCompile Include="Loading.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -60,5 +61,9 @@
     <ClInclude Include="Car_AE86.h" />
     <ClInclude Include="CarData.h" />
     <ClInclude Include="Car_Oreca07.h" />
+    <ClInclude Include="Loading.h" />
+    <ClInclude Include="PageNum.h" />
+    <ClInclude Include="Tips.h" />
+    <ClInclude Include="BGM.h" />
   </ItemGroup>
 </Project>

@@ -20,6 +20,10 @@ public:
 	void Set();
 	void Render(RenderContext& rc);
 
+	void SetGameEnd(bool m_GameEnd) {
+		GameEnd = m_GameEnd;
+	}
+
 	std::map<int, float> readLUT(std::string filename);
 
 	//æ“¾ŒnŠÖ”
@@ -85,6 +89,10 @@ public:
 		m_LapState = LapState;
 	}
 
+	void SetPauseState(int PauseState) {
+		m_PauseState = PauseState;
+	}
+
 	//‚»‚Ì‘¼‚ÌŠÖ”
 	float Returnm_throttle() {
 		return m_Throttle;
@@ -119,6 +127,8 @@ protected:
 
 	int m_NowCar = 0;													//¡æ‚Á‚Ä‚¢‚éÔ—¼
 	int m_LapState = 0;												//
+	int m_PauseState = 0;
+	
 
 	float m_Acceleration = 0.0f;
 	float m_Throttle = 0.0f;
@@ -147,5 +157,7 @@ protected:
 	VehicleInfo vehicle_info;
 
 	std::map<int, float> PowerCurve;
+
+	bool GameEnd = false;
 };
 

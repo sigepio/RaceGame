@@ -55,136 +55,142 @@ bool FrontWheelBase::Start() {
 
 void FrontWheelBase::Update() {
 	
-
+	if (GameEnd == true) {
+		DeleteGO(engine);
+		DeleteGO(engine_s);
+		DeleteGO(this);
+	}
 	//いったん凍結
 	//Move();
+	if (m_PauseState == 0) {
+		//アクセルボタンの入力量の取得
+		m_throttle = 0.0f;
 
-	//アクセルボタンの入力量の取得
-	m_throttle = 0.0f;
+		//Rボタン
+		throttle_input = 0.0f;
+		throttle_input = g_pad[0]->GetRTrigger();
+		throttle_input = throttle_input / 255.0f;
 
-	//Rボタン
-	throttle_input = 0.0f;
-	throttle_input = g_pad[0]->GetRTrigger();
-	throttle_input = throttle_input / 255.0f;
-	
 
-	//Lボタン
-	brake_input = g_pad[0]->GetLTrigger();
-	brake_input = brake_input / 255.0f;
+		//Lボタン
+		brake_input = g_pad[0]->GetLTrigger();
+		brake_input = brake_input / 255.0f;
 
-	//ステアリングの切った量の取得
-	Vector3 stickL;
-	stickL.x = g_pad[0]->GetLStickXF();
+		//ステアリングの切った量の取得
+		Vector3 stickL;
+		stickL.x = g_pad[0]->GetLStickXF();
 
-	DegreeOfRotationOfTheHandle = stickL.x * vehicle_info.MaximumSteeringAngleOfTires;
+		DegreeOfRotationOfTheHandle = stickL.x * vehicle_info.MaximumSteeringAngleOfTires;
 
-	//計算結果を受け取る構造体の宣言
-	SimulationResults ReturnSimulationResults;
+		//計算結果を受け取る構造体の宣言
+		SimulationResults ReturnSimulationResults;
 
-	ReturnSimulationResults = m_caraformula->CarSimulation(
-		vehicle_info,
-		m_FrontWheelPosition,
-		VelocityVector,
-		PitchAngle,
-		RollAngle,
-		AccelerationVector,
-		currentRPM,
-		DegreeOfRotationOfTheHandle,
-		Acceleration_DecelerationForce,
-		currentGear,
-		grade,
-		1.225,//標準大気圧での話
-		WindDirectionVector,
-		Temperature,
-		AtmosphericPressure,
-		WaterVaporPressure,
-		RollingResistanceCoefficient,
-		CoefficientOfFriction,
-		throttle_input,
-		brake_input,
-		DegreeOfRotationOfTheHandle,
-		m_FrontWheelForward,
-		FrontWheelOrientationVector
+		ReturnSimulationResults = m_caraformula->CarSimulation(
+			vehicle_info,
+			m_FrontWheelPosition,
+			VelocityVector,
+			PitchAngle,
+			RollAngle,
+			AccelerationVector,
+			currentRPM,
+			DegreeOfRotationOfTheHandle,
+			Acceleration_DecelerationForce,
+			currentGear,
+			grade,
+			1.225,//標準大気圧での話
+			WindDirectionVector,
+			Temperature,
+			AtmosphericPressure,
+			WaterVaporPressure,
+			RollingResistanceCoefficient,
+			CoefficientOfFriction,
+			throttle_input,
+			brake_input,
+			DegreeOfRotationOfTheHandle,
+			m_FrontWheelForward,
+			FrontWheelOrientationVector
 		);
-	
-	m_FrontWheelPosition  = ReturnSimulationResults.Position;
-	VelocityVector = ReturnSimulationResults.VelocityVector;
-	PitchAngle = ReturnSimulationResults.PitchAngle;
-	RollAngle = ReturnSimulationResults.RollAngle;
-	currentRPM = ReturnSimulationResults.CurrentRPM;
-	currentGear = ReturnSimulationResults.CurrentGear;
-	AccelerationVector = ReturnSimulationResults.Acceleration;
 
-	//float Velocity = sqrt(pow(VelocityVector.x, 2.0) + pow(VelocityVector.y, 2.0) + pow(VelocityVector.z, 2.0));
-	RPMGagescale = (currentRPM - 6000.0f) / 2200.0f;
-	if (RPMGagescale <= 0.0f) {
-		RPMGagescale = 0.0f;
+		m_FrontWheelPosition = ReturnSimulationResults.Position;
+		VelocityVector = ReturnSimulationResults.VelocityVector;
+		PitchAngle = ReturnSimulationResults.PitchAngle;
+		RollAngle = ReturnSimulationResults.RollAngle;
+		currentRPM = ReturnSimulationResults.CurrentRPM;
+		currentGear = ReturnSimulationResults.CurrentGear;
+		AccelerationVector = ReturnSimulationResults.Acceleration;
+
+		//float Velocity = sqrt(pow(VelocityVector.x, 2.0) + pow(VelocityVector.y, 2.0) + pow(VelocityVector.z, 2.0));
+		RPMGagescale = (currentRPM - 6000.0f) / 2200.0f;
+		if (RPMGagescale <= 0.0f) {
+			RPMGagescale = 0.0f;
+		}
+		RPMGage.SetScale(RPMGagescale, 1.0f, 0.0f);
+		RPMGage.Update();
+		ThrottleGage.SetScale(1.0f, throttle_input, 0.0f);
+		BrakeGage.SetScale(1.0f, brake_input, 0.0f);
+		ThrottleGage.Update();
+		BrakeGage.Update();
+
+		//プレイヤーの正面ベクトルを正規化
+		m_FrontWheelForward.Normalize();
+		if (VelocityVector != 0.0f) {
+			if (stickL.x != 0.0f)
+			{
+
+				m_FrontWheelForward.x = m_FrontWheelForward.x * cos(stickL.x * -0.025) - m_FrontWheelForward.z * sin(stickL.x * -0.025);
+				m_FrontWheelForward.z = m_FrontWheelForward.x * sin(stickL.x * -0.025) + m_FrontWheelForward.z * cos(stickL.x * -0.025);
+
+				m_FrontWheelRotation.SetRotationY(atan2(m_FrontWheelForward.x, m_FrontWheelForward.z));
+
+			}
+		}
+
+		Vector3 m_moveSpeed = g_vec3Zero;
+		//上下の移動速度を退避させる
+		float y = m_moveSpeed.y;
+		m_moveSpeed = m_FrontWheelForward * VelocityVector;
+		m_moveSpeed.y = y - 980.0f * g_gameTime->GetFrameDeltaTime(); // 重力
+		if (m_characterController.IsOnGround()) {
+			//地面についた。
+			m_moveSpeed.y = 0.0f;
+		}
+		m_FrontWheelPosition = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
+
+		LastDVector = DifferenceVector;
+
+		DifferenceVector = m_FrontWheelPosition - PastVector;
+		if (DifferenceVector.x == 0.0f, DifferenceVector.y == 0.0f, DifferenceVector.z == 0.0f) {
+			DifferenceVector = LastDVector;
+		}
+		DifferenceVector.Normalize();
+		PastVector = m_FrontWheelPosition;
+		//m_characterController.SetPosition({ m_FrontWheelPosition.x ,0.0f,m_FrontWheelPosition.z });
+
+		//if (VelocityVector == 0.0f) {
+		//	engine = NewGO<SoundSource>(0);
+		//	engine->Init(3);
+		//	engine->Play(false);
+		//}
+		//else {
+		//	EngineSound = currentRPM / 6000.0f;
+		//	engine_s = NewGO<SoundSource>(0);
+		//	engine_s->Init(8);
+		//	engine_s->SetFrequencyRatio(EngineSound);
+		//	engine->Play(false);
+		//}
+		wchar_t Velocity[256];
+		swprintf_s(Velocity, 256, L"%.0f\n", VelocityVector * 3600.0f * 2.5f / 1000.0f / 100.0f);
+		VelocityFont.SetPosition(-130.0f, -330.0f, 0.0f);
+		VelocityFont.SetPivot(0.0f, 0.5f);
+
+		wchar_t Gear[256];
+		swprintf_s(Gear, 256, L"%.0f\n", currentGear);
+		GearFont.SetPosition(50.0f, -325.0f, 0.0f);
+		GearFont.SetScale(1.5f);
+
+		VelocityFont.SetText(Velocity);
+		GearFont.SetText(Gear);
 	}
-	RPMGage.SetScale(RPMGagescale, 1.0f, 0.0f);
-	RPMGage.Update();
-	ThrottleGage.SetScale(1.0f, throttle_input, 0.0f);
-	BrakeGage.SetScale(1.0f, brake_input, 0.0f);
-	ThrottleGage.Update();
-	BrakeGage.Update(); 
-
-	//プレイヤーの正面ベクトルを正規化
-	m_FrontWheelForward.Normalize();
-
-	if (stickL.x != 0.0f)
-	{
-		
-		m_FrontWheelForward.x = m_FrontWheelForward.x * cos(stickL.x * -0.025) - m_FrontWheelForward.z * sin(stickL.x * -0.025);
-		m_FrontWheelForward.z = m_FrontWheelForward.x * sin(stickL.x * -0.025) + m_FrontWheelForward.z * cos(stickL.x * -0.025);
-
-		m_FrontWheelRotation.SetRotationY(atan2(m_FrontWheelForward.x, m_FrontWheelForward.z));
-		
-	}
-	
-	Vector3 m_moveSpeed = g_vec3Zero;
-	//上下の移動速度を退避させる
-	float y = m_moveSpeed.y;
-	m_moveSpeed = m_FrontWheelForward * VelocityVector;
-	m_moveSpeed.y = y - 980.0f * g_gameTime->GetFrameDeltaTime(); // 重力
-	if (m_characterController.IsOnGround()) {
-		//地面についた。
-		m_moveSpeed.y = 0.0f;
-	}
-	m_FrontWheelPosition = m_characterController.Execute(m_moveSpeed, g_gameTime->GetFrameDeltaTime());
-	
-	LastDVector = DifferenceVector;
-
-	DifferenceVector = m_FrontWheelPosition - PastVector;
-	if (DifferenceVector.x == 0.0f, DifferenceVector.y == 0.0f, DifferenceVector.z == 0.0f) {
-		DifferenceVector = LastDVector;
-	}
-	DifferenceVector.Normalize();
-	PastVector = m_FrontWheelPosition;
-	//m_characterController.SetPosition({ m_FrontWheelPosition.x ,0.0f,m_FrontWheelPosition.z });
-
-	//if (VelocityVector == 0.0f) {
-	//	engine = NewGO<SoundSource>(0);
-	//	engine->Init(3);
-	//	engine->Play(false);
-	//}
-	//else {
-	//	EngineSound = currentRPM / 6000.0f;
-	//	engine_s = NewGO<SoundSource>(0);
-	//	engine_s->Init(8);
-	//	engine_s->SetFrequencyRatio(EngineSound);
-	//	engine->Play(false);
-	//}
-	wchar_t Velocity[256];
-	swprintf_s(Velocity, 256, L"%.0f\n", VelocityVector*3600.0f*2.5f/1000.0f/100.0f);
-	VelocityFont.SetPosition(-130.0f, -330.0f, 0.0f);
-	VelocityFont.SetPivot(0.0f, 0.5f);
-
-	wchar_t Gear[256];
-	swprintf_s(Gear, 256, L"%.0f\n", currentGear);
-	GearFont.SetPosition(50.0f, -325.0f, 0.0f);
-	GearFont.SetScale(1.5f);
-
-	VelocityFont.SetText(Velocity);
-	GearFont.SetText(Gear);
 }
 
 void FrontWheelBase::Handling() {

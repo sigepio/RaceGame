@@ -33,6 +33,10 @@ bool BackGround::Start()
 }
 void BackGround::Update()
 {
+
+	if (GameEnd == true) {
+		DeleteGO(this);
+	}
 	//モデルの更新処理。
 	m_groundModel->Update();
 }

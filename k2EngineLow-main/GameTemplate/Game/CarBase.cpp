@@ -108,15 +108,30 @@ std::map<int, double> readLUT(std::string filename) {
 }
 
 void CarBase::Update() {
-	m_Throttle = m_frontwheelbase->Getm_Speed();
-	m_PlayerForward = m_frontwheelbase->GetForward();
+	//ƒQ[ƒ€I—¹
+	if (GameEnd == true) {
+		m_frontwheelbase->SetGameEnd(GameEnd);
+		m_rightfrontwheel->SetGameEnd(GameEnd);
+		m_leftfrontwheel->SetGameEnd(GameEnd);
 
-	if (m_LapState == 0 && m_frontwheelbase->GetPosition().x <= -5800.0f) {
-		m_LapState++;
+		m_rightrearwheel->SetGameEnd(GameEnd);
+		m_leftrearwheel->SetGameEnd(GameEnd);
+		DeleteGO(this);
 	}
+	if (m_PauseState == 0) {
+		m_Throttle = m_frontwheelbase->Getm_Speed();
+		m_PlayerForward = m_frontwheelbase->GetForward();
 
-	Move();
-	Set();
+		if (m_LapState == 0 && m_frontwheelbase->GetPosition().x <= -5800.0f) {
+			m_LapState++;
+		}
+
+		Move();
+		Set();
+	}
+	m_frontwheelbase->SetPauseState(m_PauseState);
+	m_leftfrontwheel->SetPauseState(m_PauseState);
+	m_rightfrontwheel->SetPauseState(m_PauseState);
 }
 
 void CarBase::Set() {

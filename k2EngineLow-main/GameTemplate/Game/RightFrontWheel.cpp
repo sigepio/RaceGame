@@ -28,40 +28,45 @@ bool RightFrontWheel::Start() {
 }
 
 void RightFrontWheel::Update() {
-
-	//ローカルポジションを教える
-	Vector3 lp = m_LocalPosition;
-
-
-	//プレイヤーの回転量を教える
-	Quaternion originRotation = m_frontwheelbase->GetRotation();
-
-
-	//プレイヤーのポジションを教える
-	m_FrontWheelPosition = m_frontwheelbase->GetPosition();
+	if (GameEnd == true) {
+		DeleteGO(this);
+	}
+	if (m_PauseState == 0) {
+		//ローカルポジションを教える
+		Vector3 lp = m_LocalPosition;
 
 
-	//乗算
-	originRotation.Multiply(lp);
+		//プレイヤーの回転量を教える
+		Quaternion originRotation = m_frontwheelbase->GetRotation();
 
 
-	//ポジションにローカルポジションを足す
-	m_FrontWheelPosition += lp;
+		//プレイヤーのポジションを教える
+		m_FrontWheelPosition = m_frontwheelbase->GetPosition();
 
 
-	//最終的な回転量を教える
-	m_FrontWheelRotation = originRotation;
+		//乗算
+		originRotation.Multiply(lp);
 
-	
-	m_FrontWheelModel.SetPosition(m_FrontWheelPosition);
-	m_FrontWheelModel.SetRotation(m_FrontWheelRotation);
-	m_FrontWheelModel.Update();
 
-	//Move();
-	Rotation();
+		//ポジションにローカルポジションを足す
+		m_FrontWheelPosition += lp;
+
+
+		//最終的な回転量を教える
+		m_FrontWheelRotation = originRotation;
+
+
+		m_FrontWheelModel.SetPosition(m_FrontWheelPosition);
+		m_FrontWheelModel.SetRotation(m_FrontWheelRotation);
+		m_FrontWheelModel.Update();
+
+		//Move();
+		Rotation();
+	}
 }
 
 void RightFrontWheel::Move() {
+
 	//スティックを倒した量の取得
 	Vector3 stickL;
 	stickL.x = g_pad[0]->GetLStickXF();

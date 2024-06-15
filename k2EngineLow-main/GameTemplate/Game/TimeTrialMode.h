@@ -7,6 +7,7 @@ class BackGround;
 class Car_RB6;
 class Car_Oreca07;
 class CarAFormula;
+class Loading;
 
 
 class TimeTrialMode:public IGameObject,Noncopyable
@@ -21,11 +22,17 @@ public:
 	void SetPosition(Vector3 position) {
 		m_NowPPosition = position;
 	}
+
+	
+
 private:
+	Vector4 m_Pausecolor = { 1.0f,1.0f,1.0f,0.0f };
 
 	Vector3 m_NowPPosition=Vector3::Zero;
 	Vector3 m_TimeUIPosition=Vector3::Zero;
 	Vector3 m_FastestLapsPosition = Vector3::Zero;
+	Vector3 m_Pauseposition = { 0.0f,-50.0f,0.0f };
+
 	Lighting* m_lighting;
 	GameCamera* m_gamecamera;
 	BackGround* m_background;
@@ -34,10 +41,18 @@ private:
 	Car_Oreca07* m_Oreca07;
 	SkyCube* m_skyCube = nullptr;
 	CarAFormula* m_caraformula;
+	Loading* m_Loading;
 
 	ModelRender StartRender;
 	SpriteRender TimeUIRender;
 	SpriteRender FastestLapsRender;
+	SpriteRender PauseSprite;
+	SpriteRender ContinueSpriteNonSelect;
+	SpriteRender ContinueSpriteSelect;
+	SpriteRender ExitSpriteNonSelect;
+	SpriteRender ExitSpriteSelect;
+
+
 	FontRender TimeFont;
 	FontRender FTimeFont;
 
@@ -60,6 +75,11 @@ private:
 	int m_skyCubeType = enSkyCubeType_Day;
 	int LapCount = 0;
 	int m_FirstFrame = 0;
+	int PauseState = 0;
+	int PauseCount = 0;
+	int PauseWindowState = 0;
+
+	bool GameEnd = false;
 
 };
 

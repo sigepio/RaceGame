@@ -24,5 +24,7 @@ bool Lighting::Start() {
 }
 
 void Lighting::Update() {
-
+	if (GameEnd == true) {
+		DeleteGO(this);
+	}
 }

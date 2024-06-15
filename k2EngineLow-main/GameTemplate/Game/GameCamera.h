@@ -25,9 +25,16 @@ public:
 		CarRotation = Rotation;
 	}
 
+	void SetPauseState(int PauseState) {
+		m_PauseState = PauseState;
+	}
 
 	void SetDi(Vector3 v) {
 		DP = v;
+	}
+
+	void SetGameEnd(bool m_GameEnd) {
+		GameEnd = m_GameEnd;
 	}
 
 	/// <summary>
@@ -64,5 +71,8 @@ private:
 	Quaternion CarRotation;
 	float RAngle = 0.0f;
 
+	int m_PauseState = 0;
+
+	bool GameEnd = false;
 };
 
