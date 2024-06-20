@@ -1,5 +1,5 @@
 #pragma once
-
+class Sebring;
 
 class BackGround : public IGameObject, Noncopyable
 {
@@ -14,10 +14,7 @@ public:
         GameEnd = m_GameEnd;
     }
 private:
-
-    std::unique_ptr<ModelRender> m_groundModel;
-    PhysicsStaticObject m_physicsStaticObject;//静的物理オブジェクト。
-
+    Sebring* m_Sebring;
     bool GameEnd = false;
 };
 

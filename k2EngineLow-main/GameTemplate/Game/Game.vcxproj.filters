@@ -33,6 +33,8 @@
     <ClCompile Include="Car_AE86.cpp" />
     <ClCompile Include="Car_Oreca07.cpp" />
     <ClCompile Include="Loading.cpp" />
+    <ClCompile Include="Sound.cpp" />
+    <ClCompile Include="Sebring.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -65,5 +67,7 @@
     <ClInclude Include="PageNum.h" />
     <ClInclude Include="Tips.h" />
     <ClInclude Include="BGM.h" />
+    <ClInclude Include="Sound.h" />
+    <ClInclude Include="Sebring.h" />
   </ItemGroup>
 </Project>

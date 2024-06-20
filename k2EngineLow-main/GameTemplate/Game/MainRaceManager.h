@@ -1,6 +1,9 @@
 #pragma once
+#include "sound/SoundSource.h"
+
 class BackGround;
 class Loading;
+
 
 class MainRaceManager:public IGameObject
 {
@@ -25,6 +28,10 @@ private:
 
 	BackGround* m_background;
 	Loading* m_Loading;
+	SoundSource* BGM;
+	SoundSource* CursorSE;
+	SoundSource* DecisionSE;
+	SoundSource* CancelSE;
 
 	SpriteRender BaseSprite;
 	SpriteRender BackSprite;

@@ -36,6 +36,10 @@ bool RaceMenu::Start() {
 	CourseSelect.Update();
 	CourseSelect_Sebring.Update();
 
+	RaceMenuBGM = NewGO<SoundSource>(0);
+	RaceMenuBGM->Init(1);
+	RaceMenuBGM->Play(true);
+
 	return true;
 }
 
@@ -55,10 +59,17 @@ void RaceMenu::Update() {
 	else
 	{
 		if (g_pad[0]->IsTrigger(enButtonA)) {
+			DecisionSE = NewGO<SoundSource>(0);
+			DecisionSE->Init(101);
+			DecisionSE->Play(false);
 			FadeState = 1;
 			FadeCount = 0;
 		}
 		else if (g_pad[0]->IsTrigger(enButtonB)) {
+			CancelSE = NewGO<SoundSource>(0);
+			CancelSE->Init(102);
+			CancelSE->Play(false);
+
 			FadeState = 2;
 			FadeCount = 0;
 		}
@@ -76,6 +87,7 @@ void RaceMenu::Update() {
 			m_Loading->SetCourse(Sebring);
 			m_Loading->SetWhereCome(RaceMenuPage);
 			m_Loading->SetWhereGo(RaceLobbyPage);
+			DeleteGO(RaceMenuBGM);
 			DeleteGO(this);
 		}
 	}
@@ -91,6 +103,7 @@ void RaceMenu::Update() {
 			m_Loading->SetCourse(Sebring);
 			m_Loading->SetWhereCome(RaceMenuPage);
 			m_Loading->SetWhereGo(WorldMenuPage);
+			DeleteGO(RaceMenuBGM);
 			DeleteGO(this);
 		}
 	}

@@ -1,5 +1,5 @@
 #pragma once
-class SoundManage;
+class Sound;
 class Menu;
 class TimeTrialMode;
 class Loading;
@@ -15,6 +15,7 @@ public:
 	
 private:
 	Loading* m_loading;
+	Sound* m_Sound;
 
 	SpriteRender m_TitleSprite;
 	SpriteRender m_PressStartSprite;

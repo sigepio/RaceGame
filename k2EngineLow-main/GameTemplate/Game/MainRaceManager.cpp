@@ -30,6 +30,11 @@ bool MainRaceManager::Start(){
 
 	ArrowSprite.SetPosition(ArrowPosition);
 	ArrowSprite.Update();
+
+	BGM = NewGO<SoundSource>(0);
+	BGM->Init(2);
+	BGM->Play(true);
+
 	return true;
 }
 
@@ -41,10 +46,16 @@ void MainRaceManager::Update() {
 	else if (FadeCount > 6) {
 		if (SelectPoint == 0) {
 			if (g_pad[0]->IsTrigger(enButtonA)) {
+				DecisionSE = NewGO<SoundSource>(0);
+				DecisionSE->Init(101);
+				DecisionSE->Play(false);
 				FadeState = 1;
 				FadeCount = 0;
 			}
 			if (g_pad[0]->IsTrigger(enButtonRight)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
 				ArrowMove = 1;
 				MoveCount = 0;
 				
@@ -52,10 +63,17 @@ void MainRaceManager::Update() {
 		}
 		else if (SelectPoint == 1) {
 			if (g_pad[0]->IsTrigger(enButtonA)) {
+				CancelSE = NewGO<SoundSource>(0);
+				CancelSE->Init(102);
+				CancelSE->Play(false);
+
 				FadeState = 2;
 				FadeCount = 0;
 			}
 			if (g_pad[0]->IsTrigger(enButtonLeft)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
 				ArrowMove = 2;
 				MoveCount = 0;
 			}
@@ -78,6 +96,7 @@ void MainRaceManager::Update() {
 			m_Loading->SetCourse(CourseInformation);
 			m_Loading->SetWhereCome(RaceLobbyPage);
 			m_Loading->SetWhereGo(PlayPage);
+			DeleteGO(BGM);
 			DeleteGO(this);
 		}
 	}
@@ -93,6 +112,7 @@ void MainRaceManager::Update() {
 			m_Loading->SetCourse(CourseInformation);
 			m_Loading->SetWhereCome(RaceLobbyPage);
 			m_Loading->SetWhereGo(RaceMenuPage);
+			DeleteGO(BGM);
 			DeleteGO(this);
 		}
 	}

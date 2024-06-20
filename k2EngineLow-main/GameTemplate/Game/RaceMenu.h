@@ -24,6 +24,9 @@ private:
     MainRaceManager* m_mainracemanager;
     Loading* m_Loading;
     SoundSource* RaceMenuBGM;
+    SoundSource* CursorSE;
+    SoundSource* DecisionSE;
+    SoundSource* CancelSE;
 
     SpriteRender Main;
     SpriteRender Base;

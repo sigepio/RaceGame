@@ -18,6 +18,8 @@ public:
 
 private:
 	Vector4 m_SelectSpriteColor = { 1.0f,1.0f,1.0f,0.0f };
+	Vector4 m_NonSelectSpriteColor = { 1.0f,1.0f,1.0f,0.0f };
+
 	Vector4 m_WindowSpriteColor = { 1.0f,1.0f,1.0f,0.0f };
 
 	Vector3 m_WindowSpritePosition = { 0.0f,-50.0f,0.0f };
@@ -33,8 +35,8 @@ private:
 	SpriteRender MaintenanceSelectSprite;	//メンテナンスセレクト中
 	SpriteRender LicenseSprite;				//ライセンス
 	SpriteRender LicenseSelectSprite;		//ライセンスセレクト中
-	SpriteRender WprldRaceSprite;			//レース
-	SpriteRender WprldRaceSelectSprite;		//レースセレクト中
+	SpriteRender WorldRaceSprite;			//レース
+	SpriteRender WorldRaceSelectSprite;		//レースセレクト中
 	SpriteRender OptionSprite;				//設定
 	SpriteRender OptionSelectSprite;		//設定セレクト中
 	SpriteRender SelectArrowSprite;			//矢印
@@ -47,6 +49,8 @@ private:
 
 	Loading* m_loading;
 	SoundSource* BGM;
+	SoundSource* CursorSE;
+	SoundSource* DecisionSE;
 						
 
 	Vector3 SelectArrowPosition = Vector3::Zero;
