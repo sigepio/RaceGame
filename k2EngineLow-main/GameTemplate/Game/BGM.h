@@ -7,7 +7,13 @@ const std::map<int, const char*> BGMList = {
 	{0, "Assets/sound/BGM/WorldMenuBGM.wav"},           //WorldMenuBGM
 	{1, "Assets/sound/BGM/RaceMenuBGM.wav"},            //RaceMenuBGM
 	{2, "Assets/sound/BGM/RaceLobbyBGM.wav"},           //RaceLobbyBGM
-	{3, "Assets/sound/BGM/BGM1.wav"}
+	{3, "Assets/sound/BGM/RaceBGM1.wav"},
+    {4, "Assets/sound/BGM/RaceBGM2.wav"},
+    {5, "Assets/sound/BGM/RaceBGM3.wav"},
+    {6, "Assets/sound/BGM/GoldBGM.wav"},
+    {7, "Assets/sound/BGM/SilverBGM.wav"},
+    {8, "Assets/sound/BGM/BronzeBGM.wav"},
+    {9, "Assets/sound/BGM/DisqualificationBGM.wav"}
 };
 
 
@@ -22,7 +28,14 @@ std::pair<int, const char*> getBGMFromList(const std::map<int, const char*>& BGM
 enum BGM {
     WorldMenuBGM,
     RaceMenuBGM,
-    RaceLobbyBGM
+    RaceLobbyBGM,
+    RaceBGM1,
+    RaceBGM2,
+    RaceBGM3,
+    GoldBGM,
+    SilverBGM,
+    BronzeBGM,
+    DisqualificationBGM
 };
 
 
@@ -30,8 +43,11 @@ enum BGM {
 const std::map<int, const char*> SEList = {
     {0, "Assets/sound/SE/Cursor.wav"},           //CursorSE
     {1, "Assets/sound/SE/DecisionSE.wav"},       //RaceMenuBGM
-    {2, "Assets/sound/SE/CancelSE.wav"},         //CancelSE
-    {3, "Assets/sound/BGM/BGM1.wav"}
+    {2, "Assets/sound/SE/CancelSE.wav"},        //CancelSE
+    {3, "Assets/sound/SE/CountSignal.wav"},     //CountSignalSE
+    {4, "Assets/sound/SE/StartSignal.wav"},     //StartSignalSE
+    {5, "Assets/sound/SE/ErrorSE.wav"},          //ErrorSE
+    {6, "Assets/sound/SE/ControlLineSE.wav"}
 };
 
 
@@ -46,6 +62,10 @@ std::pair<int, const char*> getSEFromList(const std::map<int, const char*>& SELi
 enum SE {
     CursorSE,
     DecisionSE,
-    CancelSE
+    CancelSE,
+    CountSignalSE,
+    StartSignalSE,
+    ErrorSE,
+    ControlLineSE
 };
 #endif // BGM_H_INCLUDED

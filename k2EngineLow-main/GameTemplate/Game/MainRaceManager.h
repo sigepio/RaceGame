@@ -3,6 +3,8 @@
 
 class BackGround;
 class Loading;
+class GameCamera;
+class Lighting;
 
 
 class MainRaceManager:public IGameObject
@@ -32,6 +34,9 @@ private:
 	SoundSource* CursorSE;
 	SoundSource* DecisionSE;
 	SoundSource* CancelSE;
+	GameCamera* m_gamecamera;
+	Lighting* m_lighting;
+	SkyCube* m_skyCube = nullptr;
 
 	SpriteRender BaseSprite;
 	SpriteRender BackSprite;
@@ -44,7 +49,7 @@ private:
 
 	int FadeCount = 0;
 	int MoveCount = 0;
-
+	int m_skyCubeType = enSkyCubeType_Day;
 	int FadeState = 0;
 	int ArrowMove = 0;
 	

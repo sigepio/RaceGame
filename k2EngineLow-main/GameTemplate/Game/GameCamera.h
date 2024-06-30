@@ -37,6 +37,14 @@ public:
 		GameEnd = m_GameEnd;
 	}
 
+	void SetPlayFlag(bool m_PlayFlag) {
+		PlayFlag = m_PlayFlag;
+	}
+
+	void SetMainRaceManagerFlag(bool m_MainRaceManagerFlag) {
+		MainRaceManagerFlag = m_MainRaceManagerFlag;
+	}
+
 	/// <summary>
 	/// カメラのポジションを返す
 	/// </summary>
@@ -67,12 +75,17 @@ private:
 	Vector3 m_target = Vector3::Zero;
 	Vector3 DP = g_vec3Zero;
 	Vector3 LastDP = { 0.0f,0.0f,1.0f };
+	Vector3 m_cameraPosition= { -150.0f,10.0f,.0f };
 
 	Quaternion CarRotation;
 	float RAngle = 0.0f;
 
 	int m_PauseState = 0;
+	int PlayReset = 0;
+	int LobbyCount = 0;
+	bool MainRaceManagerFlag = false;
 
+	bool PlayFlag = false;
 	bool GameEnd = false;
 };
 

@@ -5,6 +5,7 @@
 #include "TimeTrialMode.h"
 #include "Loading.h"
 #include "Sound.h"
+#include "PlayerDate.h"
 Title::Title() {
 
 }
@@ -13,6 +14,7 @@ Title::~Title() {
 }
 bool Title::Start() {
 	m_Sound = NewGO<Sound>(0,"sound");
+	PlayerDate* m_PlayerDate = NewGO<PlayerDate>(0, "playerdata");
 
 	m_TitleSprite.Init("Assets/sprite/Title/Title_Logo.DDS", 960.0f, 540.0f);
 	m_PressStartSprite.Init("Assets/sprite/Title/Press_any_button.DDS", 1920.0f, 1080.0f);

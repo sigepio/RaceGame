@@ -3,6 +3,8 @@ class Menu;
 class RaceMenu;
 class MainRaceManager;
 class TimeTrialMode;
+class GameCamera;
+class Garage;
 
 class Loading:public IGameObject
 {
@@ -21,6 +23,7 @@ public:
 	void HandleRaceLobbyPageTransition();
 	void HandleFadeOutTransition();
 	void HandlePlayPageTransition();
+	void HandleGaragePageTransition();
 
 	void SetWhereCome(int m_WhereCome) {
 		WhereCome = m_WhereCome;
@@ -53,6 +56,8 @@ private:
 	RaceMenu* m_racemenu;
 	MainRaceManager* m_MainRaceManager;
 	TimeTrialMode* m_TimeTrialMode;
+	GameCamera* m_gamecamera;
+	Garage* m_Garage;
 
 	int WhereCome = 0;			//0:タイトル
 	int WhereGo = 0;			//0:タイトル

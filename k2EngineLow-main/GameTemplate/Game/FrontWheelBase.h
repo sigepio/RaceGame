@@ -132,7 +132,7 @@ public:
 	}
 
 protected:
-	Vector3 m_FrontWheelPosition = Vector3::Zero;
+	Vector3 m_FrontWheelPosition = {0.0f,-66.980f,0.0f};
 	Vector3 m_LocalPosition;
 	Vector3 m_FrontWheelForward = { 0.0f,0.0f,1.0f };
 	Vector3 m_FrontWheelForwardCatch = { 0.0f,0.0f,1.0f };
@@ -148,6 +148,8 @@ protected:
 	Vector3 PastVector = Vector3::Zero;
 	Vector3 DifferenceVector = { 0.0f,0.0f,1.0f };
 	Vector3 LastDVector = Vector3::Zero;
+
+	Vector4 RPMGageColor = { 1.0f,1.0f,1.0f,1.0f };
 
 	Quaternion OriginRotation;
 	Quaternion m_FrontWheelRotation;
@@ -170,6 +172,8 @@ protected:
 	SpriteRender RPMCover;
 	SpriteRender ThrottleGage;
 	SpriteRender BrakeGage;
+
+	SpriteRender LapUI;
 
 
 	FontRender RPMFont;
@@ -230,13 +234,14 @@ protected:
 
 	float acceleration = 0;
 	
-	float EngineSound = 0.0f;
+	float EngineSound = 1.0f;
 	float IdolingRPM;
 
 	std::vector<std::vector<float>> data;
 	int Gear = 1;									//ÉMÉA
 
 	int m_PauseState = 0;
+	int EngineSoundStopCount = 0;
 
 	VehicleInfo vehicle_info;
 };

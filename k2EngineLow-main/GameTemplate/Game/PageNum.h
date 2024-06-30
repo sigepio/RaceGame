@@ -19,3 +19,8 @@ enum CourseNum {
 enum CarNum {
 	ORECA07
 };
+
+enum GameMode {
+	TimeTrial,
+	CircuitExperience
+};

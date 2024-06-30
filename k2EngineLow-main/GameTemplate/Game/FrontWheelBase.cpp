@@ -6,6 +6,10 @@
 #include "CarAFormula.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include <algorithm>
+#include <functional>
+#include <iostream>
+
 
 
 FrontWheelBase::FrontWheelBase() {
@@ -18,14 +22,16 @@ FrontWheelBase::~FrontWheelBase() {
 
 bool FrontWheelBase::Start() {
 	
-	currentRPM = IdolingRPM;
+	
+	currentRPM = vehicle_info.IdlingRPM;
 
 	m_caraformula = FindGO<CarAFormula>("caraformula");
 	
-	g_soundEngine->ResistWaveFileBank(3, "Assets/sound/Idling.wav");
-	g_soundEngine->ResistWaveFileBank(8, "Assets/sound/6000RPM.wav");
+	g_soundEngine->ResistWaveFileBank(200, "Assets/sound/5000RPM.wav");
+	//g_soundEngine->ResistWaveFileBank(1001, "Assets/sound/6000RPM.wav");
 
 	UIBace.Init("Assets/sprite/UI/RaceUIBase.DDS", 1600.f, 900.0f);
+	LapUI.Init("Assets/sprite/UI/LapUI.DDS", 1600.f, 900.0f);
 
 	RPMGage.Init("Assets/sprite/UI/RPMGage.DDS", 446.0f, 13.0f);
 	RPMGage.SetPosition(-222.11538461538453f, -261.0f, 0.0f);
@@ -47,13 +53,34 @@ bool FrontWheelBase::Start() {
 
 	engine = NewGO<SoundSource>(0);
 	engine_s = NewGO<SoundSource>(0);
-	engine_s->Init(8);
+	engine_s->Init(200);
 	engine_s->Play(true);
-	engine_s->SetVolume(0);
+	engine_s->SetVolume(0.75f);
+	EngineSoundStopCount++;
 	return true;
 }
 
+float calculateScaledValue(float currentRPM, float IdolingRPM, float maxRPM, float min_val = 0.1, float max_val = 2.0) {
+	// 比率を計算
+	float ratio = currentRPM / IdolingRPM;
+
+	// 1:1の比率の時の値を0.1に設定
+	// 最大比率の時（MaxRPM / アイドリングの回転数）の値を2.0に設定
+	float min_ratio = 1.0;  // 1:1の比率
+	float max_ratio = maxRPM / IdolingRPM;
+
+	// 線形補間を使用して値を計算
+	float scaled_value = min_val + (ratio - min_ratio) * (max_val - min_val) / (max_ratio - min_ratio);
+
+	// 最小値と最大値の間にクランプする
+	scaled_value = (std::max)((std::min)(scaled_value, max_val), min_val);
+
+	return scaled_value;
+}
+
 void FrontWheelBase::Update() {
+	//計算結果を受け取る構造体の宣言
+	SimulationResults ReturnSimulationResults;
 	
 	if (GameEnd == true) {
 		DeleteGO(engine);
@@ -63,6 +90,7 @@ void FrontWheelBase::Update() {
 	//いったん凍結
 	//Move();
 	if (m_PauseState == 0) {
+		engine_s->SetVolume(1.0f);
 		//アクセルボタンの入力量の取得
 		m_throttle = 0.0f;
 
@@ -82,8 +110,7 @@ void FrontWheelBase::Update() {
 
 		DegreeOfRotationOfTheHandle = stickL.x * vehicle_info.MaximumSteeringAngleOfTires;
 
-		//計算結果を受け取る構造体の宣言
-		SimulationResults ReturnSimulationResults;
+		
 
 		ReturnSimulationResults = m_caraformula->CarSimulation(
 			vehicle_info,
@@ -120,10 +147,23 @@ void FrontWheelBase::Update() {
 		AccelerationVector = ReturnSimulationResults.Acceleration;
 
 		//float Velocity = sqrt(pow(VelocityVector.x, 2.0) + pow(VelocityVector.y, 2.0) + pow(VelocityVector.z, 2.0));
-		RPMGagescale = (currentRPM - 6000.0f) / 2200.0f;
+		RPMGagescale = (currentRPM - (vehicle_info.MaxRPM - 2000.0f)) / (vehicle_info.MaxRPM - (vehicle_info.MaxRPM - 2000.0f));
+		//RPMGagescale = (currentRPM - 6000.0f) / 2200.0f;
 		if (RPMGagescale <= 0.0f) {
 			RPMGagescale = 0.0f;
 		}
+
+		//エンジン音のピッチ調整
+		engine_s->SetFrequencyRatio(calculateScaledValue(currentRPM, vehicle_info.IdlingRPM, vehicle_info.MaxRPM));
+		
+		RPMGageColor.y = -2 * RPMGagescale + 2;
+		RPMGageColor.z = -2 * RPMGagescale + 2;
+		if (RPMGageColor.y < 0.0f) {
+			RPMGageColor.y = 1.0f;
+			RPMGageColor.z = 1.0f;
+		}
+		
+		RPMGage.SetMulColor(RPMGageColor);
 		RPMGage.SetScale(RPMGagescale, 1.0f, 0.0f);
 		RPMGage.Update();
 		ThrottleGage.SetScale(1.0f, throttle_input, 0.0f);
@@ -190,6 +230,9 @@ void FrontWheelBase::Update() {
 
 		VelocityFont.SetText(Velocity);
 		GearFont.SetText(Gear);
+	}
+	if(m_PauseState == 1|| m_PauseState==3){
+		engine_s->SetVolume(0.0f);
 	}
 }
 
@@ -361,11 +404,14 @@ Vector4 FrontWheelBase::Acceleration() {
 }
 
 void FrontWheelBase::Render(RenderContext& rc) {
-	VelocityFont.Draw(rc);
-	GearFont.Draw(rc);
-	UIBace.Draw(rc);
-	RPMGage.Draw(rc);
-	RPMCover.Draw(rc);
-	ThrottleGage.Draw(rc);
-	BrakeGage.Draw(rc);
+	if (m_PauseState != 3) {
+		VelocityFont.Draw(rc);
+		GearFont.Draw(rc);
+		UIBace.Draw(rc);
+		RPMGage.Draw(rc);
+		RPMCover.Draw(rc);
+		ThrottleGage.Draw(rc);
+		BrakeGage.Draw(rc);
+		LapUI.Draw(rc);
+	}
 }

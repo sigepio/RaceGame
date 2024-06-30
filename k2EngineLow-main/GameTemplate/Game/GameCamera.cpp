@@ -16,11 +16,10 @@ GameCamera::~GameCamera()
 bool GameCamera::Start()
 {
 
-	//視点を設定。
-	m_toCameraPos.Set(0.0f, 50.0f, -200.0f);
+	
 	//m_toCameraPos.Set(0.0f, 0.0f, -5.0f);
-	//プレイヤーのインスタンスを探す。
-	m_carbase = FindGO<Car_Oreca07>("car_oreca07");
+	
+	
 
 	//カメラのニアクリップとファークリップを設定する。
 	g_camera3D->SetNear(1.0f);
@@ -33,55 +32,90 @@ void GameCamera::Update() {
 	if (GameEnd == true) {
 		DeleteGO(this);
 	}
-	if (m_PauseState == 0) {
-		//カメラを更新。
-		//注視点を計算する。
-		//m_target = m_carbase->GetPosition();
-		//プレイヤの足元からちょっと上を注視点とする。
-		m_target.y += 50.0f;
-
-		if (m_carbase->Returnm_throttle() != 0.0f) {
-			Vector3 toCameraPosOld = m_toCameraPos;
-			//パッドの入力を使ってカメラを回す。
-			float x = g_pad[0]->GetLStickXF();
-			float y = g_pad[0]->GetRStickYF();
-			//Y軸周りの回転
-			/*Quaternion qRot;
-			qRot.SetRotationDeg(Vector3::AxisY, RAngle);
-			qRot.Apply(m_toCameraPos);*/
-			//X軸周りの回転。
-			/*Vector3 axisX;
-			axisX.Cross(Vector3::AxisY, m_toCameraPos);
-			axisX.Normalize();
-			qRot.SetRotationDeg(axisX, 1.3f * y);
-			qRot.Apply(m_toCameraPos);*/
-			//カメラの回転の上限をチェックする。
-			//注視点から視点までのベクトルを正規化する。
-			//正規化すると、ベクトルの大きさが１になる。
-			//大きさが１になるということは、ベクトルから強さがなくなり、方向のみの情報となるということ。
-			Vector3 toPosDir = m_toCameraPos;
-			toPosDir.Normalize();
-			if (toPosDir.y < -0.2f) {
-				//カメラが上向きすぎ。
-				m_toCameraPos = toCameraPosOld;
+	if (PlayFlag == false) {
+		//ロビー時
+		if (MainRaceManagerFlag == true) {
+			if (LobbyCount <= 1800) {
+				m_target = { 0.0f,0.0f,10000.0f };
+				g_camera3D->SetTarget(m_target);
+				m_cameraPosition.z += 10.0f;
+				g_camera3D->SetPosition(m_cameraPosition);
+				LobbyCount++;
 			}
-			else if (toPosDir.y > 0.9f) {
-				//カメラが下向きすぎ。
-				m_toCameraPos = toCameraPosOld;
+			else {
+				Vector3 m_target = Vector3::Zero;
+				LobbyCount = 0;
+				m_cameraPosition = { -150.0f,10.0f,0.0f };
 			}
 		}
-		//視点を計算する。
-		/*Quaternion m_CameraRot;
-		float Angle = (std::acos(m_toCameraPos.Dot(m_carbase->GetForward()) / (m_toCameraPos.Length() * m_carbase->GetForward().Length()))) * 180.0 / M_PI;
-		m_CameraRot.SetRotationDegY(Angle);
-		m_CameraRot.Apply(m_toCameraPos);*/
 
-		Vector3 pos = m_target + (DP * -1.0f);
-		//メインカメラに注視点と視点を設定する。
-		g_camera3D->SetTarget(m_target);
-		g_camera3D->SetPosition(pos);
-
-		//カメラの更新。
-		g_camera3D->Update();
+		//ガレージ時
+		else {
+			m_target = { 0.0f,0.0f,50.0f};
+			g_camera3D->SetTarget(m_target);
+			m_cameraPosition = { -150.0f,30.0f,0.0f };
+			g_camera3D->SetPosition(m_cameraPosition);
+		}
 	}
+	else {
+		if (PlayReset == 0) {
+			//視点を設定。
+			m_toCameraPos.Set(0.0f, 50.0f, -200.0f);
+			//プレイヤーのインスタンスを探す。
+			m_carbase = FindGO<Car_Oreca07>("car_oreca07");
+		}
+		PlayReset++;
+		if (m_PauseState == 0) {
+			//カメラを更新。
+			//注視点を計算する。
+			//m_target = m_carbase->GetPosition();
+			//プレイヤの足元からちょっと上を注視点とする。
+			m_target.y += 50.0f;
+
+			if (m_carbase->Returnm_throttle() != 0.0f) {
+				Vector3 toCameraPosOld = m_toCameraPos;
+				//パッドの入力を使ってカメラを回す。
+				float x = g_pad[0]->GetLStickXF();
+				float y = g_pad[0]->GetRStickYF();
+				//Y軸周りの回転
+				/*Quaternion qRot;
+				qRot.SetRotationDeg(Vector3::AxisY, RAngle);
+				qRot.Apply(m_toCameraPos);*/
+				//X軸周りの回転。
+				/*Vector3 axisX;
+				axisX.Cross(Vector3::AxisY, m_toCameraPos);
+				axisX.Normalize();
+				qRot.SetRotationDeg(axisX, 1.3f * y);
+				qRot.Apply(m_toCameraPos);*/
+				//カメラの回転の上限をチェックする。
+				//注視点から視点までのベクトルを正規化する。
+				//正規化すると、ベクトルの大きさが１になる。
+				//大きさが１になるということは、ベクトルから強さがなくなり、方向のみの情報となるということ。
+				Vector3 toPosDir = m_toCameraPos;
+				toPosDir.Normalize();
+				if (toPosDir.y < -0.2f) {
+					//カメラが上向きすぎ。
+					m_toCameraPos = toCameraPosOld;
+				}
+				else if (toPosDir.y > 0.9f) {
+					//カメラが下向きすぎ。
+					m_toCameraPos = toCameraPosOld;
+				}
+			}
+			//視点を計算する。
+			/*Quaternion m_CameraRot;
+			float Angle = (std::acos(m_toCameraPos.Dot(m_carbase->GetForward()) / (m_toCameraPos.Length() * m_carbase->GetForward().Length()))) * 180.0 / M_PI;
+			m_CameraRot.SetRotationDegY(Angle);
+			m_CameraRot.Apply(m_toCameraPos);*/
+
+			Vector3 pos = m_target + (DP * -1.0f);
+			//メインカメラに注視点と視点を設定する。
+			g_camera3D->SetTarget(m_target);
+			g_camera3D->SetPosition(pos);
+
+			//カメラの更新。
+			g_camera3D->Update();
+		}
+	}
+	
 }

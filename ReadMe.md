@@ -8,6 +8,7 @@
 5. [操作説明](#操作説明)
 6. [技術紹介](#技術紹介)
     * [エンジンについて](#エンジンについて)
+    * [音について](#音について)
 7. [現在の開発状況](#現在の開発状況)
 8. [今後実装していきたいもの](#今後実装していきたいもの)
 9. [引用元](#引用元)
@@ -53,6 +54,7 @@ GItHub
 ## 作成したソースコード
 BackGround.cpp
 <br>BackGround.h
+<br>BGM.h
 <br>Car_AE86.cpp
 <br>Car_AE86.h
 <br>Car_Oreca07.cpp
@@ -68,16 +70,23 @@ BackGround.cpp
 <br>FrontWheelBase.h
 <br>GameCamera.cpp
 <br>GameCamera.h
+<br>Garage.cpp
+<br>Garage.h
 <br>LeftFrontWheel.cpp
 <br>LeftFrontWheel.h
 <br>LeftRearWheel.cpp
 <br>LeftRearWheel.h
 <br>Lighting.cpp
 <br>Lighting.h
+<br>Loading.cpp
+<br>Loading.h
 <br>MainRaceManager.cpp
 <br>MainRaceManager.h
 <br>Menu.cpp
 <br>Menu.h
+<br>PageNum.h
+<br>PlayerDate.cpp
+<br>PlayerDate.h
 <br>MyGarage.cpp
 <br>MyGarage.h
 <br>RaceMenu.cpp
@@ -86,10 +95,15 @@ BackGround.cpp
 <br>RightFrontWheel.h
 <br>RightRearWheel.cpp
 <br>RightRearWheel.h
+<br>Sebring.cpp
+<br>Sebring.h
+<br>Sound.cpp
+<br>Sound.h
 <br>Test.cpp
 <br>Test.h
 <br>TimeTrialMode.cpp
 <br>TimeTrialMode.h
+<br>Tips.h
 <br>Title.cpp
 <br>Title.h
 <br>WorldMode.cpp
@@ -126,7 +140,7 @@ Bloom.cpp
 ## ゲーム内容
 自動車を走らせてタイムアタックするゲーム
 <br>プレイ映像
-<br>https://youtu.be/mHFXGXMGR5E
+<br>https://youtu.be/Cs0SdHBkwUM
 <br>※再生時画質が低くなるため、画質の変更をしてください.
 ## 操作説明
 ![alt text](操作説明-1-1.png)
@@ -335,6 +349,39 @@ $$TireRadius:タイヤ半径$$
 $$GearRatio:ギア比$$ 
 
 $$DifferentialRatio:デファレンシャル比$$ 
+
+### 音について
+今回エンジン音は、以下のような実装を行っている。
+
+#### 1.音源ファイルの準備
+一定の回転数でループさせたエンジン音を用意する。
+
+#### 2.音源のピッチをプログラムで変更
+エンジン音のピッチをアイドリング時に-1.9倍にして、最高回転数時に2.0倍になるように調整する。
+```C++
+float calculateScaledValue(float currentRPM, float IdolingRPM, float maxRPM, float min_val = 0.1, float max_val = 2.0) {
+	// 比率を計算
+	float ratio = currentRPM / IdolingRPM;
+
+	// 1:1の比率の時の値を0.1に設定
+	// 最大比率の時（MaxRPM / アイドリングの回転数）の値を2.0に設定
+	float min_ratio = 1.0;  // 1:1の比率
+	float max_ratio = maxRPM / IdolingRPM;
+
+	// 線形補間を使用して値を計算
+	float scaled_value = min_val + (ratio - min_ratio) * (max_val - min_val) / (max_ratio - min_ratio);
+
+	// 最小値と最大値の間にクランプする
+	scaled_value = (std::max)((std::min)(scaled_value, max_val), min_val);
+
+	return scaled_value;
+}
+
+void FrontWheelBase::Update() {
+    //エンジン音のピッチ調整
+    engine_s->SetFrequencyRatio(calculateScaledValue(currentRPM, vehicle_info.IdlingRPM, vehicle_info.MaxRPM));
+}
+```
 
 ## 現在の開発状況
 ### 車両運動モデルの実装

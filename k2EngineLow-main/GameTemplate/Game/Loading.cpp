@@ -3,9 +3,11 @@
 #include "Loading.h"
 #include "Menu.h"
 #include "RaceMenu.h"
+#include "Garage.h"
 #include "MainRaceManager.h"
 #include "TimeTrialMode.h"
 #include "Tips.h"
+#include "GameCamera.h"
 #include <math.h>
 #include <map>
 #include <random>
@@ -152,6 +154,9 @@ void Loading::HandleSceneTransition() {
     case WorldMenuPage:
         HandleWorldMenuPageTransition();
         break;
+    case GaragePage:
+        HandleGaragePageTransition();
+        break;
     case RaceMenuPage:
         HandleRaceMenuPageTransition();
         break;
@@ -180,10 +185,25 @@ void Loading::HandleWorldMenuPageTransition() {
     if (WhereGo == RaceMenuPage) {
         if (FadeCount == 0) 
             m_racemenu = NewGO<RaceMenu>(0, "racemenu");
-            HandleFadeOutTransition();
+           HandleFadeOutTransition();
+    }
+    else if (WhereGo == GaragePage) {
+        if (FadeCount == 0)
+            m_Garage = NewGO<Garage>(0, "garage");
+        HandleFadeOutTransition();
     }
 }
 
+
+//ガレージから
+void Loading::HandleGaragePageTransition() {
+    //ワールドメニューへ戻る
+    if (WhereGo == WorldMenuPage) {
+        if (FadeCount == 0)
+            m_menu = NewGO<Menu>(1, "menu");
+        HandleFadeOutTransition();
+    }
+}
 
 //レースメニューから
 void Loading::HandleRaceMenuPageTransition() {
@@ -204,12 +224,18 @@ void Loading::HandleRaceMenuPageTransition() {
     } 
 }
 
+
+
 //レースロビーから
 void Loading::HandleRaceLobbyPageTransition() {
     //インゲームへ
     if (WhereGo == PlayPage) {
-        if (FadeCount == 0) 
+        if (FadeCount == 0) {
+            m_gamecamera = FindGO<GameCamera>("gamecamera");
             m_TimeTrialMode = NewGO<TimeTrialMode>(0, "timetrialmode");
+            m_TimeTrialMode->SetGameMode(CircuitExperience);
+            m_gamecamera->SetPlayFlag(true);
+        }
         HandleFadeOutTransition();
     }
     //レースメニューへ戻る
@@ -228,6 +254,14 @@ void Loading::HandlePlayPageTransition() {
             m_MainRaceManager = NewGO<MainRaceManager>(0, "mainracemanager");
             m_MainRaceManager->SetCourseNum(CourseState);
             m_MainRaceManager->SetCarInformation(CarState);
+        }
+        HandleFadeOutTransition();
+    }
+    if (WhereGo == PlayPage) {
+        if (FadeCount == 0) {
+            m_gamecamera = FindGO<GameCamera>("gamecamera");
+            m_TimeTrialMode = NewGO<TimeTrialMode>(0, "timetrialmode");
+            m_gamecamera->SetPlayFlag(true);
         }
         HandleFadeOutTransition();
     }

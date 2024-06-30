@@ -1,7 +1,6 @@
 #include "stdafx.h"
 #include "RightRearWheel.h"
 #include "FrontWheelBase.h"
-#include "CarData.h"
 
 RightRearWheel::RightRearWheel() {
 
@@ -13,14 +12,6 @@ RightRearWheel::~RightRearWheel() {
 
 bool RightRearWheel::Start() {
 	m_frontwheelbase = FindGO<FrontWheelBase>("frontwheelbase");
-	switch (m_NowCar)
-	{
-	case AE86:
-		m_FrontWheelModel.Init("Assets/modelData/Car/AE86_Right.tkm");
-		break;
-	default:
-		break;
-	}
 
 	return true;
 }

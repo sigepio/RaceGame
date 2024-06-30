@@ -67,22 +67,25 @@ void WorldMode::Update() {
 		CarDealerSelectSprite.SetMulColor(m_NonSelectSpriteColor);
 		TuningSelectSprite.SetMulColor(m_NonSelectSpriteColor);
 		MaintenanceSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		if (ErrorWindowFlag == 0) {
+			if (g_pad[0]->IsTrigger(enButtonA)) {
 
-		if (g_pad[0]->IsTrigger(enButtonA)) {
-			if (SelectFlag[SelectState] == 0 && ErrorWindowFlag == 0) {
-
+				ErrorSE = NewGO<SoundSource>(0);
+				ErrorSE->Init(105);
+				ErrorSE->Play(false);
+				WindowCount = 0;
 				ErrorWindowFlag = 1;
 			}
-		}
-		if (g_pad[0]->IsTrigger(enButtonRight)) {
-			CursorSE = NewGO<SoundSource>(0);
-			CursorSE->Init(100);
-			CursorSE->Play(false);
+			if (g_pad[0]->IsTrigger(enButtonRight)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
 
-			m_SelectSpriteColor.w = 1.0f;
-			SelectDirection = 1;
-			Count = 0;
-			SelectState = 1;
+				m_SelectSpriteColor.w = 1.0f;
+				SelectDirection = 1;
+				Count = 0;
+				SelectState = 1;
+			}
 		}
 		break;
 	case 1:
@@ -127,6 +130,16 @@ void WorldMode::Update() {
 			Count = 0;
 			SelectState = 0;
 		}
+		if (g_pad[0]->IsTrigger(enButtonDown)) {
+			CursorSE = NewGO<SoundSource>(0);
+			CursorSE->Init(100);
+			CursorSE->Play(false);
+
+			m_SelectSpriteColor.w = 1.0f;
+			SelectDirection = 1;
+			Count = 0;
+			SelectState = 3;
+		}
 		break;
 	case 2:
 		LicenseSelectSprite.SetMulColor(m_SelectSpriteColor);
@@ -135,31 +148,184 @@ void WorldMode::Update() {
 		CarDealerSelectSprite.SetMulColor(m_NonSelectSpriteColor);
 		TuningSelectSprite.SetMulColor(m_NonSelectSpriteColor);
 		MaintenanceSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		if (ErrorWindowFlag == 0) {
+			if (g_pad[0]->IsTrigger(enButtonA)) {
+				if (ErrorWindowFlag == 0) {
+					ErrorSE = NewGO<SoundSource>(0);
+					ErrorSE->Init(105);
+					ErrorSE->Play(false);
+					WindowCount = 0;
+					ErrorWindowFlag = 1;
+				}
+			}
+			if (g_pad[0]->IsTrigger(enButtonLeft)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
 
-		if (g_pad[0]->IsTrigger(enButtonLeft)) {
-			CursorSE = NewGO<SoundSource>(0);
-			CursorSE->Init(100);
-			CursorSE->Play(false);
+				m_SelectSpriteColor.w = 1.0f;
+				SelectDirection = 1;
+				Count = 0;
+				SelectState = 1;
+			}
+			if (g_pad[0]->IsTrigger(enButtonDown)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
 
-			m_SelectSpriteColor.w = 1.0f;
-			SelectDirection = 1;
-			Count = 0;
-			SelectState = 1;
+				m_SelectSpriteColor.w = 1.0f;
+				SelectDirection = 1;
+				Count = 0;
+				SelectState = 5;
+			}
 		}
 		break;
 	case 3:
+		LicenseSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		MyGarageSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		WorldRaceSelectSprite.SetMulColor(m_NonSelectSpriteColor);
 		CarDealerSelectSprite.SetMulColor(m_SelectSpriteColor);
+		TuningSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		MaintenanceSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		if (ErrorWindowFlag == 0) {
+			if (g_pad[0]->IsTrigger(enButtonA)) {
+				if (ErrorWindowFlag == 0) {
+					ErrorSE = NewGO<SoundSource>(0);
+					ErrorSE->Init(105);
+					ErrorSE->Play(false);
+					WindowCount = 0;
+					ErrorWindowFlag = 1;
+				}
+			}
+
+			if (g_pad[0]->IsTrigger(enButtonRight)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
+
+				m_SelectSpriteColor.w = 1.0f;
+				SelectDirection = 1;
+				Count = 0;
+				SelectState = 4;
+			}
+			if (g_pad[0]->IsTrigger(enButtonLeft)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
+
+				m_SelectSpriteColor.w = 1.0f;
+				SelectDirection = 1;
+				Count = 0;
+				SelectState = 0;
+			}
+			if (g_pad[0]->IsTrigger(enButtonDown)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
+
+				m_SelectSpriteColor.w = 1.0f;
+				SelectDirection = 1;
+				Count = 0;
+				SelectState = 1;
+			}
+		}
+
 		break;
 	case 4:
+		LicenseSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		MyGarageSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		WorldRaceSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		CarDealerSelectSprite.SetMulColor(m_NonSelectSpriteColor);
 		TuningSelectSprite.SetMulColor(m_SelectSpriteColor);
+		MaintenanceSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+
+		if (ErrorWindowFlag == 0) {
+			if (g_pad[0]->IsTrigger(enButtonA)) {
+				if (ErrorWindowFlag == 0) {
+					ErrorSE = NewGO<SoundSource>(0);
+					ErrorSE->Init(105);
+					ErrorSE->Play(false);
+					WindowCount = 0;
+					ErrorWindowFlag = 1;
+				}
+			}
+
+			if (g_pad[0]->IsTrigger(enButtonRight)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
+
+				m_SelectSpriteColor.w = 1.0f;
+				SelectDirection = 1;
+				Count = 0;
+				SelectState = 5;
+			}
+			if (g_pad[0]->IsTrigger(enButtonLeft)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
+
+				m_SelectSpriteColor.w = 1.0f;
+				SelectDirection = 1;
+				Count = 0;
+				SelectState = 3;
+			}
+			if (g_pad[0]->IsTrigger(enButtonDown)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
+
+				m_SelectSpriteColor.w = 1.0f;
+				SelectDirection = 1;
+				Count = 0;
+				SelectState = 1;
+			}
+		}
 		break;
 	case 5:
+		LicenseSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		MyGarageSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		WorldRaceSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		CarDealerSelectSprite.SetMulColor(m_NonSelectSpriteColor);
+		TuningSelectSprite.SetMulColor(m_NonSelectSpriteColor);
 		MaintenanceSelectSprite.SetMulColor(m_SelectSpriteColor);
+		if (ErrorWindowFlag == 0) {
+			if (g_pad[0]->IsTrigger(enButtonA)) {
+				if (ErrorWindowFlag == 0) {
+					ErrorSE = NewGO<SoundSource>(0);
+					ErrorSE->Init(105);
+					ErrorSE->Play(false);
+					WindowCount = 0;
+					ErrorWindowFlag = 1;
+				}
+			}
+
+			if (g_pad[0]->IsTrigger(enButtonLeft)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
+
+				m_SelectSpriteColor.w = 1.0f;
+				SelectDirection = 1;
+				Count = 0;
+				SelectState = 4;
+			}
+			if (g_pad[0]->IsTrigger(enButtonUp)) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->Play(false);
+
+				m_SelectSpriteColor.w = 1.0f;
+				SelectDirection = 1;
+				Count = 0;
+				SelectState = 2;
+			}
+		}
 		break;
 	default:
 		break;
 	}
-	/*if (ErrorWindowFlag == 1) {
+	if (ErrorWindowFlag == 1) {
 		m_WindowSpriteColor.w += 0.1f;
 		m_WindowSpritePosition.y += 5.0f;
 
@@ -175,6 +341,9 @@ void WorldMode::Update() {
 	}
 	else if (ErrorWindowFlag == 2) {
 		if (g_pad[0]->IsTrigger(enButtonA)) {
+			DecisionSE = NewGO<SoundSource>(0);
+			DecisionSE->Init(101);
+			DecisionSE->Play(false);
 			ErrorWindowFlag = 3;
 			WindowCount = 0;
 		}
@@ -197,7 +366,7 @@ void WorldMode::Update() {
 	
 	
 	if (Count % 10 == 0) {
-	}*/
+	}
 	if (FadeSate == -1) {
 		if (FadeCount > 5) {
 			FadeSate = 0;
@@ -216,7 +385,11 @@ void WorldMode::Update() {
 			switch (SelectState)
 			{
 			case 0:
-				
+				m_loading = NewGO<Loading>(10, "loading");
+				m_loading->SetWhereCome(WorldMenuPage);
+				m_loading->SetWhereGo(GaragePage);
+				DeleteGO(BGM);
+				DeleteGO(this);
 				break;
 			case 1:
 				m_loading = NewGO<Loading>(10, "loading");

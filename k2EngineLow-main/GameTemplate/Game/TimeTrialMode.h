@@ -1,5 +1,5 @@
 #pragma once
-
+#include "sound/SoundSource.h"
 
 class Lighting;
 class GameCamera;
@@ -8,6 +8,7 @@ class Car_RB6;
 class Car_Oreca07;
 class CarAFormula;
 class Loading;
+
 
 
 class TimeTrialMode:public IGameObject,Noncopyable
@@ -23,15 +24,37 @@ public:
 		m_NowPPosition = position;
 	}
 
+	void SetGameMode(int m_GameMode) {
+		GameMode = m_GameMode;
+	}
+
+	void ResultSelect();
+
 	
 
 private:
 	Vector4 m_Pausecolor = { 1.0f,1.0f,1.0f,0.0f };
 
+	
+	Vector4 ResultBaseColor = { 1.0f,1.0f,1.0f,0.0f };
+	Vector4 ResultSpriteColor = { 1.0f,1.0f,1.0f,0.0f };
+	Vector4 ResultSelectArrowColor = { 1.0f,1.0f,1.0f,0.0f };
+	Vector4 FINISHColor = { 1.0f,1.0f,1.0f,0.0f };
+	Vector4 ResultColor = { 1.0f,1.0f,1.0f,0.0f };
+	Vector4 ResultTimeColor = { 1.0f,1.0f,1.0f,0.0f };
+
 	Vector3 m_NowPPosition=Vector3::Zero;
 	Vector3 m_TimeUIPosition=Vector3::Zero;
 	Vector3 m_FastestLapsPosition = Vector3::Zero;
 	Vector3 m_Pauseposition = { 0.0f,-50.0f,0.0f };
+
+	Vector3 ResultScale = { 2.0f,2.0f,1.0f };
+	Vector3 ResultSelectSpritePosition = { 0.0f,-100.0f,0.0f };
+	Vector3 ResultSelectArrowPosition = { 0.0f,0.0f,0.0f };
+	Vector3 ResultTimeFontPosition = { -300.0f,0.0f,0.0f };
+
+
+	Vector3 StartSignalPosition{ 0.0f,200.0f,0.0f };
 
 	Lighting* m_lighting;
 	GameCamera* m_gamecamera;
@@ -43,6 +66,11 @@ private:
 	CarAFormula* m_caraformula;
 	Loading* m_Loading;
 
+	SoundSource* BGM;
+	SoundSource* CountSignalSE;
+	SoundSource* StartSignalSE;
+	SoundSource* ControlLineSE;
+
 	ModelRender StartRender;
 	SpriteRender TimeUIRender;
 	SpriteRender FastestLapsRender;
@@ -52,22 +80,52 @@ private:
 	SpriteRender ExitSpriteNonSelect;
 	SpriteRender ExitSpriteSelect;
 
+	SpriteRender StartSignalBaseRender;
+	SpriteRender StartSignalGreenSignalRender;
+	SpriteRender StartSignalSignal1Render;
+	SpriteRender StartSignalSignal2Render;
+	SpriteRender StartSignalSignal3Render;
+	SpriteRender StartSignalSignal4Render;
+	SpriteRender StartSignalSignal5Render;
 
+	SpriteRender ResultSprite;
+	SpriteRender ResultBaseSprite;
+	SpriteRender ResultSelectSprite;
+	SpriteRender ResultSelectArrowSprite;
+	SpriteRender FINISHSprite;
+	SpriteRender PassedTimeBaseSprite;
+	SpriteRender PassedTimeSprite;
+	SpriteRender CourseMapUISprite;
+
+	FontRender ResultTimeFont;
 	FontRender TimeFont;
 	FontRender FTimeFont;
+
+	FontRender LapCountFont;
+	FontRender GAmeModeFont;
 
 
 	
 	float m_LapTimeminsec;
 	float m_timer;
+	int m_timerintsecont;
+	int m_timermsecont;
 	float m_timersecont;
 	
 	float FastestLap=10000.0f;
-
+	float FastestLapKeep = 0.0f;
+	int m_Fastesttimerintsecont;
+	int m_Fastesttimermsecont;
 	float FastestLapTimesec = 60.0f;
+
+
+	float ResultTimeScale = 3.0f;
+
+	float BGMVolume = 0.0f;
 
 	std::vector<float> LapTimeList;
 
+	CircuitExperienceTime circuit_experience_time;
 
 	int m_timerminit;
 	int m_LapTimemin;
@@ -79,7 +137,23 @@ private:
 	int PauseCount = 0;
 	int PauseWindowState = 0;
 
+	int StartSignalCount = 0;
+	int StartSignalSetCount = 0;
+	int StartSignal = 0;
+	int ResetCount = 0;
+	int StartSignalState = 0;
+	int StartSignalTime = 0;
+	int BGMTrack = 1;
+
+	int GameMode = 0;//0:TimeTrial 1:CircuitExperience
+
+	int ResultCount = 0;
+	int ResultSetectState = 0;//0:Retry 1:Exit
+	int ResultSetectCount = 5;
+
 	bool GameEnd = false;
+	bool PassedState = false;
+	bool ResultTimeState = false;
 
 };
 

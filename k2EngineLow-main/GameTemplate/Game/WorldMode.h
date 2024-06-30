@@ -51,6 +51,7 @@ private:
 	SoundSource* BGM;
 	SoundSource* CursorSE;
 	SoundSource* DecisionSE;
+	SoundSource* ErrorSE;
 						
 
 	Vector3 SelectArrowPosition = Vector3::Zero;

@@ -3,6 +3,8 @@
 #include "BackGround.h"
 #include "PageNum.h"
 #include "Loading.h"
+#include "GameCamera.h"
+#include "Lighting.h"
 
 MainRaceManager::MainRaceManager() {
 
@@ -14,6 +16,18 @@ MainRaceManager::~MainRaceManager() {
 
 bool MainRaceManager::Start(){
 	m_background = NewGO<BackGround>(1, "background");
+	m_gamecamera = NewGO<GameCamera>(4, "gamecamera");
+	m_lighting = NewGO<Lighting>(0, "lighting");
+	m_gamecamera->SetPlayFlag(false);
+	m_gamecamera->SetMainRaceManagerFlag(true);
+
+	// åªç›ÇÃãÛÇîjä¸ÅB
+	DeleteGO(m_skyCube);
+	m_skyCube = NewGO<SkyCube>(0, "skycube");
+
+	m_skyCube->SetLuminance(1.0f);
+	m_skyCube->SetType((EnSkyCubeType)m_skyCubeType);
+	m_skyCube->SetScale(5000.0f);
 	
 	BackSprite.Init("Assets/Sprite/Lobby/Test.DDS", 1600.0f, 900.0f);
 	BaseSprite.Init("Assets/Sprite/Lobby/Base.DDS", 1600.0f, 900.0f);
@@ -39,6 +53,7 @@ bool MainRaceManager::Start(){
 }
 
 void MainRaceManager::Update() {
+
 	if (FadeCount < 5) {
 		BlackOutColor.w -= 0.2;
 		BlackOutSprite.SetMulColor(BlackOutColor);
@@ -96,6 +111,7 @@ void MainRaceManager::Update() {
 			m_Loading->SetCourse(CourseInformation);
 			m_Loading->SetWhereCome(RaceLobbyPage);
 			m_Loading->SetWhereGo(PlayPage);
+			
 			DeleteGO(BGM);
 			DeleteGO(this);
 		}
@@ -112,6 +128,9 @@ void MainRaceManager::Update() {
 			m_Loading->SetCourse(CourseInformation);
 			m_Loading->SetWhereCome(RaceLobbyPage);
 			m_Loading->SetWhereGo(RaceMenuPage);
+			DeleteGO(m_gamecamera);
+			DeleteGO(m_background);
+			DeleteGO(m_lighting);
 			DeleteGO(BGM);
 			DeleteGO(this);
 		}
@@ -151,7 +170,7 @@ void MainRaceManager::Update() {
 }
 
 void MainRaceManager::Render(RenderContext& rc) {
-	BackSprite.Draw(rc);
+	//BackSprite.Draw(rc);
 	BaseSprite.Draw(rc);
 	CourseSprite.Draw(rc);
 	ArrowSprite.Draw(rc);

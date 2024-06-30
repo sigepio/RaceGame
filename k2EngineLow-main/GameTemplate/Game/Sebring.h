@@ -25,6 +25,7 @@ private:
     //当たり判定のないオブジェクトの
     ModelRender m_NonCollisionModel;
     
+    CircuitExperienceTime circuit_experience_time;
 
     bool GameEnd = false;
 };

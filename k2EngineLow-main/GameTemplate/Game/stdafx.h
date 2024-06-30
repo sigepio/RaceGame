@@ -31,6 +31,8 @@ struct VehicleInfo {
 	float RearSpringRate;					//リアバネレート[N/m]
 	float AirResistanceCoefficient;			//空気抵抗係数
 	float MaxGear;							//最大ギア数
+	float MaxRPM;							//最大回転数
+	float IdlingRPM;						//アイドリング時の回転数
 };
 
 //シミュレート結果
@@ -46,3 +48,10 @@ struct SimulationResults {
 };
 
 
+const int MAXRaceBGM = 3;
+
+struct CircuitExperienceTime {
+	float GoldTime;
+	float SilverTime;
+	float BronzeTime;
+};

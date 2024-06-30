@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "RightFrontWheel.h"
 #include "FrontWheelBase.h"
-#include "CarData.h"
+
 
 RightFrontWheel::RightFrontWheel() {
 
@@ -15,14 +15,7 @@ bool RightFrontWheel::Start() {
 	m_frontwheelbase = FindGO<FrontWheelBase>("frontwheelbase");
 	m_FrontWheelModel.Init("Assets/modelData/Car/LMP2_Right.tkm");
 
-	switch (m_NowCar)
-	{
-	case AE86:
-		
-		break;
-	default:
-		break;
-	}
+
 
 	return true;
 }

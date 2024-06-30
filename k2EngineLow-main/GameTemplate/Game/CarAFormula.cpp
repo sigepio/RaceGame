@@ -170,12 +170,12 @@ SimulationResults CarAFormula::CarSimulation(
         NewRPM = N_Tire * vehicleinfo.GEAR_RATIOS[CurrentGear - 1] * vehicleinfo.FinalGearRatio;
     }
     //アイドリング
-    if (NewRPM < 1500.0f && VelocityVector * 3600 / 1000 <= 5.0f) {
-        NewRPM = 1500.0f;
+    if (NewRPM < vehicleinfo.IdlingRPM && VelocityVector * 3600 / 1000 <= 5.0f) {
+        NewRPM = vehicleinfo.IdlingRPM;
     }
     //レブリミット
-    if (NewRPM >= 8200.0f) {
-        NewRPM = 8000.0f;
+    if (NewRPM >= vehicleinfo.MaxRPM) {
+        NewRPM = vehicleinfo.MaxRPM-200.0f;
     }
     if (NewRPM <= 0.0f) {
         NewRPM = 0.0f;

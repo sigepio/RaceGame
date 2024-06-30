@@ -1,6 +1,7 @@
 #include "stdafx.h"
 #include "Car_Oreca07.h" 
-#include "CarData.h"
+#include "PageNum.h"
+
 
 Car_Oreca07::Car_Oreca07() {
 	//AE86の初期設定
@@ -70,7 +71,9 @@ Car_Oreca07::Car_Oreca07() {
     1588,               //フロントバネレート[N/m]
     1456,               //リアバネレート[N/m]
     0.1,                //(仮の値)
-    6
+    6,
+    8200,
+    1500
     };
 
 	
@@ -105,7 +108,7 @@ Car_Oreca07::Car_Oreca07() {
 	m_PlayerCarModel.Init("Assets/modelData/Car/LMP2.tkm");
 
 	//車両データ設定
-	m_NowCar = Oreca07;
+	m_NowCar = ORECA07;
 
 	//各タイヤのローカル座標設定
 	m_LeftFrontWheelLocalPosition = { -28.0f,10.0f,55.0f };		//左フロント

@@ -17,7 +17,7 @@
 #include "RightRearWheel.h"
 #include "LeftRearWheel.h"
 #include "TimeTrialMode.h"
-#include "CarData.h"
+
 
 
 bool CarBase::Start() {
@@ -122,7 +122,10 @@ void CarBase::Update() {
 		m_Throttle = m_frontwheelbase->Getm_Speed();
 		m_PlayerForward = m_frontwheelbase->GetForward();
 
-		if (m_LapState == 0 && m_frontwheelbase->GetPosition().x <= -5800.0f) {
+		if (m_LapState == 0 && m_frontwheelbase->GetPosition().x >= -10700.0f&& m_frontwheelbase->GetPosition().z <= -4500.0f) {
+			m_LapState++;
+		}
+		if (m_LapState == 1 && m_frontwheelbase->GetPosition().x >= 5300.0f && m_frontwheelbase->GetPosition().z >= 30000.0f) {
 			m_LapState++;
 		}
 
@@ -143,7 +146,9 @@ void CarBase::Set() {
 	float ANGLE = test.y * -1.0f * M_PI / 180.0f;
 	m_gamecamera->SetRAngle(ANGLE);
 	
-	m_gamecamera->SetDi(m_frontwheelbase->Get_DVector());
+	CameraVector = m_frontwheelbase->Get_DVector();
+	CameraVector.y /= 2.0f;
+	m_gamecamera->SetDi(CameraVector);
 	m_gamecamera->SetTarget(m_frontwheelbase->GetPosition());
 	m_timetrialmode->SetPosition(m_frontwheelbase->GetPosition());
 }

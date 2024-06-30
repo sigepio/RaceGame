@@ -110,6 +110,7 @@ protected:
 	Vector3 m_LeftRearWheelLocalPosition = { 0.0f,0.0f,0.0f };		//左リアタイヤのローカル座標
 	Vector3 m_RightRearWheelLocalPosition = { 0.0f,0.0f,0.0f };		//右リアタイヤのローカル座標
 	Vector3 ResetVector = { 0.0f,0.0f,1.0f };
+	Vector3 CameraVector = Vector3::Zero;
 
 	Quaternion m_PlayerRotation;									//プレイヤーローテーション
 

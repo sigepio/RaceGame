@@ -18,7 +18,6 @@
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="CarBase.cpp" />
     <ClCompile Include="TimeTrialMode.cpp" />
-    <ClCompile Include="Car_RB6.cpp" />
     <ClCompile Include="Lighting.cpp" />
     <ClCompile Include="FrontWheelBase.cpp" />
     <ClCompile Include="RightFrontWheel.cpp" />
@@ -27,14 +26,14 @@
     <ClCompile Include="LeftRearWheel.cpp" />
     <ClCompile Include="CarAFormula.cpp" />
     <ClCompile Include="WorldMode.cpp" />
-    <ClCompile Include="MyGarage.cpp" />
     <ClCompile Include="RaceMenu.cpp" />
     <ClCompile Include="MainRaceManager.cpp" />
-    <ClCompile Include="Car_AE86.cpp" />
     <ClCompile Include="Car_Oreca07.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sebring.cpp" />
+    <ClCompile Include="Garage.cpp" />
+    <ClCompile Include="PlayerDate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -48,7 +47,6 @@
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="CarBase.h" />
     <ClInclude Include="TimeTrialMode.h" />
-    <ClInclude Include="Car_RB6.h" />
     <ClInclude Include="Lighting.h" />
     <ClInclude Include="FrontWheelBase.h" />
     <ClInclude Include="RightFrontWheel.h" />
@@ -57,11 +55,8 @@
     <ClInclude Include="LeftRearWheel.h" />
     <ClInclude Include="CarAFormula.h" />
     <ClInclude Include="WorldMode.h" />
-    <ClInclude Include="MyGarage.h" />
     <ClInclude Include="RaceMenu.h" />
     <ClInclude Include="MainRaceManager.h" />
-    <ClInclude Include="Car_AE86.h" />
-    <ClInclude Include="CarData.h" />
     <ClInclude Include="Car_Oreca07.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="PageNum.h" />
@@ -69,5 +64,7 @@
     <ClInclude Include="BGM.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sebring.h" />
+    <ClInclude Include="Garage.h" />
+    <ClInclude Include="PlayerDate.h" />
   </ItemGroup>
 </Project>

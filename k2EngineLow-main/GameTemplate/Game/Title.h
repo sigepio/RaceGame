@@ -3,6 +3,7 @@ class Sound;
 class Menu;
 class TimeTrialMode;
 class Loading;
+class PlayerDate;
 
 class Title:public IGameObject,Noncopyable
 {
