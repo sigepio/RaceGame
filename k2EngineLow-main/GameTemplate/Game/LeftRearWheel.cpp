@@ -65,5 +65,5 @@ void LeftRearWheel::Rotation() {
 }
 
 void LeftRearWheel::Render(RenderContext& rc) {
-	m_FrontWheelModel.Draw(rc);
+	//m_FrontWheelModel.Draw(rc);
 }

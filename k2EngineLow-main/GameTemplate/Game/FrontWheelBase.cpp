@@ -2,8 +2,10 @@
 #include "FrontWheelBase.h"
 #include "RightFrontWheel.h"
 #include "LeftFrontWheel.h"
+#include "BackGround.h"
 #include "sound/SoundEngine.h"
 #include "CarAFormula.h"
+#include "PlayerDate.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <algorithm>
@@ -13,7 +15,7 @@
 
 
 FrontWheelBase::FrontWheelBase() {
-	m_characterController.Init(20.0f, 30.0f, m_FrontWheelPosition);
+	
 }
 
 FrontWheelBase::~FrontWheelBase() {
@@ -21,11 +23,16 @@ FrontWheelBase::~FrontWheelBase() {
 }
 
 bool FrontWheelBase::Start() {
-	
+	m_BackGround = FindGO<BackGround>("background");
+	m_FrontWheelPosition = m_BackGround->GetStartPosition();
+
+	m_characterController.Init(20.0f, 30.0f, m_FrontWheelPosition);
 	
 	currentRPM = vehicle_info.IdlingRPM;
 
 	m_caraformula = FindGO<CarAFormula>("caraformula");
+	m_PlayerDate = FindGO<PlayerDate>("playerdate");
+	
 	
 	g_soundEngine->ResistWaveFileBank(200, "Assets/sound/5000RPM.wav");
 	//g_soundEngine->ResistWaveFileBank(1001, "Assets/sound/6000RPM.wav");
@@ -81,6 +88,12 @@ float calculateScaledValue(float currentRPM, float IdolingRPM, float maxRPM, flo
 void FrontWheelBase::Update() {
 	//計算結果を受け取る構造体の宣言
 	SimulationResults ReturnSimulationResults;
+	if (g_pad[0]->IsTrigger(enButtonLB1)) {
+		Transmission = true;
+	}
+	else if (g_pad[0]->IsTrigger(enButtonRB1)) {
+		Transmission = false;
+	}
 	
 	if (GameEnd == true) {
 		DeleteGO(engine);
@@ -89,6 +102,7 @@ void FrontWheelBase::Update() {
 	}
 	//いったん凍結
 	//Move();
+	Vector3 stickL;
 	if (m_PauseState == 0) {
 		engine_s->SetVolume(1.0f);
 		//アクセルボタンの入力量の取得
@@ -105,12 +119,12 @@ void FrontWheelBase::Update() {
 		brake_input = brake_input / 255.0f;
 
 		//ステアリングの切った量の取得
-		Vector3 stickL;
+
 		stickL.x = g_pad[0]->GetLStickXF();
 
 		DegreeOfRotationOfTheHandle = stickL.x * vehicle_info.MaximumSteeringAngleOfTires;
 
-		
+
 
 		ReturnSimulationResults = m_caraformula->CarSimulation(
 			vehicle_info,
@@ -135,7 +149,8 @@ void FrontWheelBase::Update() {
 			brake_input,
 			DegreeOfRotationOfTheHandle,
 			m_FrontWheelForward,
-			FrontWheelOrientationVector
+			FrontWheelOrientationVector,
+			Transmission
 		);
 
 		m_FrontWheelPosition = ReturnSimulationResults.Position;
@@ -155,14 +170,14 @@ void FrontWheelBase::Update() {
 
 		//エンジン音のピッチ調整
 		engine_s->SetFrequencyRatio(calculateScaledValue(currentRPM, vehicle_info.IdlingRPM, vehicle_info.MaxRPM));
-		
+
 		RPMGageColor.y = -2 * RPMGagescale + 2;
 		RPMGageColor.z = -2 * RPMGagescale + 2;
 		if (RPMGageColor.y < 0.0f) {
 			RPMGageColor.y = 1.0f;
 			RPMGageColor.z = 1.0f;
 		}
-		
+
 		RPMGage.SetMulColor(RPMGageColor);
 		RPMGage.SetScale(RPMGagescale, 1.0f, 0.0f);
 		RPMGage.Update();
@@ -228,11 +243,20 @@ void FrontWheelBase::Update() {
 		GearFont.SetPosition(50.0f, -325.0f, 0.0f);
 		GearFont.SetScale(1.5f);
 
+		wchar_t DebugPos[256];
+		swprintf_s(DebugPos, 256, L"%.0f:%.0f:%.0f\n", m_FrontWheelPosition.x, m_FrontWheelPosition.y, m_FrontWheelPosition.z);
+		DebugPosFont.SetPosition(0.0f, 0.0f, 0.0f);
+		DebugPosFont.SetText(DebugPos);
+
 		VelocityFont.SetText(Velocity);
 		GearFont.SetText(Gear);
 	}
 	if(m_PauseState == 1|| m_PauseState==3){
 		engine_s->SetVolume(0.0f);
+	}
+	if (m_PauseState == -1) {
+		DifferenceVector = { 0.0f,0.0f,1.0f };
+		m_FrontWheelForward = { 0.0f,0.0f,1.0f };
 	}
 }
 
@@ -405,6 +429,7 @@ Vector4 FrontWheelBase::Acceleration() {
 
 void FrontWheelBase::Render(RenderContext& rc) {
 	if (m_PauseState != 3) {
+		DebugPosFont.Draw(rc);
 		VelocityFont.Draw(rc);
 		GearFont.Draw(rc);
 		UIBace.Draw(rc);

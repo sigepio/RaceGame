@@ -1,6 +1,7 @@
 #pragma once
 #include "SceneLight.h"
 #include "Bloom.h"
+#include "SceneGeometryData.h"
 
 namespace nsK2EngineLow {
 
@@ -9,12 +10,15 @@ namespace nsK2EngineLow {
 	class ModelRender;
 	class SpriteRender;
 
+
 	class RenderingEngine:public Noncopyable
 	{
 	public:
 		RenderingEngine();
 		bool Start();
 		void InitShadowMap();
+		void Update();
+		void CalcViewProjectionMatrixForViewCulling();
 		//void InitZPrepassRenderTarget();
 		void InitFinalSprite();
 		//void InitToonMap();
@@ -57,13 +61,21 @@ namespace nsK2EngineLow {
 			m_sceneLight.SetHemLight(groundColor, skyColor, groundNormal);
 		}
 
+		/// <summary>
+		/// 幾何学データを登録
+		/// </summary>
+		/// <param name="geomData">幾何学データ</param>
+		void RegisterGeometryData(GemometryData* geomData)
+		{
+			m_sceneGeometryData.RegisterGeometryData(geomData);
+		}
 
 		void AddModelRenderObject(ModelRender* modelRender)
 		{
 			//コンテナの後ろにくっつける
 			ModelRenderObject.push_back(modelRender);
 		}
-
+		
 		void AddSpriteRenderObject(SpriteRender* spriteRender)
 		{
 			//コンテナの後ろにくっつける
@@ -76,6 +88,9 @@ namespace nsK2EngineLow {
 			FontRenderObject.push_back(fontRender);
 		}
 
+		auto GetViewProjectionMatrixForViewCulling() {
+			return m_viewProjMatrixForViewCulling;
+		}
 
 		//ライトビュースクリーンの設定
 		void SetLVP(Matrix mat)
@@ -136,6 +151,7 @@ namespace nsK2EngineLow {
 	private:
 		SceneLight m_sceneLight;
 		Bloom m_bloom;
+		SceneGeometryData m_sceneGeometryData;
 
 		static RenderingEngine* m_instance;
 
@@ -152,11 +168,13 @@ namespace nsK2EngineLow {
 		Camera lightCamera;
 		float clearColor[4] = { 1.0f,1.0f,1.0f,1.0f };	//カラーバッファーは真っ白
 
+		Matrix m_viewProjMatrixForViewCulling;              // ビューカリング用のビュープロジェクション行列。
 
 		std::vector<ModelRender*>	ModelRenderObject;
 		std::vector<SpriteRender*>	SpriteRenderObject;
 		std::vector<FontRender*>	FontRenderObject;
 
+		
 	};
 }
 

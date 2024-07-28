@@ -1,4 +1,7 @@
 #pragma once
+#include "geometry/AABB.h"
+#include "GeometryData.h"
+
 namespace nsK2EngineLow {
 	struct ModelInitDataFR :public ModelInitData
 	{
@@ -19,14 +22,17 @@ namespace nsK2EngineLow {
 		//初期化
 		void Init(const char* filePath,
 			bool m_shadowDrop = true,//影(trueが影あり)
+			AlphaBlendMode m_AlphaBlendMode = AlphaBlendMode_None,
 			AnimationClip* animationClips = nullptr,
 			int numAnimationClips = 0,
-			EnModelUpAxis enModelUpAxis = enModelUpAxisZ);
+			EnModelUpAxis enModelUpAxis = enModelUpAxisZ
+			);
 		//アップデート
 		void Update(bool m_syuzinkou = false);
 		//描画処理
 		void Draw(RenderContext& rc);
-
+		// 幾何学データを初期化。
+		void InitGeometryDatas();
 		//座標設定
 		void SetPosition(const Vector3& pos) {
 			m_position = pos;//引数に設定した座標データを代入
@@ -63,6 +69,12 @@ namespace nsK2EngineLow {
 			SetScale(scale);
 		}
 
+		Matrix GetWorldMatrix() {
+			return m_zprepassModel.GetWorldMatrix();
+		}
+
+	
+
 		//モデルを取得
 		Model& GetModel() {
 			return m_model;
@@ -88,6 +100,10 @@ namespace nsK2EngineLow {
 
 		bool& GetSyuzinkou() {
 			return syuok;
+		}
+
+		void SetAlwaysOnDisplay(bool m_AlwaysOnDisplay) {
+			AlwaysOnDisplay = m_AlwaysOnDisplay;
 		}
 
 		//アニメーションの再生
@@ -141,8 +157,11 @@ namespace nsK2EngineLow {
 			Quaternion m_rotation = { 0.0f,0.0f,0.0f,1.0f };
 			Vector3 m_scale = Vector3::One;
 
+			std::vector< GemometryData > m_geometryDatas;		// ジオメトリ情報。
+
 			bool syuok = false;
 			bool m_flashFlag = false;
+			bool AlwaysOnDisplay = false;
 
 			int Now_Animation_Number = -1;
 	};

@@ -1,6 +1,7 @@
 #pragma once
 
 class Sebring;
+class LeMans;
 
 class BackGround : public IGameObject, Noncopyable
 {
@@ -16,7 +17,13 @@ public:
         GameEnd = m_GameEnd;
     }
 
+    Vector3 GetStartPosition() {
+        return StartPosition;
+    }
+
 private:
+    Vector3 StartPosition = { 0.0f,0.0f,0.0f };
     Sebring* m_Sebring;
+    LeMans* m_LeMans;
     bool GameEnd;
 };

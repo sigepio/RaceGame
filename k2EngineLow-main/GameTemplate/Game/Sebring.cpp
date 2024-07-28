@@ -40,6 +40,8 @@ void Sebring::Update() {
 }
 
 void Sebring::Render(RenderContext& rc) {
+	m_groundModel->SetAlwaysOnDisplay(true);
+	m_NonCollisionModel.SetAlwaysOnDisplay(true);
 	m_groundModel->Draw(rc);
 	m_NonCollisionModel.Draw(rc);
 }

@@ -1,8 +1,9 @@
 #include "stdafx.h"
 #include "BackGround.h"
 #include "Sebring.h"
+#include "LeMans.h"
 
-BackGround::BackGround() : m_Sebring(nullptr), GameEnd(false)
+BackGround::BackGround()
 {
 }
 
@@ -12,8 +13,10 @@ BackGround::~BackGround()
 
 bool BackGround::Start()
 {
-    m_Sebring = NewGO<Sebring>(0, "sebring");
-    return m_Sebring != nullptr;
+    //m_Sebring = NewGO<Sebring>(0, "sebring");
+    m_LeMans = NewGO<LeMans>(0, "lemans");
+    StartPosition = m_LeMans->GetStartPosition();
+    return true;
 }
 
 void BackGround::Update()

@@ -235,7 +235,7 @@ float4 PSMain( SPSIn psIn ) : SV_Target0
     
 
 	float4 albedoColor = g_albedo.Sample(g_sampler, psIn.uv);
-	albedoColor.xyz*=lig;
+	//albedoColor.xyz*=lig;
 	return albedoColor;
 }
 

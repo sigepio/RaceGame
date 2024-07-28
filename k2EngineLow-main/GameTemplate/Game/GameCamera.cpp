@@ -23,7 +23,7 @@ bool GameCamera::Start()
 
 	//カメラのニアクリップとファークリップを設定する。
 	g_camera3D->SetNear(1.0f);
-	g_camera3D->SetFar(100000.0f);
+	g_camera3D->SetFar(10000000.0f);
 
 	return true;
 }
@@ -65,7 +65,7 @@ void GameCamera::Update() {
 			m_carbase = FindGO<Car_Oreca07>("car_oreca07");
 		}
 		PlayReset++;
-		if (m_PauseState == 0) {
+		
 			//カメラを更新。
 			//注視点を計算する。
 			//m_target = m_carbase->GetPosition();
@@ -115,7 +115,7 @@ void GameCamera::Update() {
 
 			//カメラの更新。
 			g_camera3D->Update();
-		}
+		
 	}
 	
 }

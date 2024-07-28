@@ -1,6 +1,7 @@
 #include "k2EngineLowPreCompile.h"
 #include "RenderingEngine.h"
 
+
 namespace nsK2EngineLow {
 	RenderingEngine* RenderingEngine::m_instance = nullptr;
 
@@ -185,6 +186,28 @@ namespace nsK2EngineLow {
 
 		// 描画されるまで待つ
 		rc.WaitUntilFinishDrawingToRenderTarget(m_mainRenderingTarget);
+	}
+
+
+
+	void RenderingEngine::CalcViewProjectionMatrixForViewCulling()
+	{
+		Matrix projMatrix;
+		projMatrix.MakeProjectionMatrix(
+			g_camera3D->GetViewAngle(),
+			g_camera3D->GetAspect(),
+			g_camera3D->GetNear(),
+			g_camera3D->GetFar()
+		);
+		m_viewProjMatrixForViewCulling.Multiply(g_camera3D->GetViewMatrix(), projMatrix);
+	}
+
+	void RenderingEngine::Update()
+	{
+		// ビューカリング用のビュープロジェクション行列の計算。
+		CalcViewProjectionMatrixForViewCulling();
+		// シーンのジオメトリ情報の更新。
+		m_sceneGeometryData.Update();
 	}
 
 	void RenderingEngine::SpriteFontDraw(RenderContext& rc)
