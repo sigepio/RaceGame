@@ -32,7 +32,8 @@ public:
 					float BrakePressure,					//ブレーキの踏み込み具合
 					float SteeringAngle,					//ステアリングアングル
 					Vector3 SteeringFrontVector,			//ステアリングの正面ベクトル(正規化済みのみ)
-					Vector3 FrontWheelOrientationVector		//前輪向きを表現している単位ベクトル
+					Vector3 FrontWheelOrientationVector,	//前輪向きを表現している単位ベクトル
+					bool Transmission						//ATかMTか
 	);	
 	void ShiftChange();
 

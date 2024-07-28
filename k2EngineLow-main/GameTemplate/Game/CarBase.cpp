@@ -118,20 +118,19 @@ void CarBase::Update() {
 		m_leftrearwheel->SetGameEnd(GameEnd);
 		DeleteGO(this);
 	}
-	if (m_PauseState == 0) {
-		m_Throttle = m_frontwheelbase->Getm_Speed();
-		m_PlayerForward = m_frontwheelbase->GetForward();
+	m_Throttle = m_frontwheelbase->Getm_Speed();
+	m_PlayerForward = m_frontwheelbase->GetForward();
 
-		if (m_LapState == 0 && m_frontwheelbase->GetPosition().x >= -10700.0f&& m_frontwheelbase->GetPosition().z <= -4500.0f) {
-			m_LapState++;
-		}
-		if (m_LapState == 1 && m_frontwheelbase->GetPosition().x >= 5300.0f && m_frontwheelbase->GetPosition().z >= 30000.0f) {
-			m_LapState++;
-		}
-
-		Move();
-		Set();
+	if (m_LapState == 0 && m_frontwheelbase->GetPosition().x >= -10700.0f&& m_frontwheelbase->GetPosition().z <= -4500.0f) {
+		m_LapState++;
 	}
+	if (m_LapState == 1 && m_frontwheelbase->GetPosition().x >= 5300.0f && m_frontwheelbase->GetPosition().z >= 30000.0f) {
+		m_LapState++;
+	}
+
+	Move();
+	Set();
+	
 	m_frontwheelbase->SetPauseState(m_PauseState);
 	m_leftfrontwheel->SetPauseState(m_PauseState);
 	m_rightfrontwheel->SetPauseState(m_PauseState);
@@ -163,5 +162,6 @@ void CarBase::Move() {
 
 
 void CarBase::Render(RenderContext& rc) {
+	m_PlayerCarModel.SetAlwaysOnDisplay(true);
 	m_PlayerCarModel.Draw(rc);
 }

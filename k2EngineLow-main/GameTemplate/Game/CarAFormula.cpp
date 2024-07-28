@@ -76,7 +76,8 @@ SimulationResults CarAFormula::CarSimulation(
     float BrakePressure,					//ブレーキの踏み込み具合
     float SteeringAngle,					//ステアリングアングル
     Vector3 SteeringFrontVector,			//ステアリングの正面ベクトル
-    Vector3 FrontWheelOrientationVector	   	//前輪向きを表現している単位ベクトル
+    Vector3 FrontWheelOrientationVector,	//前輪向きを表現している単位ベクトル
+    bool Transmission
 ) {
     //ステップ0:準備フェーズ
     //リターン用の構造体の宣言
@@ -134,19 +135,38 @@ SimulationResults CarAFormula::CarSimulation(
     Fbrake = (vehicleinfo.MaximumBrakingForce*(10.0f * ((vehicleinfo.MaxGear / CurrentGear)/ vehicleinfo.MaxGear))) * BrakePressure * vehicleinfo.TireRadius;
     
     //変速
-    // シフトアップ処理
-    if (g_pad[0]->IsTrigger(enButtonA) && CurrentGear < vehicleinfo.MaxGear) {
-        // シフトアップ
-        ShiftChangeFlag = true;
-        CurrentGear++;
+    if (Transmission == true) {
+        // シフトアップ処理
+        if (CurrentRPM >= (vehicleinfo.MaxRPM - 200.0f) && CurrentGear < vehicleinfo.MaxGear) {
+            // シフトアップ
+            ShiftChangeFlag = true;
+            CurrentGear++;
+        }
+
+        // シフトダウン処理
+        if (CurrentRPM < (vehicleinfo.MaxRPM - 2100.0f) && CurrentGear > 1) {
+            // シフトダウン
+            ShiftChangeFlag = true;
+            CurrentGear--;
+        }
+    }
+    else {
+        // シフトアップ処理
+        if (g_pad[0]->IsTrigger(enButtonA) && CurrentGear < vehicleinfo.MaxGear) {
+            // シフトアップ
+            ShiftChangeFlag = true;
+            CurrentGear++;
+        }
+
+        // シフトダウン処理
+        if (g_pad[0]->IsTrigger(enButtonX) && CurrentGear > 1) {
+            // シフトダウン
+            ShiftChangeFlag = true;
+            CurrentGear--;
+        }
     }
 
-    // シフトダウン処理
-    if (g_pad[0]->IsTrigger(enButtonX) && CurrentGear > 1) {
-        // シフトダウン
-        ShiftChangeFlag = true;
-        CurrentGear--;
-    }
+    
 
     //エンジントルクへの抵抗
     Tload = (Faero + Frr + Fgrade + Fbrake) * (vehicleinfo.TireRadius / (vehicleinfo.GEAR_RATIOS[CurrentGear - 1] * vehicleinfo.FinalGearRatio * 0.95));

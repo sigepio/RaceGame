@@ -3,6 +3,8 @@
 class RightFrontWheel;
 class LeftFrontWheel;
 class CarAFormula;
+class PlayerDate;
+class BackGround;
 
 class FrontWheelBase:public IGameObject,Noncopyable
 {
@@ -132,7 +134,9 @@ public:
 	}
 
 protected:
-	Vector3 m_FrontWheelPosition = {0.0f,-66.980f,0.0f};
+	//Vector3 m_FrontWheelPosition = {0.0f,-66.980f,0.0f};
+	//Vector3 m_FrontWheelPosition = { 0.0f,3000.0f,0.0f };
+	Vector3 m_FrontWheelPosition = { 0.0f,0.0f,0.0f };
 	Vector3 m_LocalPosition;
 	Vector3 m_FrontWheelForward = { 0.0f,0.0f,1.0f };
 	Vector3 m_FrontWheelForwardCatch = { 0.0f,0.0f,1.0f };
@@ -179,6 +183,7 @@ protected:
 	FontRender RPMFont;
 	FontRender VelocityFont;
 	FontRender GearFont;
+	FontRender DebugPosFont;
 
 	SoundSource* engine;
 	SoundSource* engine_s;
@@ -186,7 +191,9 @@ protected:
 	RightFrontWheel* m_rightfrontwheel;
 	LeftFrontWheel* m_leftfrontwheel;
 
+	PlayerDate* m_PlayerDate;
 	CarAFormula* m_caraformula;
+	BackGround* m_BackGround;
 
 	bool TurnRightState = false;
 	bool GameEnd = false;
@@ -244,5 +251,7 @@ protected:
 	int EngineSoundStopCount = 0;
 
 	VehicleInfo vehicle_info;
+
+	bool Transmission = true;
 };
 

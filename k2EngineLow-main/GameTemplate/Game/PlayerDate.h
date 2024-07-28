@@ -19,6 +19,10 @@ public:
 		return RideCarNum;
 	}
 
+	bool GetTransmission() {
+		return Transmission;
+	}
+
 	std::vector<int> GetPossessionCar() {
 		return PossessionCar;
 	}
@@ -26,5 +30,7 @@ public:
 private:
 	int RideCarNum = 0;
 	std::vector<int> PossessionCar = { 0 };
+
+	bool Transmission = true;	//true:AT  false:MT
 };
 

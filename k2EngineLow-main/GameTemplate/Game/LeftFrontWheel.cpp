@@ -25,7 +25,7 @@ void LeftFrontWheel::Update() {
 	if (GameEnd == true) {
 		DeleteGO(this);
 	}
-	if (m_PauseState == 0) {
+	
 		//ローカルポジションを教える
 		Vector3 lp = m_LocalPosition;
 
@@ -53,7 +53,7 @@ void LeftFrontWheel::Update() {
 		m_FrontWheelModel.SetPosition(m_FrontWheelPosition);
 		m_FrontWheelModel.SetRotation(m_FrontWheelRotation);
 		m_FrontWheelModel.Update();
-
+	if (m_PauseState == 0) {
 		//Move();
 		Rotation();
 	}
@@ -129,5 +129,6 @@ void LeftFrontWheel::Rotation() {
 }
 
 void LeftFrontWheel::Render(RenderContext& rc) {
+	m_FrontWheelModel.SetAlwaysOnDisplay(true);
 	m_FrontWheelModel.Draw(rc);
 }

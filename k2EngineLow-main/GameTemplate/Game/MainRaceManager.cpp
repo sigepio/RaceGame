@@ -27,7 +27,7 @@ bool MainRaceManager::Start(){
 
 	m_skyCube->SetLuminance(1.0f);
 	m_skyCube->SetType((EnSkyCubeType)m_skyCubeType);
-	m_skyCube->SetScale(5000.0f);
+	m_skyCube->SetScale(50000.0f);
 	
 	BackSprite.Init("Assets/Sprite/Lobby/Test.DDS", 1600.0f, 900.0f);
 	BaseSprite.Init("Assets/Sprite/Lobby/Base.DDS", 1600.0f, 900.0f);

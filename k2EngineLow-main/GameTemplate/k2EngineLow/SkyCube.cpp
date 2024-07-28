@@ -66,6 +66,7 @@ namespace nsK2EngineLow {
 
 	void SkyCube::Render(RenderContext& rc)
 	{
+		m_modelRender.SetAlwaysOnDisplay(true);
 		m_modelRender.Draw(rc);
 	}
 }

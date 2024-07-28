@@ -232,6 +232,7 @@
     <ClCompile Include="Garage.cpp" />
     <ClCompile Include="LeftFrontWheel.cpp" />
     <ClCompile Include="LeftRearWheel.cpp" />
+    <ClCompile Include="LeMans.cpp" />
     <ClCompile Include="Lighting.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="main.cpp" />
@@ -265,6 +266,7 @@
     <ClInclude Include="Garage.h" />
     <ClInclude Include="LeftFrontWheel.h" />
     <ClInclude Include="LeftRearWheel.h" />
+    <ClInclude Include="LeMans.h" />
     <ClInclude Include="Lighting.h" />
     <ClInclude Include="Loading.h" />
     <ClInclude Include="MainRaceManager.h" />

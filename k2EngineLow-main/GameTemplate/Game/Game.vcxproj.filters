@@ -34,6 +34,7 @@
     <ClCompile Include="Sebring.cpp" />
     <ClCompile Include="Garage.cpp" />
     <ClCompile Include="PlayerDate.cpp" />
+    <ClCompile Include="LeMans.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -66,5 +67,6 @@
     <ClInclude Include="Sebring.h" />
     <ClInclude Include="Garage.h" />
     <ClInclude Include="PlayerDate.h" />
+    <ClInclude Include="LeMans.h" />
   </ItemGroup>
 </Project>
