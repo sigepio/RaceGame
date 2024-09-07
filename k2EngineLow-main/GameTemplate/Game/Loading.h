@@ -8,6 +8,7 @@ class Garage;
 class LicenseMode;
 class LicenseRace;
 class OptionMenu;
+class BackGround;
 
 class Loading:public IGameObject
 {
@@ -74,6 +75,8 @@ private:
 	LicenseMode* m_LicenseMode;
 	LicenseRace* m_LicenseRace;
 	OptionMenu* m_OptionMenu;
+	SkyCube* m_skyCube = nullptr;
+	BackGround* m_BackGround;
 
 	int WhereCome = 0;			//0:タイトル
 	int WhereGo = 0;			//0:タイトル

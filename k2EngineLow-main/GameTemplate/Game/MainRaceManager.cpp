@@ -6,6 +6,8 @@
 #include "GameCamera.h"
 #include "Lighting.h"
 #include "Player.h"
+#include "FadeIn.h"
+#include "PageNum.h"
 
 MainRaceManager::MainRaceManager() {
 
@@ -16,25 +18,29 @@ MainRaceManager::~MainRaceManager() {
 }
 
 bool MainRaceManager::Start(){
-	m_background = NewGO<BackGround>(1, "background");
-	m_background->SetCourse(CourseInformation);
-	m_background->SetLicenseNum(LicenseNum);
+	if (WhereComePage != PlayPage) {
+		m_background = NewGO<BackGround>(1, "background");
+		m_background->SetCourse(CourseInformation);
+		m_background->SetLicenseNum(LicenseNum);
+		// åªç›ÇÃãÛÇîjä¸ÅB
+		m_skyCube = NewGO<SkyCube>(0, "skycube");
+
+		m_skyCube->SetLuminance(1.0f);
+		m_skyCube->SetType((EnSkyCubeType)m_skyCubeType);
+		m_skyCube->SetScale(50000.0f);
+		
+	}
 	m_gamecamera = NewGO<GameCamera>(4, "gamecamera");
 	m_lighting = NewGO<Lighting>(0, "lighting");
 	m_gamecamera->SetPlayFlag(false);
 	m_gamecamera->SetMainRaceManagerFlag(true);
+	m_FadeIn = FindGO<FadeIn>("fadein");
 
 	
 
 	m_player = FindGO<Player>("player");
 
-	// åªç›ÇÃãÛÇîjä¸ÅB
-	DeleteGO(m_skyCube);
-	m_skyCube = NewGO<SkyCube>(0, "skycube");
-
-	m_skyCube->SetLuminance(1.0f);
-	m_skyCube->SetType((EnSkyCubeType)m_skyCubeType);
-	m_skyCube->SetScale(50000.0f);
+	
 	
 	BackSprite.Init("Assets/Sprite/Lobby/Test.DDS", 1600.0f, 900.0f);
 	BaseSprite.Init("Assets/Sprite/Lobby/Base.DDS", 1600.0f, 900.0f);
@@ -151,7 +157,7 @@ bool MainRaceManager::Start(){
 }
 
 void MainRaceManager::Update() {
-
+	
 	if (LicenseNum != 0) {
 		if (LicenseCount < 50) {
 			LicenseContentsBase.SetScale(1.0f, scaleValues[LicenseCount], 0.0f);
@@ -175,8 +181,9 @@ void MainRaceManager::Update() {
 				DecisionSE->Init(101);
 				DecisionSE->SetVolume(m_player->GetSEVolume());
 				DecisionSE->Play(false);
-				FadeState = 1;
 				FadeCount = 0;
+				FadeState = 1;
+				
 			}
 			if (g_pad[0]->IsTrigger(enButtonRight)) {
 				CursorSE = NewGO<SoundSource>(0);
@@ -194,9 +201,9 @@ void MainRaceManager::Update() {
 				CancelSE->Init(102);
 				CancelSE->SetVolume(m_player->GetSEVolume());
 				CancelSE->Play(false);
-
-				FadeState = 2;
 				FadeCount = 0;
+				FadeState = 2;
+				
 			}
 			if (g_pad[0]->IsTrigger(enButtonLeft)) {
 				CursorSE = NewGO<SoundSource>(0);
@@ -214,10 +221,11 @@ void MainRaceManager::Update() {
 		
 	}
 	if (FadeState == 1) {
+		
 		if (FadeCount < 5) {
 			BlackOutColor.w += 0.2f;
 			BlackOutSprite.SetMulColor(BlackOutColor);
-			FadeCount++;
+			
 		}
 		else {
 			m_Loading = NewGO<Loading>(10, "loading");
@@ -232,6 +240,9 @@ void MainRaceManager::Update() {
 		}
 	}
 	if (FadeState == 2) {
+		m_FadeIn->FedeInStart();
+		BlackOutColor.w = 1.0f;
+		BlackOutSprite.SetMulColor(BlackOutColor);
 		if (FadeCount < 5) {
 			BlackOutColor.w += 0.2f;
 			BlackOutSprite.SetMulColor(BlackOutColor);
@@ -248,14 +259,14 @@ void MainRaceManager::Update() {
 			else {
 				m_Loading->SetWhereGo(LicenseModePage);
 			}
-			m_background->SetGameEnd(true);
-			DeleteGO(m_gamecamera);
 			
+			DeleteGO(m_gamecamera);
+			DeleteGO(m_skyCube);
 			DeleteGO(m_lighting);
 			DeleteGO(BGM);
 			DeleteGO(this);
 		}
-		FadeCount++;
+		
 	}
 
 	if (ArrowMove == 1) {
@@ -288,6 +299,7 @@ void MainRaceManager::Update() {
 		}
 		MoveCount++;
 	}
+	BlackOutSprite.Update();
 	FadeCount++;
 }
 

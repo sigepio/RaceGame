@@ -12,6 +12,7 @@ namespace nsK2EngineLow {
 	}
 	PhysicsStaticObject::~PhysicsStaticObject()
 	{
+		Release();
 	}
 	void PhysicsStaticObject::CreateFromModel(Model& model, const Matrix& worldMatrix, const float restitution)
 	{

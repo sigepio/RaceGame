@@ -575,8 +575,8 @@ Vector4 FrontWheelBase::Acceleration() {
 
 void FrontWheelBase::Render(RenderContext& rc) {
 	if (m_PauseState != 3) {
-		DebugPosFont.Draw(rc);
-		DebugFont.Draw(rc);
+		/*DebugPosFont.Draw(rc);
+		DebugFont.Draw(rc);*/
 		VelocityFont.Draw(rc);
 		GearFont.Draw(rc);
 		UIBace.Draw(rc);

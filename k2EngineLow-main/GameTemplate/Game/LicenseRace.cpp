@@ -420,9 +420,9 @@ void LicenseRace::Update() {
 
 			m_lighting->SetGameEnd(GameEnd);
 			m_caraformula->SetGameEnd(GameEnd);
-			m_background->SetGameEnd(GameEnd);
+			
 			DeleteGO(BGM);
-			DeleteGO(m_skyCube);
+			
 			DeleteGO(this);
 		}
 		else if (g_pad[0]->IsTrigger(enButtonRight) && PauseWindowState >= 0&& PauseWindowState<2) {
@@ -818,8 +818,7 @@ void LicenseRace::ResultSelect() {
 			}
 			m_lighting->SetGameEnd(GameEnd);
 			m_caraformula->SetGameEnd(GameEnd);
-			m_background->SetGameEnd(GameEnd);
-			DeleteGO(m_skyCube);
+			
 			DeleteGO(this);
 		}
 	}

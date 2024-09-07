@@ -6,6 +6,7 @@ class Loading;
 class Player;
 class GameCamera;
 class Lighting;
+class FadeIn;
 
 class Title:public IGameObject,Noncopyable
 {
@@ -21,6 +22,7 @@ private:
 	Sound* m_Sound;
 	GameCamera* m_GameCamera;
 	Lighting* m_Lighting;
+	FadeIn* m_FadeIn;
 
 	ModelRender CarModel;
 
