@@ -8,6 +8,11 @@ class Car_RB6;
 class Car_Oreca07;
 class CarAFormula;
 class Loading;
+class Car_86GT;
+class Player;
+class Car_RX7FD;
+class Car_A90Supra;
+class Car_GTRR35;
 
 
 
@@ -53,15 +58,20 @@ private:
 	Vector3 ResultSelectArrowPosition = { 0.0f,0.0f,0.0f };
 	Vector3 ResultTimeFontPosition = { -300.0f,0.0f,0.0f };
 
-
+	Vector3 ClearTime = Vector3::Zero;		//クリアタイムの設定 x:Gold y:Silver z:Bronze
 	Vector3 StartSignalPosition{ 0.0f,200.0f,0.0f };
 
 	Lighting* m_lighting;
 	GameCamera* m_gamecamera;
 	BackGround* m_background;
+	Player* m_player;
 	Car_RB6* m_RB6;
+	Car_86GT* m_86GT;
 	//Car_AE86* m_AE86;
 	Car_Oreca07* m_Oreca07;
+	Car_RX7FD* m_FD3S;
+	Car_A90Supra* m_A90Supra;
+	Car_GTRR35* m_GTRR35;
 	SkyCube* m_skyCube = nullptr;
 	CarAFormula* m_caraformula;
 	Loading* m_Loading;
@@ -77,6 +87,8 @@ private:
 	SpriteRender PauseSprite;
 	SpriteRender ContinueSpriteNonSelect;
 	SpriteRender ContinueSpriteSelect;
+	SpriteRender RetryNonSelect;			//ポーズ時のリトライ用
+	SpriteRender RetrySelect;
 	SpriteRender ExitSpriteNonSelect;
 	SpriteRender ExitSpriteSelect;
 
@@ -146,6 +158,9 @@ private:
 	int BGMTrack = 1;
 
 	int GameMode = 0;//0:TimeTrial 1:CircuitExperience
+	int CarNum = -1;//0:ORECA07 1:86GT 2:
+
+	int NowLap = 0;
 
 	int ResultCount = 0;
 	int ResultSetectState = 0;//0:Retry 1:Exit

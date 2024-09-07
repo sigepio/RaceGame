@@ -5,7 +5,8 @@
 #include "BackGround.h"
 #include "sound/SoundEngine.h"
 #include "CarAFormula.h"
-#include "PlayerDate.h"
+#include "Player.h"
+#include "PageNum.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
 #include <algorithm>
@@ -25,16 +26,18 @@ FrontWheelBase::~FrontWheelBase() {
 bool FrontWheelBase::Start() {
 	m_BackGround = FindGO<BackGround>("background");
 	m_FrontWheelPosition = m_BackGround->GetStartPosition();
+	m_FrontWheelForward = m_BackGround->GetStartForward();
+	m_FrontWheelRotation.SetRotationY(atan2(m_FrontWheelForward.x, m_FrontWheelForward.z));
 
 	m_characterController.Init(20.0f, 30.0f, m_FrontWheelPosition);
 	
 	currentRPM = vehicle_info.IdlingRPM;
 
 	m_caraformula = FindGO<CarAFormula>("caraformula");
-	m_PlayerDate = FindGO<PlayerDate>("playerdate");
+	m_Player = FindGO<Player>("player");
 	
 	
-	g_soundEngine->ResistWaveFileBank(200, "Assets/sound/5000RPM.wav");
+	
 	//g_soundEngine->ResistWaveFileBank(1001, "Assets/sound/6000RPM.wav");
 
 	UIBace.Init("Assets/sprite/UI/RaceUIBase.DDS", 1600.f, 900.0f);
@@ -49,20 +52,108 @@ bool FrontWheelBase::Start() {
 	RPMCover.SetPosition(0.0f, -4.8f, 0.0f);
 	RPMCover.Update();
 	ThrottleGage.Init("Assets/sprite/UI/ThrottleGage.DDS", 20.0f, 131.0f);
-	ThrottleGage.SetPosition(283.0f, -389.75f, 0.0f);
+	ThrottleGage.SetPosition(574.0f, -392.30769230769226f, 0.0f);
 	ThrottleGage.SetPivot(0.5f, 0.0f);
 	ThrottleGage.Update();
 	
 	BrakeGage.Init("Assets/sprite/UI/BrakeGage.DDS", 20.0f, 131.0f);
-	BrakeGage.SetPosition(-283.0f, -389.75f, 0.0f);
+	BrakeGage.SetPosition(-574.0f, -392.30769230769226f, 0.0f);
 	BrakeGage.SetPivot(0.5f, 0.0f);
 	BrakeGage.Update();
 
+	//タコメーター
+	RPMNeedle.Init("Assets/sprite/UI/Needle.DDS", 5.0f, 356.0f);
+	RPMNeedle.SetPosition(354.0f, -380.0f, 0.0f);
+	rpmneedlerot.SetRotationDegZ(95);
+	RPMNeedle.SetRotation(rpmneedlerot);
+	RPMNeedle.Update();
+
+	SpeedNeedle.Init("Assets/sprite/UI/Needle.DDS", 5.0f, 356.0f);
+	SpeedNeedle.SetPosition(-356.5f, -380.0f, 0.0f);
+	speedneedlerot.SetRotationDegZ(106);
+	SpeedNeedle.SetRotation(speedneedlerot);
+	SpeedNeedle.Update();
+
+	//タコメーターの種類の決定
+	if (vehicle_info.MaxRPM <= 9000.0f) {
+		RPMMeter.Init("Assets/sprite/UI/9000RPM.DDS", 1600.f, 900.0f);
+		RPMMeterPattern = 0;
+	}
+	else if (vehicle_info.MaxRPM <= 13000.0f) {
+		RPMMeter.Init("Assets/sprite/UI/13000RPM.DDS", 1600.f, 900.0f);
+		RPMMeterPattern = 1;
+	}
+	else if (vehicle_info.MaxRPM <= 15000.0f) {
+		RPMMeter.Init("Assets/sprite/UI/15000RPM.DDS", 1600.f, 900.0f);
+		RPMMeterPattern = 2;
+	}
+
+	MaxSpeed = vehicle_info.MaxRPM / vehicle_info.GEAR_RATIOS[vehicle_info.MaxGear - 1] / vehicle_info.FinalGearRatio * (vehicle_info.TireRadius * 2.0) * M_PI * 60.0f / 1000.0f;
+	if (MaxSpeed <= 250.0f) {
+		SpeedMeter.Init("Assets/sprite/UI/250km.DDS", 1600.f, 900.0f);
+		SpeedMeterPattern = 0;
+	}
+	else if (MaxSpeed <= 320.0f) {
+		SpeedMeter.Init("Assets/sprite/UI/320km.DDS", 1600.f, 900.0f);
+		SpeedMeterPattern = 1;
+	}
+	else if (MaxSpeed <= 410.0f) {
+		SpeedMeter.Init("Assets/sprite/UI/410km.DDS", 1600.f, 900.0f);
+		SpeedMeterPattern = 2;
+	}
+	else if (MaxSpeed <= 510.0f) {
+		SpeedMeter.Init("Assets/sprite/UI/510km.DDS", 1600.f, 900.0f);
+		SpeedMeterPattern = 3;
+	}
+
+	//レッドゾーンの設定
+	switch (m_Player->GetCarNum())
+	{
+	case ORECA07:
+		RedZone.Init("Assets/sprite/UI/RedZone/ORECA07.DDS", 1600.f, 900.0f);
+		break;
+	case TOYOTA86GT:
+		RedZone.Init("Assets/sprite/UI/RedZone/86GT.DDS", 1600.f, 900.0f);
+		break;
+	case TOYOTA90Supra:
+		RedZone.Init("Assets/sprite/UI/RedZone/A90.DDS", 1600.f, 900.0f);
+		break;
+	case NissanGTR_17:
+		RedZone.Init("Assets/sprite/UI/RedZone/GTRR35.DDS", 1600.f, 900.0f);
+		break;
+	case MazdaRX_7FD3SSpiritRTypeA:
+		RedZone.Init("Assets/sprite/UI/RedZone/RX_7FD3S.DDS", 1600.f, 900.0f);
+		break;
+	default:
+		break;
+	}
+
+
 	engine = NewGO<SoundSource>(0);
 	engine_s = NewGO<SoundSource>(0);
-	engine_s->Init(200);
+	switch (m_Player->GetCarNum())
+	{
+	case ORECA07:
+		engine_s->Init(200);
+		break;
+	case TOYOTA86GT:
+		engine_s->Init(201);
+		break;
+	case TOYOTA90Supra:
+		engine_s->Init(202);
+		break;
+	case NissanGTR_17:
+		engine_s->Init(203);
+		break;
+	case MazdaRX_7FD3SSpiritRTypeA:
+		engine_s->Init(204);
+		break;
+	default:
+		break;
+	}
+	
 	engine_s->Play(true);
-	engine_s->SetVolume(0.75f);
+	engine_s->SetVolume(m_Player->GetEngineSoundVolume());
 	EngineSoundStopCount++;
 	return true;
 }
@@ -88,6 +179,13 @@ float calculateScaledValue(float currentRPM, float IdolingRPM, float maxRPM, flo
 void FrontWheelBase::Update() {
 	//計算結果を受け取る構造体の宣言
 	SimulationResults ReturnSimulationResults;
+	if (m_PauseState == 1 || m_PauseState == 3) {
+		engine_s->SetVolume(0.0f);
+	}
+	if (m_PauseState == -1) {
+		/*DifferenceVector = { 0.0f,0.0f,1.0f };*/
+		/*m_FrontWheelForward = { 0.0f,0.0f,1.0f };*/
+	}
 	if (g_pad[0]->IsTrigger(enButtonLB1)) {
 		Transmission = true;
 	}
@@ -103,7 +201,7 @@ void FrontWheelBase::Update() {
 	//いったん凍結
 	//Move();
 	Vector3 stickL;
-	if (m_PauseState == 0) {
+	if (m_PauseState == 0|| m_PauseState==-1) {
 		engine_s->SetVolume(1.0f);
 		//アクセルボタンの入力量の取得
 		m_throttle = 0.0f;
@@ -124,7 +222,20 @@ void FrontWheelBase::Update() {
 
 		DegreeOfRotationOfTheHandle = stickL.x * vehicle_info.MaximumSteeringAngleOfTires;
 
-
+		if (AutoDriveState == true) {
+			throttle_input = 1.0f;
+			stickL.x = 0.0f;
+			Transmission = true;
+		}
+		else {
+			
+			if (m_PauseState == -1) {
+				m_FrontWheelForward = m_BackGround->GetStartForward();
+				throttle_input = 0.0f;
+				stickL.x = 0.0f;
+			}
+			Transmission = m_Player->GetTransmission();
+		}
 
 		ReturnSimulationResults = m_caraformula->CarSimulation(
 			vehicle_info,
@@ -150,7 +261,8 @@ void FrontWheelBase::Update() {
 			DegreeOfRotationOfTheHandle,
 			m_FrontWheelForward,
 			FrontWheelOrientationVector,
-			Transmission
+			Transmission,
+			ΔRPM
 		);
 
 		m_FrontWheelPosition = ReturnSimulationResults.Position;
@@ -160,6 +272,7 @@ void FrontWheelBase::Update() {
 		currentRPM = ReturnSimulationResults.CurrentRPM;
 		currentGear = ReturnSimulationResults.CurrentGear;
 		AccelerationVector = ReturnSimulationResults.Acceleration;
+		ΔRPM = ReturnSimulationResults.ΔRPM;
 
 		//float Velocity = sqrt(pow(VelocityVector.x, 2.0) + pow(VelocityVector.y, 2.0) + pow(VelocityVector.z, 2.0));
 		RPMGagescale = (currentRPM - (vehicle_info.MaxRPM - 2000.0f)) / (vehicle_info.MaxRPM - (vehicle_info.MaxRPM - 2000.0f));
@@ -188,18 +301,19 @@ void FrontWheelBase::Update() {
 
 		//プレイヤーの正面ベクトルを正規化
 		m_FrontWheelForward.Normalize();
+		m_FrontWheelForwardCatch = m_FrontWheelForward;
 		if (VelocityVector != 0.0f) {
 			if (stickL.x != 0.0f)
 			{
 
-				m_FrontWheelForward.x = m_FrontWheelForward.x * cos(stickL.x * -0.025) - m_FrontWheelForward.z * sin(stickL.x * -0.025);
-				m_FrontWheelForward.z = m_FrontWheelForward.x * sin(stickL.x * -0.025) + m_FrontWheelForward.z * cos(stickL.x * -0.025);
+				m_FrontWheelForward.x = m_FrontWheelForward.x * cos(stickL.x * vehicle_info.CorneringPower) - m_FrontWheelForward.z * sin(stickL.x * vehicle_info.CorneringPower);
+				m_FrontWheelForward.z = m_FrontWheelForward.x * sin(stickL.x * vehicle_info.CorneringPower) + m_FrontWheelForward.z * cos(stickL.x * vehicle_info.CorneringPower);
 
 				m_FrontWheelRotation.SetRotationY(atan2(m_FrontWheelForward.x, m_FrontWheelForward.z));
 
 			}
 		}
-
+		TurningAngle = acos(m_FrontWheelForward.Dot(m_FrontWheelForwardCatch) / (m_FrontWheelForward.Length() * m_FrontWheelForwardCatch.Length()));
 		Vector3 m_moveSpeed = g_vec3Zero;
 		//上下の移動速度を退避させる
 		float y = m_moveSpeed.y;
@@ -216,6 +330,10 @@ void FrontWheelBase::Update() {
 		DifferenceVector = m_FrontWheelPosition - PastVector;
 		if (DifferenceVector.x == 0.0f, DifferenceVector.y == 0.0f, DifferenceVector.z == 0.0f) {
 			DifferenceVector = LastDVector;
+		}
+		//スタート時の視点の修正
+		if (m_PauseState == -1 && AutoDriveState == false) {
+			DifferenceVector = m_BackGround->GetStartForward();
 		}
 		DifferenceVector.Normalize();
 		PastVector = m_FrontWheelPosition;
@@ -248,16 +366,44 @@ void FrontWheelBase::Update() {
 		DebugPosFont.SetPosition(0.0f, 0.0f, 0.0f);
 		DebugPosFont.SetText(DebugPos);
 
+		wchar_t DebugForward[256];
+		swprintf_s(DebugForward, 256, L"%.3f:%.3f:%.3f\n", m_FrontWheelForward.x, m_FrontWheelForward.y, m_FrontWheelForward.z);
+		DebugFont.SetPosition(0.0f, -100.0f, 0.0f);
+		DebugFont.SetText(DebugForward);
+		
+		//タコメーターの更新
+		ScaleSpeed = VelocityVector * 3600.0f * 2.5f / 1000.0f / 100.0f;
+		if (SpeedMeterPattern == 0) {
+			speedneedlerot.SetRotationDegZ(106 - (ScaleSpeed * 0.8f));
+		}
+		else if (SpeedMeterPattern == 1) {
+			speedneedlerot.SetRotationDegZ(106 - (ScaleSpeed * 0.625f));
+		}
+		else if (SpeedMeterPattern == 2) {
+			speedneedlerot.SetRotationDegZ(106 - (ScaleSpeed * 0.488f));
+		}
+		else if (SpeedMeterPattern == 3) {
+			speedneedlerot.SetRotationDegZ(106 - (ScaleSpeed * 0.392f));
+		}
+		SpeedNeedle.SetRotation(speedneedlerot);
+		SpeedNeedle.Update();
+
+		if (RPMMeterPattern == 0) {
+			rpmneedlerot.SetRotationDegZ(95-(currentRPM*0.0222));
+		}
+		else if (RPMMeterPattern == 1) {
+			rpmneedlerot.SetRotationDegZ(95 - (currentRPM * 0.01538));
+		}
+		else if (RPMMeterPattern == 2) {
+			rpmneedlerot.SetRotationDegZ(95 - (currentRPM * 0.01333));
+		}
+		RPMNeedle.SetRotation(rpmneedlerot);
+		RPMNeedle.Update();
+
 		VelocityFont.SetText(Velocity);
 		GearFont.SetText(Gear);
 	}
-	if(m_PauseState == 1|| m_PauseState==3){
-		engine_s->SetVolume(0.0f);
-	}
-	if (m_PauseState == -1) {
-		DifferenceVector = { 0.0f,0.0f,1.0f };
-		m_FrontWheelForward = { 0.0f,0.0f,1.0f };
-	}
+
 }
 
 void FrontWheelBase::Handling() {
@@ -430,9 +576,15 @@ Vector4 FrontWheelBase::Acceleration() {
 void FrontWheelBase::Render(RenderContext& rc) {
 	if (m_PauseState != 3) {
 		DebugPosFont.Draw(rc);
+		DebugFont.Draw(rc);
 		VelocityFont.Draw(rc);
 		GearFont.Draw(rc);
 		UIBace.Draw(rc);
+		RedZone.Draw(rc);
+		RPMMeter.Draw(rc);
+		SpeedMeter.Draw(rc);
+		RPMNeedle.Draw(rc);
+		SpeedNeedle.Draw(rc);
 		RPMGage.Draw(rc);
 		RPMCover.Draw(rc);
 		ThrottleGage.Draw(rc);

@@ -3,6 +3,7 @@
 #include "PageNum.h"
 #include "Loading.h"
 #include "Sound.h"
+#include "Player.h"
 
 
 #include "sound/SoundEngine.h"
@@ -16,6 +17,8 @@ WorldMode::~WorldMode() {
 }
 
 bool WorldMode::Start() {
+	m_player = FindGO<Player>("player");
+	m_player->Save();
 	Sound* mSound = FindGO<Sound>("sound");
 
 	BaseSprite.Init("Assets/Sprite/MyHome/Base.DDS", 1632.0f, 918.0f);
@@ -46,6 +49,7 @@ bool WorldMode::Start() {
 
 	BGM = NewGO<SoundSource>(0);
 	BGM->Init(0);
+	BGM->SetVolume(m_player->GetBGMVolume());
 	BGM->Play(true);
 
 	return true;
@@ -57,7 +61,11 @@ void WorldMode::Update() {
 	}
 
 	m_SelectSpriteColor.w -= 0.016 * SelectDirection;
-	
+	if (g_pad[0]->IsTrigger(enButtonStart)) {
+		FadeSate = 1;
+		FadeCount = 0;
+		OptionState = true;
+	}
 	switch (SelectState)
 	{
 	case 0:
@@ -72,6 +80,7 @@ void WorldMode::Update() {
 
 				ErrorSE = NewGO<SoundSource>(0);
 				ErrorSE->Init(105);
+				ErrorSE->SetVolume(m_player->GetSEVolume());
 				ErrorSE->Play(false);
 				WindowCount = 0;
 				ErrorWindowFlag = 1;
@@ -79,6 +88,7 @@ void WorldMode::Update() {
 			if (g_pad[0]->IsTrigger(enButtonRight)) {
 				CursorSE = NewGO<SoundSource>(0);
 				CursorSE->Init(100);
+				CursorSE->SetVolume(m_player->GetSEVolume());
 				CursorSE->Play(false);
 
 				m_SelectSpriteColor.w = 1.0f;
@@ -106,6 +116,7 @@ void WorldMode::Update() {
 			}*/
 			DecisionSE = NewGO<SoundSource>(0);
 			DecisionSE->Init(101);
+			DecisionSE->SetVolume(m_player->GetSEVolume());
 			DecisionSE->Play(false);
 			FadeSate = 1;
 			FadeCount = 0;
@@ -113,6 +124,7 @@ void WorldMode::Update() {
 		if (g_pad[0]->IsTrigger(enButtonRight)) {
 			CursorSE = NewGO<SoundSource>(0);
 			CursorSE->Init(100);
+			CursorSE->SetVolume(m_player->GetSEVolume());
 			CursorSE->Play(false);
 
 			m_SelectSpriteColor.w = 1.0f;
@@ -123,6 +135,7 @@ void WorldMode::Update() {
 		if (g_pad[0]->IsTrigger(enButtonLeft)) {
 			CursorSE = NewGO<SoundSource>(0);
 			CursorSE->Init(100);
+			CursorSE->SetVolume(m_player->GetSEVolume());
 			CursorSE->Play(false);
 
 			m_SelectSpriteColor.w = 1.0f;
@@ -133,6 +146,7 @@ void WorldMode::Update() {
 		if (g_pad[0]->IsTrigger(enButtonDown)) {
 			CursorSE = NewGO<SoundSource>(0);
 			CursorSE->Init(100);
+			CursorSE->SetVolume(m_player->GetSEVolume());
 			CursorSE->Play(false);
 
 			m_SelectSpriteColor.w = 1.0f;
@@ -148,19 +162,18 @@ void WorldMode::Update() {
 		CarDealerSelectSprite.SetMulColor(m_NonSelectSpriteColor);
 		TuningSelectSprite.SetMulColor(m_NonSelectSpriteColor);
 		MaintenanceSelectSprite.SetMulColor(m_NonSelectSpriteColor);
-		if (ErrorWindowFlag == 0) {
 			if (g_pad[0]->IsTrigger(enButtonA)) {
-				if (ErrorWindowFlag == 0) {
-					ErrorSE = NewGO<SoundSource>(0);
-					ErrorSE->Init(105);
-					ErrorSE->Play(false);
-					WindowCount = 0;
-					ErrorWindowFlag = 1;
-				}
+				DecisionSE = NewGO<SoundSource>(0);
+				DecisionSE->Init(101);
+				DecisionSE->SetVolume(m_player->GetSEVolume());
+				DecisionSE->Play(false);
+				FadeSate = 1;
+				FadeCount = 0;
 			}
 			if (g_pad[0]->IsTrigger(enButtonLeft)) {
 				CursorSE = NewGO<SoundSource>(0);
 				CursorSE->Init(100);
+				CursorSE->SetVolume(m_player->GetSEVolume());
 				CursorSE->Play(false);
 
 				m_SelectSpriteColor.w = 1.0f;
@@ -171,6 +184,7 @@ void WorldMode::Update() {
 			if (g_pad[0]->IsTrigger(enButtonDown)) {
 				CursorSE = NewGO<SoundSource>(0);
 				CursorSE->Init(100);
+				CursorSE->SetVolume(m_player->GetSEVolume());
 				CursorSE->Play(false);
 
 				m_SelectSpriteColor.w = 1.0f;
@@ -178,7 +192,6 @@ void WorldMode::Update() {
 				Count = 0;
 				SelectState = 5;
 			}
-		}
 		break;
 	case 3:
 		LicenseSelectSprite.SetMulColor(m_NonSelectSpriteColor);
@@ -192,6 +205,7 @@ void WorldMode::Update() {
 				if (ErrorWindowFlag == 0) {
 					ErrorSE = NewGO<SoundSource>(0);
 					ErrorSE->Init(105);
+					ErrorSE->SetVolume(m_player->GetSEVolume());
 					ErrorSE->Play(false);
 					WindowCount = 0;
 					ErrorWindowFlag = 1;
@@ -201,6 +215,7 @@ void WorldMode::Update() {
 			if (g_pad[0]->IsTrigger(enButtonRight)) {
 				CursorSE = NewGO<SoundSource>(0);
 				CursorSE->Init(100);
+				CursorSE->SetVolume(m_player->GetSEVolume());
 				CursorSE->Play(false);
 
 				m_SelectSpriteColor.w = 1.0f;
@@ -211,6 +226,7 @@ void WorldMode::Update() {
 			if (g_pad[0]->IsTrigger(enButtonLeft)) {
 				CursorSE = NewGO<SoundSource>(0);
 				CursorSE->Init(100);
+				CursorSE->SetVolume(m_player->GetSEVolume());
 				CursorSE->Play(false);
 
 				m_SelectSpriteColor.w = 1.0f;
@@ -221,6 +237,7 @@ void WorldMode::Update() {
 			if (g_pad[0]->IsTrigger(enButtonDown)) {
 				CursorSE = NewGO<SoundSource>(0);
 				CursorSE->Init(100);
+				CursorSE->SetVolume(m_player->GetSEVolume());
 				CursorSE->Play(false);
 
 				m_SelectSpriteColor.w = 1.0f;
@@ -244,6 +261,7 @@ void WorldMode::Update() {
 				if (ErrorWindowFlag == 0) {
 					ErrorSE = NewGO<SoundSource>(0);
 					ErrorSE->Init(105);
+					ErrorSE->SetVolume(m_player->GetSEVolume());
 					ErrorSE->Play(false);
 					WindowCount = 0;
 					ErrorWindowFlag = 1;
@@ -253,6 +271,7 @@ void WorldMode::Update() {
 			if (g_pad[0]->IsTrigger(enButtonRight)) {
 				CursorSE = NewGO<SoundSource>(0);
 				CursorSE->Init(100);
+				CursorSE->SetVolume(m_player->GetSEVolume());
 				CursorSE->Play(false);
 
 				m_SelectSpriteColor.w = 1.0f;
@@ -263,6 +282,7 @@ void WorldMode::Update() {
 			if (g_pad[0]->IsTrigger(enButtonLeft)) {
 				CursorSE = NewGO<SoundSource>(0);
 				CursorSE->Init(100);
+				CursorSE->SetVolume(m_player->GetSEVolume());
 				CursorSE->Play(false);
 
 				m_SelectSpriteColor.w = 1.0f;
@@ -273,6 +293,7 @@ void WorldMode::Update() {
 			if (g_pad[0]->IsTrigger(enButtonDown)) {
 				CursorSE = NewGO<SoundSource>(0);
 				CursorSE->Init(100);
+				CursorSE->SetVolume(m_player->GetSEVolume());
 				CursorSE->Play(false);
 
 				m_SelectSpriteColor.w = 1.0f;
@@ -294,6 +315,7 @@ void WorldMode::Update() {
 				if (ErrorWindowFlag == 0) {
 					ErrorSE = NewGO<SoundSource>(0);
 					ErrorSE->Init(105);
+					ErrorSE->SetVolume(m_player->GetSEVolume());
 					ErrorSE->Play(false);
 					WindowCount = 0;
 					ErrorWindowFlag = 1;
@@ -303,6 +325,7 @@ void WorldMode::Update() {
 			if (g_pad[0]->IsTrigger(enButtonLeft)) {
 				CursorSE = NewGO<SoundSource>(0);
 				CursorSE->Init(100);
+				CursorSE->SetVolume(m_player->GetSEVolume());
 				CursorSE->Play(false);
 
 				m_SelectSpriteColor.w = 1.0f;
@@ -313,6 +336,7 @@ void WorldMode::Update() {
 			if (g_pad[0]->IsTrigger(enButtonUp)) {
 				CursorSE = NewGO<SoundSource>(0);
 				CursorSE->Init(100);
+				CursorSE->SetVolume(m_player->GetSEVolume());
 				CursorSE->Play(false);
 
 				m_SelectSpriteColor.w = 1.0f;
@@ -343,6 +367,7 @@ void WorldMode::Update() {
 		if (g_pad[0]->IsTrigger(enButtonA)) {
 			DecisionSE = NewGO<SoundSource>(0);
 			DecisionSE->Init(101);
+			DecisionSE->SetVolume(m_player->GetSEVolume());
 			DecisionSE->Play(false);
 			ErrorWindowFlag = 3;
 			WindowCount = 0;
@@ -382,38 +407,50 @@ void WorldMode::Update() {
 	else if (FadeSate == 1) {
 		
 		if (FadeCount > 5) {
-			switch (SelectState)
-			{
-			case 0:
+			if (OptionState == true) {
 				m_loading = NewGO<Loading>(10, "loading");
 				m_loading->SetWhereCome(WorldMenuPage);
-				m_loading->SetWhereGo(GaragePage);
+				m_loading->SetWhereGo(OptionPage);
 				DeleteGO(BGM);
 				DeleteGO(this);
-				break;
-			case 1:
-				m_loading = NewGO<Loading>(10, "loading");
-				m_loading->SetWhereCome(WorldMenuPage);
-				m_loading->SetWhereGo(RaceMenuPage);
-				DeleteGO(BGM);
-				DeleteGO(this);
-				break;
-			case 2:
-				
-				break;
-			case 3:
-				CarDealerSelectSprite.SetMulColor(m_SelectSpriteColor);
-				break;
-			case 4:
-				TuningSelectSprite.SetMulColor(m_SelectSpriteColor);
-				break;
-			case 5:
-				MaintenanceSelectSprite.SetMulColor(m_SelectSpriteColor);
-				break;
-			default:
-				break;
 			}
-			
+			else {
+				switch (SelectState)
+				{
+				case 0:
+					m_loading = NewGO<Loading>(10, "loading");
+					m_loading->SetWhereCome(WorldMenuPage);
+					m_loading->SetWhereGo(GaragePage);
+					DeleteGO(BGM);
+					DeleteGO(this);
+					break;
+				case 1:
+					m_loading = NewGO<Loading>(10, "loading");
+					m_loading->SetWhereCome(WorldMenuPage);
+					m_loading->SetWhereGo(RaceMenuPage);
+					DeleteGO(BGM);
+					DeleteGO(this);
+					break;
+				case 2:
+					m_loading = NewGO<Loading>(10, "loading");
+					m_loading->SetWhereCome(WorldMenuPage);
+					m_loading->SetWhereGo(LicenseModePage);
+					DeleteGO(BGM);
+					DeleteGO(this);
+					break;
+				case 3:
+					CarDealerSelectSprite.SetMulColor(m_SelectSpriteColor);
+					break;
+				case 4:
+					TuningSelectSprite.SetMulColor(m_SelectSpriteColor);
+					break;
+				case 5:
+					MaintenanceSelectSprite.SetMulColor(m_SelectSpriteColor);
+					break;
+				default:
+					break;
+				}
+			}
 		}
 		else {
 

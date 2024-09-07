@@ -33,8 +33,16 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Sebring.cpp" />
     <ClCompile Include="Garage.cpp" />
-    <ClCompile Include="PlayerDate.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="LeMans.cpp" />
+    <ClCompile Include="LicenseMode.cpp" />
+    <ClCompile Include="Car_86GT.cpp" />
+    <ClCompile Include="Monza.cpp" />
+    <ClCompile Include="Car_RX7FD.cpp" />
+    <ClCompile Include="Car_A90Supra.cpp" />
+    <ClCompile Include="Car_GTRR35.cpp" />
+    <ClCompile Include="LicenseRace.cpp" />
+    <ClCompile Include="OptionMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -66,7 +74,15 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Sebring.h" />
     <ClInclude Include="Garage.h" />
-    <ClInclude Include="PlayerDate.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="LeMans.h" />
+    <ClInclude Include="LicenseMode.h" />
+    <ClInclude Include="Car_86GT.h" />
+    <ClInclude Include="Monza.h" />
+    <ClInclude Include="Car_RX7FD.h" />
+    <ClInclude Include="Car_A90Supra.h" />
+    <ClInclude Include="Car_GTRR35.h" />
+    <ClInclude Include="LicenseRace.h" />
+    <ClInclude Include="OptionMenu.h" />
   </ItemGroup>
 </Project>

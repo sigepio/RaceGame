@@ -17,7 +17,11 @@ public:
     void SetGameEnd(bool m_GameEnd) {
         GameEnd = m_GameEnd;
     }
+    Vector3 GetStartPosition() {
+        return StartPosition;
+    }
 private:
+    Vector3 StartPosition = { 0.0f,-66.980f,0.0f };
     //当たり判定のあるオブジェクト
     std::unique_ptr<ModelRender> m_groundModel;
     PhysicsStaticObject m_physicsStaticObject;//静的物理オブジェクト。

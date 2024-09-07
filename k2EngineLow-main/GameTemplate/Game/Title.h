@@ -3,7 +3,9 @@ class Sound;
 class Menu;
 class TimeTrialMode;
 class Loading;
-class PlayerDate;
+class Player;
+class GameCamera;
+class Lighting;
 
 class Title:public IGameObject,Noncopyable
 {
@@ -17,6 +19,10 @@ public:
 private:
 	Loading* m_loading;
 	Sound* m_Sound;
+	GameCamera* m_GameCamera;
+	Lighting* m_Lighting;
+
+	ModelRender CarModel;
 
 	SpriteRender m_TitleSprite;
 	SpriteRender m_PressStartSprite;

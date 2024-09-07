@@ -8,6 +8,9 @@
 #include "TimeTrialMode.h"
 #include "Tips.h"
 #include "GameCamera.h"
+#include "LicenseMode.h"
+#include "LicenseRace.h"
+#include "OptionMenu.h"
 #include <math.h>
 #include <map>
 #include <random>
@@ -50,13 +53,28 @@ std::vector<const char*> collectAllTips() {
     for (const auto& tip : SebringTipsList) {
         allTips.push_back(tip.second);
     }
-
-
+    for (const auto& tip : LeMansTipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : MonzaTipsList) {
+        allTips.push_back(tip.second);
+    }
     // 車種のTipsを集める
     for (const auto& tip : ORECA07TipsList) {
         allTips.push_back(tip.second);
     }
-
+    for (const auto& tip : TOYOTA86GTTipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : FD3STipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : A90SupraTipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : GTRR35TipsList) {
+        allTips.push_back(tip.second);
+    }
 
     return allTips;
 }
@@ -82,12 +100,30 @@ const char* getLoadingScreenTip(int course, int car) {
             if (course == 0) {
                 tip = getRandomTip(SebringTipsList);
             }
+            else if (course == 1) {
+                tip = getRandomTip(LeMansTipsList);
+            }
+            else if (course == 2) {
+                tip = getRandomTip(MonzaTipsList);
+            }
 
         }
         else {
             // 車種のTipsを選択
             if (car == 0) {
                 tip = getRandomTip(ORECA07TipsList);
+            }
+            else if (car == 1) {
+                tip = getRandomTip(TOYOTA86GTTipsList);
+            }
+            else if (car == 2) {
+                tip = getRandomTip(A90SupraTipsList);
+            }
+            else if (car == 3) {
+                tip = getRandomTip(GTRR35TipsList);
+            }
+            else if (car == 4) {
+                tip = getRandomTip(FD3STipsList);
             }
 
         }
@@ -113,6 +149,18 @@ void Loading::SetTips(int CarState, int CourseState) {
         case ORECA07:
             CarLogo.Init("Assets/Sprite/Loading/ORECALogo.DDS", 1600.0f, 900.0f);
             break;
+        case TOYOTA86GT:
+            CarLogo.Init("Assets/Sprite/Loading/TOYOTALogo.DDS", 1600.0f, 900.0f);
+            break;
+        case TOYOTA90Supra:
+            CarLogo.Init("Assets/Sprite/Loading/TOYOTALogo.DDS", 1600.0f, 900.0f);
+            break;
+        case NissanGTR_17:
+            CarLogo.Init("Assets/Sprite/Loading/NISSANLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case MazdaRX_7FD3SSpiritRTypeA:
+            CarLogo.Init("Assets/Sprite/Loading/MAZDALogo.DDS", 1600.0f, 900.0f);
+            break;
         default:
             break;
         }
@@ -121,8 +169,14 @@ void Loading::SetTips(int CarState, int CourseState) {
     if (CourseState != -1) {
         switch (CourseState)
         {
-        case Sebring:
+        case sebring:
             CourseLogo.Init("Assets/Sprite/Loading/SebringLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case CircuitDeLaSarthe:
+            CourseLogo.Init("Assets/Sprite/Loading/LeMansLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case AutodromoNazionaleDiMonza:
+            CourseLogo.Init("Assets/Sprite/Loading/MonzaLogo.DDS", 1600.0f, 900.0f);
             break;
         default:
             break;
@@ -157,6 +211,9 @@ void Loading::HandleSceneTransition() {
     case GaragePage:
         HandleGaragePageTransition();
         break;
+    case LicenseModePage:
+        HandleLicenseModeTransition();
+        break;
     case RaceMenuPage:
         HandleRaceMenuPageTransition();
         break;
@@ -165,6 +222,9 @@ void Loading::HandleSceneTransition() {
         break;
     case PlayPage:
         HandlePlayPageTransition();
+        break;
+    case OptionPage:
+        HandleOptionPageTransition();
         break;
     default:
         break;
@@ -187,9 +247,21 @@ void Loading::HandleWorldMenuPageTransition() {
             m_racemenu = NewGO<RaceMenu>(0, "racemenu");
            HandleFadeOutTransition();
     }
+    else if (WhereGo == LicenseModePage) {
+        if (FadeCount == 0)
+            m_LicenseMode = NewGO<LicenseMode>(0, "licensemode");
+        HandleFadeOutTransition();
+    }
     else if (WhereGo == GaragePage) {
         if (FadeCount == 0)
             m_Garage = NewGO<Garage>(0, "garage");
+        HandleFadeOutTransition();
+    }
+    else if (WhereGo == OptionPage) {
+        if (FadeCount == 0) {
+            m_OptionMenu = NewGO<OptionMenu>(0, "optionmenu");
+            m_OptionMenu->SetWhereComePage(WhereCome);
+        }
         HandleFadeOutTransition();
     }
 }
@@ -216,6 +288,7 @@ void Loading::HandleRaceMenuPageTransition() {
         }
             HandleFadeOutTransition();
     }
+    
     //ワールドメニューへ戻る
     if (WhereGo == WorldMenuPage) {
         if (FadeCount == 0)
@@ -224,7 +297,25 @@ void Loading::HandleRaceMenuPageTransition() {
     } 
 }
 
-
+//ライセンスモードから
+void Loading::HandleLicenseModeTransition() {
+    //レースロビーへ
+    if (WhereGo == RaceLobbyPage) {
+        if (FadeCount == 0) {
+            m_MainRaceManager = NewGO<MainRaceManager>(0, "mainracemanager");
+            m_MainRaceManager->SetCourseNum(CourseState);
+            m_MainRaceManager->SetCarInformation(CarState);
+            m_MainRaceManager->SetLicenseNum(LicenseNum);
+        }
+        HandleFadeOutTransition();
+    }
+    //ワールドメニューへ戻る
+    if (WhereGo == WorldMenuPage) {
+        if (FadeCount == 0)
+            m_menu = NewGO<Menu>(1, "menu");
+        HandleFadeOutTransition();
+    }
+}
 
 //レースロビーから
 void Loading::HandleRaceLobbyPageTransition() {
@@ -232,18 +323,32 @@ void Loading::HandleRaceLobbyPageTransition() {
     if (WhereGo == PlayPage) {
         if (FadeCount == 0) {
             m_gamecamera = FindGO<GameCamera>("gamecamera");
-            m_TimeTrialMode = NewGO<TimeTrialMode>(0, "timetrialmode");
-            m_TimeTrialMode->SetGameMode(CircuitExperience);
+            if (LicenseNum == 0) {
+                m_TimeTrialMode = NewGO<TimeTrialMode>(0, "timetrialmode");
+                m_TimeTrialMode->SetGameMode(CircuitExperience);
+            }
+            else {
+                m_LicenseRace = NewGO<LicenseRace>(0, "licenserace");
+                m_LicenseRace->SetLicenseNum(LicenseNum);
+                m_LicenseRace->SetCourseNum(CourseState);
+            }
             m_gamecamera->SetPlayFlag(true);
         }
         HandleFadeOutTransition();
     }
     //レースメニューへ戻る
-    if (WhereGo == RaceMenuPage) {
-        if (FadeCount == 0)
-            m_racemenu = NewGO<RaceMenu>(0, "racemenu");
-        HandleFadeOutTransition();
-    }
+       if (WhereGo == RaceMenuPage) {
+           if (FadeCount == 0)
+               m_racemenu = NewGO<RaceMenu>(0, "racemenu");
+           HandleFadeOutTransition();
+       }
+    //ライセンスモードの時
+       else {
+           if (FadeCount == 0)
+               m_LicenseMode = NewGO<LicenseMode>(0, "licensemode");
+           HandleFadeOutTransition();
+       }
+
 }
 
 //インゲームから
@@ -254,19 +359,42 @@ void Loading::HandlePlayPageTransition() {
             m_MainRaceManager = NewGO<MainRaceManager>(0, "mainracemanager");
             m_MainRaceManager->SetCourseNum(CourseState);
             m_MainRaceManager->SetCarInformation(CarState);
+            m_MainRaceManager->SetLicenseNum(LicenseNum);
         }
         HandleFadeOutTransition();
     }
+    
     if (WhereGo == PlayPage) {
-        if (FadeCount == 0) {
-            m_gamecamera = FindGO<GameCamera>("gamecamera");
-            m_TimeTrialMode = NewGO<TimeTrialMode>(0, "timetrialmode");
-            m_gamecamera->SetPlayFlag(true);
+        if (LicenseNum == 0) {
+            if (FadeCount == 0) {
+                m_gamecamera = FindGO<GameCamera>("gamecamera");
+                m_TimeTrialMode = NewGO<TimeTrialMode>(0, "timetrialmode");
+                m_gamecamera->SetPlayFlag(true);
+            }
+            HandleFadeOutTransition();
         }
-        HandleFadeOutTransition();
+        else {
+            if (FadeCount == 0) {
+                m_gamecamera = FindGO<GameCamera>("gamecamera");
+                m_LicenseRace = NewGO<LicenseRace>(0, "licenserace");
+                m_LicenseRace->SetLicenseNum(LicenseNum);
+                m_LicenseRace->SetCourseNum(CourseState);
+                m_gamecamera->SetPlayFlag(true);
+            }
+            HandleFadeOutTransition();
+        }
     }
 }
 
+//オプションメニューから
+void Loading::HandleOptionPageTransition() {
+    //ワールドメニューへ戻る
+    if (WhereGo == WorldMenuPage) {
+        if (FadeCount == 0)
+            m_menu = NewGO<Menu>(1, "menu");
+        HandleFadeOutTransition();
+    }
+}
 
 //遷移
 void Loading::HandleFadeOutTransition() {

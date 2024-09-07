@@ -5,6 +5,9 @@ class MainRaceManager;
 class TimeTrialMode;
 class GameCamera;
 class Garage;
+class LicenseMode;
+class LicenseRace;
+class OptionMenu;
 
 class Loading:public IGameObject
 {
@@ -20,10 +23,12 @@ public:
 	void HandleTitlePageTransition();
 	void HandleWorldMenuPageTransition();
 	void HandleRaceMenuPageTransition();
+	void HandleLicenseModeTransition();
 	void HandleRaceLobbyPageTransition();
 	void HandleFadeOutTransition();
 	void HandlePlayPageTransition();
 	void HandleGaragePageTransition();
+	void HandleOptionPageTransition();
 
 	void SetWhereCome(int m_WhereCome) {
 		WhereCome = m_WhereCome;
@@ -39,6 +44,14 @@ public:
 
 	void SetCourse(int m_CourseState) {
 		CourseState = m_CourseState;
+	}
+
+	void SetPlayMode(int m_PlayMode) {
+		PlayMode = m_PlayMode;
+	}
+
+	void SetLicenseNum(int m_LicenseNum) {
+		LicenseNum = m_LicenseNum;
 	}
 
 
@@ -58,11 +71,18 @@ private:
 	TimeTrialMode* m_TimeTrialMode;
 	GameCamera* m_gamecamera;
 	Garage* m_Garage;
+	LicenseMode* m_LicenseMode;
+	LicenseRace* m_LicenseRace;
+	OptionMenu* m_OptionMenu;
 
 	int WhereCome = 0;			//0:タイトル
 	int WhereGo = 0;			//0:タイトル
 	int CarState = -1;			//0:Oreca07
 	int CourseState = -1;		//0:セブリング
+
+	int PlayMode = 0; //0:タイムアタック 1:サーキットエクスペリエンス 2:ライセンス 3:ワールドチャレンジ
+
+	int LicenseNum=0;//1～5:B 6～10:A 11～15:IB 16～20:IA 21～25:S
 
 	int FadeCount;
 	int LoadCount = 0;

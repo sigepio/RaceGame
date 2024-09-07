@@ -5,7 +5,7 @@
 
 
 class Loading;
-
+class Player;
 
 class WorldMode:public IGameObject
 {
@@ -48,6 +48,7 @@ private:
 	SpriteRender BlackOut;
 
 	Loading* m_loading;
+	Player* m_player;
 	SoundSource* BGM;
 	SoundSource* CursorSE;
 	SoundSource* DecisionSE;
@@ -67,5 +68,7 @@ private:
 	int SelectDirection = 1;
 	int SelectFlag[6] = { 0,0,0,0,0,0 };
 	int FadeCount = 0;
+
+	bool OptionState = false;
 };
 

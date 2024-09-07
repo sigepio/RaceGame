@@ -11,6 +11,11 @@
 #include "CarAFormula.h"
 #include "Loading.h"
 #include "PageNum.h"
+#include "Car_86GT.h"
+#include "Car_RX7FD.h"
+#include "Car_A90Supra.h"
+#include "Car_GTRR35.h"
+#include "Player.h"
 #define _USE_MATH_DEFINES
 
 
@@ -23,24 +28,80 @@ TimeTrialMode::~TimeTrialMode() {
 }
 
 bool TimeTrialMode::Start() {
-	
-	PassedTimeBaseSprite.Init("Assets/sprite/CircuitExperience/PassedTimeBase.DDS", 1600.0f, 900.0f);
-	PassedTimeSprite.Init("Assets/sprite/CircuitExperience/PassedTimeSebring.DDS", 1600.0f, 900.0f);
-
 	m_background = FindGO<BackGround>("background");
 	m_gamecamera = FindGO<GameCamera>("gamecamera");
 	m_lighting = FindGO<Lighting>("lighting");
 	m_skyCube = FindGO<SkyCube>("skycube");
-
-	m_Oreca07 = NewGO<Car_Oreca07>(2, "car_oreca07");
-	
+	m_player = FindGO<Player>("player");
+	CarNum = m_player->GetCarNum();
 	m_caraformula = NewGO<CarAFormula>(0, "caraformula");
 
+	//クリアタイムの設定
+	switch (m_player->GetNowCourse())
+	{
+	case 1:
+		ClearTime = { 80.500f,83.200f,90.000f };
+		break;
+	case 2:
+		ClearTime = { 16.200,17.500,20.000 };
+		break;
+	case 3:
+		ClearTime = { 32.500,34.200,36.000 };
+		break;
+	default:
+		break;
+	}
+
+	
+	PassedTimeBaseSprite.Init("Assets/sprite/CircuitExperience/PassedTimeBase.DDS", 1600.0f, 900.0f);
+	//目標タイムの画像の読み込み
+	PassedTimeSprite.Init("Assets/sprite/CircuitExperience/PassedTimeSebring.DDS", 1600.0f, 900.0f);
+
+	
+
+	switch (CarNum)
+	{
+	case ORECA07:
+		m_Oreca07 = NewGO<Car_Oreca07>(2, "car_oreca07");
+		break;
+	case TOYOTA86GT:
+		m_86GT = NewGO<Car_86GT>(2, "car_86gt");
+		break;
+	case TOYOTA90Supra:
+		m_A90Supra = NewGO<Car_A90Supra>(2, "car_a90supra");
+		break;
+	case NissanGTR_17:
+		m_GTRR35 = NewGO<Car_GTRR35>(2, "car_gtrr35");
+		break;
+	case MazdaRX_7FD3SSpiritRTypeA:
+		m_FD3S = NewGO<Car_RX7FD>(2, "car_rx7fd");
+		break;
+	default:
+		break;
+	}
+	
+
+	
+	//タイムのUIの設定
 	TimeUIRender.Init("Assets/sprite/TimeUi.DDS", 1920.0f, 1080.0f);
 	m_TimeUIPosition.y = -48.0f;
 	TimeUIRender.SetPosition(m_TimeUIPosition);
 	TimeUIRender.Update();
-	CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUI.DDS", 1600.0f, 900.0f);
+	//コース図の設定
+	switch (m_player->GetNowCourse())
+	{
+	case sebring:
+		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUI.DDS", 1600.0f, 900.0f);
+		break;
+	case CircuitDeLaSarthe:
+		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUILeMans.DDS", 1600.0f, 900.0f);
+		break;
+	case AutodromoNazionaleDiMonza:
+		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUIMonza.DDS", 1600.0f, 900.0f);
+		break;
+	default:
+		break;
+	}
 
 	/*FastestLapsRender.Init("Assets/sprite/FastestLap.DDS", 1632.0f, 918.0f);
 	m_FastestLapsPosition = { Vector3(700.0f, 360.0f, 0.0f) };
@@ -48,26 +109,41 @@ bool TimeTrialMode::Start() {
 	FastestLapsRender.Update();*/
 
 	//StartRender.Init("Assets/modelData/course/track1.tkm", false);
-	
+	//ポーズ画面のUI設定
 	PauseSprite.Init("Assets/sprite/UI/Pause.DDS", 1600.0f, 900.0f);
 	PauseSprite.SetMulColor(m_Pausecolor);
-
+	//再開用
 	ContinueSpriteNonSelect.Init("Assets/sprite/UI/Pause_Continue_Non_Select.DDS", 1600.0f, 900.0f);
 	ContinueSpriteNonSelect.SetMulColor(m_Pausecolor);
 	ContinueSpriteNonSelect.SetPosition(m_Pauseposition);
 	ContinueSpriteSelect.Init("Assets/sprite/UI/Pause_Continue_Select.DDS", 1600.0f, 900.0f);
 	ContinueSpriteSelect.SetMulColor(m_Pausecolor);
 	ContinueSpriteSelect.SetPosition(m_Pauseposition);
-
+	//Exit用
 	ExitSpriteNonSelect.Init("Assets/sprite/UI/Pause_Exit_Non_Select.DDS", 1600.0f, 900.0f);
 	ExitSpriteNonSelect.SetMulColor(m_Pausecolor);
 	ExitSpriteNonSelect.SetPosition(m_Pauseposition);
 	ExitSpriteSelect.Init("Assets/sprite/UI/Pause_Exit_Select.DDS", 1600.0f, 900.0f);
 	ExitSpriteSelect.SetMulColor(m_Pausecolor);
 	ExitSpriteSelect.SetPosition(m_Pauseposition);
+	//リトライ用
+	RetryNonSelect.Init("Assets/sprite/UI/Pause_Retry_Non_Select.DDS", 1600.0f, 900.0f);
+	RetryNonSelect.SetMulColor(m_Pausecolor);
+	RetryNonSelect.SetPosition(m_Pauseposition);
+	RetrySelect.Init("Assets/sprite/UI/Pause_Retry_Select.DDS", 1600.0f, 900.0f);
+	RetrySelect.SetMulColor(m_Pausecolor);
+	RetrySelect.SetPosition(m_Pauseposition);
+	//更新
+	ContinueSpriteNonSelect.Update();
+	ContinueSpriteSelect.Update();
+	ExitSpriteNonSelect.Update();
+	ExitSpriteSelect.Update();
+	RetryNonSelect.Update();
+	RetrySelect.Update();
+	PauseSprite.Update();
 
 	//PauseSprite.Update();
-
+	//スタートシグナル用
 	StartSignalBaseRender.Init("Assets/sprite/StartSignal/Base.DDS", 1600.0f, 900.0f);
 	StartSignalBaseRender.SetPosition(StartSignalPosition);
 	StartSignalBaseRender.Update();
@@ -98,12 +174,14 @@ void TimeTrialMode::Update() {
 				if (StartSignal < 4) {
 					CountSignalSE = NewGO<SoundSource>(0);
 					CountSignalSE->Init(103);
+					CountSignalSE->SetVolume(m_player->GetSEVolume());
 					CountSignalSE->Play(false);
 				}
 			}
 			if (StartSignal == 4) {
 				StartSignalSE = NewGO<SoundSource>(0);
 				StartSignalSE->Init(104);
+				StartSignalSE->SetVolume(m_player->GetSEVolume());
 				StartSignalSE->Play(false);
 				PauseState = 0;
 				StartSignalSetCount = 0;
@@ -113,7 +191,7 @@ void TimeTrialMode::Update() {
 				
 				BGM->Init(3);
 				BGM->Play(false);
-				BGM->SetVolume(0.5f);
+				BGM->SetVolume(m_player->GetBGMVolume()/2.0f);
 			}
 			
 		}
@@ -142,7 +220,7 @@ void TimeTrialMode::Update() {
 					
 					BGM->Init(BGMTrack+2);
 					BGM->Play(false);
-					BGM->SetVolume(0.5f);
+					BGM->SetVolume(m_player->GetBGMVolume() / 2.0f);
 					if (MAXRaceBGM == BGMTrack)
 						BGMTrack = 0;
 				}
@@ -172,15 +250,21 @@ void TimeTrialMode::Update() {
 			ExitSpriteNonSelect.SetPosition(m_Pauseposition);
 			ExitSpriteSelect.SetMulColor(m_Pausecolor);
 			ExitSpriteSelect.SetPosition(m_Pauseposition);
+			RetryNonSelect.SetMulColor(m_Pausecolor);
+			RetryNonSelect.SetPosition(m_Pauseposition);
+			RetrySelect.SetMulColor(m_Pausecolor);
+			RetrySelect.SetPosition(m_Pauseposition);
 
 			ContinueSpriteNonSelect.Update();
 			ContinueSpriteSelect.Update();
 			ExitSpriteNonSelect.Update();
 			ExitSpriteSelect.Update();
+			RetryNonSelect.Update();
+			RetrySelect.Update();
 			PauseSprite.Update();
 		}
 		//ゲームに戻る
-		else if (g_pad[0]->IsTrigger(enButtonStart)|| g_pad[0]->IsTrigger(enButtonA)&&PauseWindowState==0){
+		else if (g_pad[0]->IsTrigger(enButtonStart) || g_pad[0]->IsTrigger(enButtonA) && PauseWindowState == 0) {
 			BGM->Play(false);
 			PauseState = 2;
 			PauseCount = 0;
@@ -196,17 +280,71 @@ void TimeTrialMode::Update() {
 				PauseWindowState = 0;
 			}
 		}
-		//ゲームを終わる
+		//リトライ
 		else if (g_pad[0]->IsTrigger(enButtonA) && PauseWindowState == 1) {
 			m_Loading = NewGO<Loading>(0, "loading");
-			m_Loading->SetCar(0);
-			m_Loading->SetCourse(0);
+			m_Loading->SetCar(CarNum);
+			m_Loading->SetCourse(m_player->GetNowCourse());
+			m_Loading->SetWhereCome(PlayPage);
+			m_Loading->SetWhereGo(PlayPage);
+			DeleteGO(BGM);
+
+			GameEnd = true;
+			switch (CarNum)
+			{
+			case ORECA07:
+				m_Oreca07->SetGameEnd(GameEnd);
+				break;
+			case TOYOTA86GT:
+				m_86GT->SetGameEnd(GameEnd);
+				break;
+			case TOYOTA90Supra:
+				m_A90Supra->SetGameEnd(GameEnd);
+				break;
+			case NissanGTR_17:
+				m_GTRR35->SetGameEnd(GameEnd);
+				break;
+			case MazdaRX_7FD3SSpiritRTypeA:
+				m_FD3S->SetGameEnd(GameEnd);
+				break;
+			default:
+				break;
+			}
+			m_caraformula->SetGameEnd(GameEnd);
+			DeleteGO(this);
+		}
+		//ゲームを終わる
+		else if (g_pad[0]->IsTrigger(enButtonA) && PauseWindowState == 2) {
+			m_Loading = NewGO<Loading>(0, "loading");
+			m_Loading->SetCar(CarNum);
+			m_Loading->SetCourse(m_player->GetNowCourse());
 			m_Loading->SetWhereCome(PlayPage);
 			m_Loading->SetWhereGo(RaceLobbyPage);
+			DeleteGO(BGM);
 
 			GameEnd = true;
 			m_gamecamera->SetGameEnd(GameEnd);
-			m_Oreca07->SetGameEnd(GameEnd);
+			switch (CarNum)
+			{
+			case ORECA07:
+				m_Oreca07->SetGameEnd(GameEnd);
+				break;
+			case TOYOTA86GT:
+				m_86GT->SetGameEnd(GameEnd);
+				break;
+			case TOYOTA90Supra:
+				m_A90Supra->SetGameEnd(GameEnd);
+				break;
+			case NissanGTR_17:
+				m_GTRR35->SetGameEnd(GameEnd);
+				break;
+			case MazdaRX_7FD3SSpiritRTypeA:
+				m_FD3S->SetGameEnd(GameEnd);
+				break;
+			default:
+				break;
+			}
+
 			m_lighting->SetGameEnd(GameEnd);
 			m_caraformula->SetGameEnd(GameEnd);
 			m_background->SetGameEnd(GameEnd);
@@ -214,21 +352,23 @@ void TimeTrialMode::Update() {
 			DeleteGO(m_skyCube);
 			DeleteGO(this);
 		}
-		else if (g_pad[0]->IsTrigger(enButtonRight) && PauseWindowState == 0) {
-			PauseWindowState = 1;
+		else if (g_pad[0]->IsTrigger(enButtonRight) && PauseWindowState >= 0 && PauseWindowState < 2) {
+			PauseWindowState++;
 		}
-		else if (g_pad[0]->IsTrigger(enButtonLeft) && PauseWindowState == 1) {
-			PauseWindowState = 0;
+		else if (g_pad[0]->IsTrigger(enButtonLeft) && PauseWindowState >= 1 && PauseWindowState <= 2) {
+			PauseWindowState--;
 		}
 
-		
+
 
 		PauseCount++;
 	}
+	//ポーズを閉じる処理
 	if (PauseState == 2) {
 		if (PauseCount <= 10) {
 			m_Pausecolor.w -= 0.1f;
 			m_Pauseposition.y -= 5.0f;
+			PauseSprite.SetMulColor(m_Pausecolor);
 			ContinueSpriteNonSelect.SetMulColor(m_Pausecolor);
 			ContinueSpriteNonSelect.SetPosition(m_Pauseposition);
 			ContinueSpriteSelect.SetMulColor(m_Pausecolor);
@@ -237,12 +377,17 @@ void TimeTrialMode::Update() {
 			ExitSpriteNonSelect.SetPosition(m_Pauseposition);
 			ExitSpriteSelect.SetMulColor(m_Pausecolor);
 			ExitSpriteSelect.SetPosition(m_Pauseposition);
+			RetryNonSelect.SetMulColor(m_Pausecolor);
+			RetryNonSelect.SetPosition(m_Pauseposition);
+			RetrySelect.SetMulColor(m_Pausecolor);
+			RetrySelect.SetPosition(m_Pauseposition);
 
 			ContinueSpriteNonSelect.Update();
 			ContinueSpriteSelect.Update();
 			ExitSpriteNonSelect.Update();
 			ExitSpriteSelect.Update();
-			PauseSprite.SetMulColor(m_Pausecolor);
+			RetryNonSelect.Update();
+			RetrySelect.Update();
 			PauseSprite.Update();
 		}
 		else {
@@ -250,7 +395,7 @@ void TimeTrialMode::Update() {
 		}
 		PauseCount++;
 	}
-	
+	//タイマーの処理
 	if (m_timer >= 60.0f) {
 		m_timerminit ++;
 		m_timer =0;
@@ -267,9 +412,98 @@ void TimeTrialMode::Update() {
 	
 
 	TimeFont.SetText(Time);
+	//ラップの処理
+	switch (CarNum)
+	{
+	case ORECA07:
+		NowLap = m_Oreca07->Getm_LapState();
+		break;
+	case TOYOTA86GT:
+		NowLap = m_86GT->Getm_LapState();
+		break;
+	case TOYOTA90Supra:
+		NowLap = m_A90Supra->Getm_LapState();
+		break;
+	case NissanGTR_17:
+		NowLap = m_GTRR35->Getm_LapState();
+		break;
+	case MazdaRX_7FD3SSpiritRTypeA:
+		NowLap = m_FD3S->Getm_LapState();
+		break;
+	default:
+		break;
+	}
+	switch (m_player->GetNowCourse())
+	{
+	case sebring:
+		//1セクターの処理
+		if (NowLap == 0) {
+			if (m_NowPPosition.x >= -10700.0f && m_NowPPosition.z <= -4500.0f) {
+				NowLap++;
+			}
+		}
+		//2セクターの処理
+		if (NowLap == 1) {
+			if (m_NowPPosition.x >= 5300.0f && m_NowPPosition.z >= 30000.0f) {
+				NowLap++;
+			}
+		}
+		//コントロールライン
+		if (NowLap == 2) {
+			if (m_NowPPosition.z >= 4000.0f && m_NowPPosition.x <= 120.0f) {
+				NowLap++;
+			}
+		}
+		break;
+	case CircuitDeLaSarthe:
+		//1セクターの処理
+		if (NowLap == 0) {
+			if (m_NowPPosition.x >= 20000.0f && m_NowPPosition.z <= 45500.0f) {
+				NowLap++;
+			}
+		}
+		//2セクターの処理
+		if (NowLap == 1) {
+			if (m_NowPPosition.x <= -10000.0f && m_NowPPosition.z >= -97765.0f) {
+				NowLap++;
+			}
+		}
+		//コントロールライン
+		if (NowLap == 2) {
+			if (m_NowPPosition.x <= -34000.0f && m_NowPPosition.z >= 17700.0f) {
+				NowLap++;
+			}
+		}
+		break;
+	case AutodromoNazionaleDiMonza:
+		//1セクターの処理
+		if (NowLap == 0) {
+			if (m_NowPPosition.x >= 9000.0f && m_NowPPosition.z <= 7000.0f) {
+				NowLap++;
+			}
+		}
+		//2セクターの処理
+		if (NowLap == 1) {
+			if (m_NowPPosition.x <= 0.0f && m_NowPPosition.z <= -16700.0f) {
+				NowLap++;
+			}
+		}
+		//コントロールライン
+		if (NowLap == 2) {
+			if (m_NowPPosition.x <= -10000.0f && m_NowPPosition.z >= -25261.0f) {
+				NowLap++;
+			}
+		}
+		break;
+	case Silverstone:
+		break;
+	case Imola:
+		break;
+	default:
+		break;
+	}
 
-
-	if (m_Oreca07->Getm_LapState() == 2 && m_NowPPosition.z >= 4000.0f&& m_NowPPosition.x<= 120.0f) {
+	if (NowLap == 3) {
 		if (FastestLap >= m_timerminit*60+m_timersecont) {
 			FastestLap = m_timerminit * 60 + m_timersecont;
 			FastestLapKeep = FastestLap;
@@ -282,10 +516,33 @@ void TimeTrialMode::Update() {
 		}
 		m_timer = 0.0f;
 		m_timerminit = 0.0f;
-		m_Oreca07->Setm_LapState(0);
+
+
+		switch (CarNum)
+		{
+		case ORECA07:
+			m_Oreca07->Setm_LapState(0);
+			break;
+		case TOYOTA86GT:
+			m_86GT->Setm_LapState(0);
+			break;
+		case TOYOTA90Supra:
+			m_A90Supra->Setm_LapState(0);
+			break;
+		case NissanGTR_17:
+			m_GTRR35->Setm_LapState(0);
+			break;
+		case MazdaRX_7FD3SSpiritRTypeA:
+			m_FD3S->Setm_LapState(0);
+			break;
+		default:
+			break;
+		}
+
 		LapCount++;
 		ControlLineSE = NewGO<SoundSource>(0);
 		ControlLineSE->Init(106);
+		ControlLineSE->SetVolume(m_player->GetSEVolume());
 		ControlLineSE->Play(false);
 		
 		wchar_t FTime[256];
@@ -298,11 +555,11 @@ void TimeTrialMode::Update() {
 
 	wchar_t m_LapCount[256];
 	swprintf_s(m_LapCount, 256, L"%d/3\n", LapCount+1);
-	LapCountFont.SetPosition(-870.0f,440.0f, 0.0f);
-
 	LapCountFont.SetText(m_LapCount);
+	LapCountFont.SetPosition(-870.0f,440.0f, 0.0f);
+	
 
-
+	//サーキットエクスペリエンスモードなら
 	if (GameMode == CircuitExperience) {
 		if (LapCount == 3) {
 			PauseState = 3;
@@ -333,7 +590,7 @@ void TimeTrialMode::Update() {
 				ResultTimeFont.SetText(ResultTime);
 
 				
-				if (FastestLapKeep <= 80.500f) {
+				if (FastestLapKeep <= ClearTime.x) {
 					ResultSprite.Init("Assets/sprite/CircuitExperience/Gold.DDS", 1600.0f, 900.0f);
 					PassedState = true;
 					DeleteGO(BGM);
@@ -342,7 +599,7 @@ void TimeTrialMode::Update() {
 					BGM->Play(true);
 					BGM->SetVolume(0.0f);
 				}
-				else if (FastestLapKeep <= 83.200f) {
+				else if (FastestLapKeep <= ClearTime.y) {
 					ResultSprite.Init("Assets/sprite/CircuitExperience/Silver.DDS", 1600.0f, 900.0f);
 					PassedState = true;
 					DeleteGO(BGM);
@@ -351,7 +608,7 @@ void TimeTrialMode::Update() {
 					BGM->Play(true);
 					BGM->SetVolume(0.0f);
 				}
-				else if (FastestLapKeep <= 90.000f) {
+				else if (FastestLapKeep <= ClearTime.z) {
 					ResultSprite.Init("Assets/sprite/CircuitExperience/Bronze.DDS", 1600.0f, 900.0f);
 					PassedState = true;
 					DeleteGO(BGM);
@@ -451,7 +708,29 @@ void TimeTrialMode::Update() {
 	m_FirstFrame++;
 	ResetCount++;
 	m_gamecamera->SetPauseState(PauseState);
-	m_Oreca07->SetPauseState(PauseState);
+
+	switch (CarNum)
+	{
+	case ORECA07:
+		m_Oreca07->SetPauseState(PauseState);
+		break;
+	case TOYOTA86GT:
+		m_86GT->SetPauseState(PauseState);
+		break;
+	case TOYOTA90Supra:
+		m_A90Supra->SetPauseState(PauseState);
+		break;
+	case NissanGTR_17:
+		m_GTRR35->SetPauseState(PauseState);
+		break;
+	case MazdaRX_7FD3SSpiritRTypeA:
+		m_FD3S->SetPauseState(PauseState);
+		break;
+	default:
+		break;
+	}
+	
+	
 }
 
 void TimeTrialMode::ResultSelect() {
@@ -467,13 +746,32 @@ void TimeTrialMode::ResultSelect() {
 		}
 		else if (g_pad[0]->IsTrigger(enButtonA)) {
 			m_Loading = NewGO<Loading>(0, "loading");
-			m_Loading->SetCar(0);
-			m_Loading->SetCourse(0);
+			m_Loading->SetCar(CarNum);
+			m_Loading->SetCourse(m_player->GetNowCourse());
 			m_Loading->SetWhereCome(PlayPage);
 			m_Loading->SetWhereGo(PlayPage);
 
 			GameEnd = true;
-			m_Oreca07->SetGameEnd(GameEnd);
+			switch (CarNum)
+			{
+			case ORECA07:
+				m_Oreca07->SetGameEnd(GameEnd);
+				break;
+			case TOYOTA86GT:
+				m_86GT->SetGameEnd(GameEnd);
+				break;
+			case TOYOTA90Supra:
+				m_A90Supra->SetGameEnd(GameEnd);
+				break;
+			case NissanGTR_17:
+				m_GTRR35->SetGameEnd(GameEnd);
+				break;
+			case MazdaRX_7FD3SSpiritRTypeA:
+				m_FD3S->SetGameEnd(GameEnd);
+				break;
+			default:
+				break;
+			}
 			m_caraformula->SetGameEnd(GameEnd);
 			DeleteGO(this);
 		}
@@ -489,14 +787,34 @@ void TimeTrialMode::ResultSelect() {
 		}
 		else if (g_pad[0]->IsTrigger(enButtonA)) {
 			m_Loading = NewGO<Loading>(0, "loading");
-			m_Loading->SetCar(0);
-			m_Loading->SetCourse(0);
+			m_Loading->SetCar(CarNum);
+			m_Loading->SetCourse(m_player->GetNowCourse());
 			m_Loading->SetWhereCome(PlayPage);
 			m_Loading->SetWhereGo(RaceLobbyPage);
 
 			GameEnd = true;
 			m_gamecamera->SetGameEnd(GameEnd);
-			m_Oreca07->SetGameEnd(GameEnd);
+
+			switch (CarNum)
+			{
+			case ORECA07:
+				m_Oreca07->SetGameEnd(GameEnd);
+				break;
+			case TOYOTA86GT:
+				m_86GT->SetGameEnd(GameEnd);
+				break;
+			case TOYOTA90Supra:
+				m_A90Supra->SetGameEnd(GameEnd);
+				break;
+			case NissanGTR_17:
+				m_GTRR35->SetGameEnd(GameEnd);
+				break;
+			case MazdaRX_7FD3SSpiritRTypeA:
+				m_FD3S->SetGameEnd(GameEnd);
+				break;
+			default:
+				break;
+			}
 			m_lighting->SetGameEnd(GameEnd);
 			m_caraformula->SetGameEnd(GameEnd);
 			m_background->SetGameEnd(GameEnd);
@@ -520,15 +838,7 @@ void TimeTrialMode::Render(RenderContext& rc) {
 	}
 
 
-	PauseSprite.Draw(rc);
-	if (PauseWindowState == 0) {
-		ContinueSpriteSelect.Draw(rc);
-		ExitSpriteNonSelect.Draw(rc);
-	}
-	else if (PauseWindowState == 1) {
-		ContinueSpriteNonSelect.Draw(rc);
-		ExitSpriteSelect.Draw(rc);
-	}
+	
 
 	StartSignalBaseRender.Draw(rc);
 	if (StartSignal > 0 && StartSignal < 4) {
@@ -543,12 +853,10 @@ void TimeTrialMode::Render(RenderContext& rc) {
 		}
 	}
 
-	
-	if (LapCount != 3) {
+	if (PauseState != 3) {
 		LapCountFont.Draw(rc);
 		CourseMapUISprite.Draw(rc);
 	}
-
 	if (GameMode == CircuitExperience) {
 		if (LapCount == 3) {
 			ResultBaseSprite.Draw(rc);
@@ -564,5 +872,21 @@ void TimeTrialMode::Render(RenderContext& rc) {
 			PassedTimeBaseSprite.Draw(rc);
 			PassedTimeSprite.Draw(rc);
 		}
+	}
+	PauseSprite.Draw(rc);
+	if (PauseWindowState == 0) {
+		ContinueSpriteSelect.Draw(rc);
+		ExitSpriteNonSelect.Draw(rc);
+		RetryNonSelect.Draw(rc);
+	}
+	else if (PauseWindowState == 1) {
+		ContinueSpriteNonSelect.Draw(rc);
+		RetrySelect.Draw(rc);
+		ExitSpriteNonSelect.Draw(rc);
+	}
+	else if (PauseWindowState == 2) {
+		ContinueSpriteNonSelect.Draw(rc);
+		ExitSpriteSelect.Draw(rc);
+		RetryNonSelect.Draw(rc);
 	}
 }
