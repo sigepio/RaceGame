@@ -43,6 +43,7 @@
     <ClCompile Include="Car_GTRR35.cpp" />
     <ClCompile Include="LicenseRace.cpp" />
     <ClCompile Include="OptionMenu.cpp" />
+    <ClCompile Include="FadeIn.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -84,5 +85,6 @@
     <ClInclude Include="Car_GTRR35.h" />
     <ClInclude Include="LicenseRace.h" />
     <ClInclude Include="OptionMenu.h" />
+    <ClInclude Include="FadeIn.h" />
   </ItemGroup>
 </Project>

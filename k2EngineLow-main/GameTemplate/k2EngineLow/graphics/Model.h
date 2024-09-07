@@ -175,6 +175,11 @@ namespace nsK2EngineLow {
 		/// </remark>
 		/// <param name="reInitData">再初期化データ。</param>
 		void ReInitMaterials(MaterialReInitData& reInitData);
+
+		//指定のファイルのリリース
+		void ResourceRelease(const char* filePath) {
+			g_engine->TkmFileRelease(filePath);
+		}
 	private:
 		bool m_isInited = false;						//初期化されている？
 		Matrix m_worldMatrix;							//ワールド行列。

@@ -75,6 +75,9 @@ namespace nsK2EngineLow {
 		{
 			return m_textureDesc.Format;
 		}
+		/// 解放。
+		/// </summary>
+		void Release();
 	private:
 		/// <summary>
 		/// DDSファイルからテクスチャをロード。
@@ -90,9 +93,7 @@ namespace nsK2EngineLow {
 		/// <param name="device">D3Dデバイス</param>
 		void LoadTextureFromMemory(const char* memory, unsigned int size);
 		/// <summary>
-		/// 解放。
-		/// </summary>
-		void Release();
+		
 	private:
 		ID3D12Resource* m_texture = nullptr;	//テクスチャ。
 		D3D12_RESOURCE_DESC m_textureDesc;	//テクスチャ情報

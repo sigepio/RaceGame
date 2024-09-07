@@ -6,7 +6,7 @@ Sebring::Sebring() {
 }
 
 Sebring::~Sebring() {
-
+	g_engine->TResourceBankRelease();
 }
 
 bool Sebring::Start() {

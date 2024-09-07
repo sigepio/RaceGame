@@ -5,7 +5,13 @@ Monza::Monza() {
 }
 
 Monza::~Monza() {
-
+	g_engine->TResourceBankRelease();
+	m_groundModel.release();
+	m_CollisionModel.release();
+	m_CollisionAlphaBlendModel.release();
+	m_physicsStaticObject.Release();
+	m_CollisionModelphysicsStaticObject.Release();
+	m_CollisionAlphaBlendModelphysicsStaticObject.Release();
 }
 
 bool Monza::Start() {
@@ -43,7 +49,9 @@ bool Monza::Start() {
 
 void Monza::Update() {
 	if (GameEnd == true) {
+		
 		DeleteGO(this);
+		
 	}
 	//モデルの更新処理。
 	m_groundModel->Update();

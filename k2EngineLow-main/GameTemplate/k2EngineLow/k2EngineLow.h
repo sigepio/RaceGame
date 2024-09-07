@@ -201,7 +201,18 @@ namespace nsK2EngineLow {
 			m_frameRateInfo.frameRateMode = frameRateMode;
 			m_frameRateInfo.maxFPS = maxFPS;
 		}
-		
+		//TresourceBankÇÃÉäÉäÅ[ÉXÇÇ∑ÇÈ
+		void TResourceBankRelease() {
+			m_tkmFileBank.Release();
+			m_textureBank.Release();
+			m_lowTextureBank.Release();
+			m_shaderBank.Release();
+			m_tksFileBank.Release();
+			m_tkaFileBank.Release();
+		}
+		void TkmFileRelease(const char* filePath) {
+			m_tkmFileBank.Release(filePath);
+		}
 	private:
 #ifdef K2_DEBUG
 		std::unique_ptr<Font> m_fpsFont;

@@ -5,11 +5,13 @@ class Lighting;
 class GameCamera;
 class BackGround;
 class Car_RB6;
-class Car_Oreca07;
+
 class CarAFormula;
 class Loading;
-class Car_86GT;
+
 class Player;
+class Car_86GT;
+class Car_Oreca07;
 class Car_RX7FD;
 class Car_A90Supra;
 class Car_GTRR35;
@@ -157,6 +159,8 @@ private:
 	int ResultCount = 0;//リザルト用のカウント
 	int ResultSetectState = 0;//0:Retry 1:Exit
 	int ResultSetectCount = 5;
+
+	int FarstSetCount = 0;
 
 	int ResultState = 0;
 

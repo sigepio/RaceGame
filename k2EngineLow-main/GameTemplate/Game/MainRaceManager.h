@@ -6,7 +6,12 @@ class Loading;
 class GameCamera;
 class Lighting;
 class Player;
-
+class FadeIn;
+class Car_86GT;
+class Car_Oreca07;
+class Car_RX7FD;
+class Car_A90Supra;
+class Car_GTRR35;
 
 class MainRaceManager:public IGameObject
 {
@@ -29,6 +34,10 @@ public:
 		LicenseNum = m_LicenseNum;
 	}
 
+	void SetWhereComePage(int m_WhereComePage) {
+		WhereComePage = m_WhereComePage;
+	}
+
 private:
 	Vector4 BlackOutColor = { 1.0f,1.0f,1.0f,1.0f };
 	Vector4 LicenseContentsColor = { 1.0f,1.0f,1.0f,0.0f };
@@ -46,6 +55,12 @@ private:
 	Lighting* m_lighting;
 	SkyCube* m_skyCube = nullptr;
 	Player* m_player;
+	FadeIn* m_FadeIn;
+	Car_86GT* m_86GT;
+	Car_Oreca07* m_Oreca07;
+	Car_RX7FD* m_FD3S;
+	Car_A90Supra* m_A90Supra;
+	Car_GTRR35* m_GTRR35;
 
 	SpriteRender BaseSprite;
 	SpriteRender BackSprite;
@@ -72,6 +87,8 @@ private:
 	int LicenseNum = 0;//1Å`5:B 6Å`10:A 11Å`15:IB 16Å`20:IA 21Å`25:S
 
 	int LicenseCount = 0;
+
+	int WhereComePage = 0;
 	
 
 	int SelectPoint = 0;//0:ÉXÉ^Å[Ég 1:exit

@@ -129,6 +129,9 @@ namespace nsK2EngineLow {
 		void PlayFlash() {
 			m_flashFlag = true;
 		}
+		void ResourceRelease(const char* filePath) {
+			m_model.ResourceRelease(filePath);
+		}
 		private:
 			//アニメーションの初期化
 			void InitAnimation(AnimationClip* animationClips,	//アニメーションクリップ

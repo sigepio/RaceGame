@@ -101,7 +101,10 @@ namespace nsK2EngineLow {
 		{
 			m_sprite.Draw(rc);
 		}
-
+		//‰ð•ú
+		void Release() {
+			m_sprite.ReleaseTexture();
+		}
 	private:
 	public:
 	private:

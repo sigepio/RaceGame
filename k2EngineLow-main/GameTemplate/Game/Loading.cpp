@@ -14,6 +14,7 @@
 #include <math.h>
 #include <map>
 #include <random>
+#include "BackGround.h"
 
 //このクラスの呼び出しは一番重くする。
 
@@ -26,8 +27,15 @@ Loading::~Loading() {
 }
 
 bool Loading::Start() {
-	Base.Init("Assets/Sprite/Loading/Base.DDS", 1600.0f, 900.0f);
+    if (WhereGo==LicenseModePage|| WhereGo==RaceMenuPage) {
+        m_BackGround = FindGO<BackGround>("background");
+        if (m_BackGround != nullptr) {
+            m_BackGround->SetGameEnd(true);
+        }
+    }
 
+    Base.Init("Assets/Sprite/Loading/Base.DDS", 1600.0f, 900.0f);
+    
 
 	BlackOut.Init("Assets/Sprite/Loading/BlackOut.DDS", 1600.0f, 900.0f);
 	BlackOut.SetMulColor(BlackOutColor);
@@ -360,6 +368,7 @@ void Loading::HandlePlayPageTransition() {
             m_MainRaceManager->SetCourseNum(CourseState);
             m_MainRaceManager->SetCarInformation(CarState);
             m_MainRaceManager->SetLicenseNum(LicenseNum);
+            m_MainRaceManager->SetWhereComePage(WhereCome);
         }
         HandleFadeOutTransition();
     }

@@ -231,6 +231,7 @@
     <ClCompile Include="Car_GTRR35.cpp" />
     <ClCompile Include="Car_Oreca07.cpp" />
     <ClCompile Include="Car_RX7FD.cpp" />
+    <ClCompile Include="FadeIn.cpp" />
     <ClCompile Include="FrontWheelBase.cpp" />
     <ClCompile Include="GameCamera.cpp" />
     <ClCompile Include="Garage.cpp" />
@@ -273,6 +274,7 @@
     <ClInclude Include="Car_GTRR35.h" />
     <ClInclude Include="Car_Oreca07.h" />
     <ClInclude Include="Car_RX7FD.h" />
+    <ClInclude Include="FadeIn.h" />
     <ClInclude Include="FrontWheelBase.h" />
     <ClInclude Include="GameCamera.h" />
     <ClInclude Include="Garage.h" />

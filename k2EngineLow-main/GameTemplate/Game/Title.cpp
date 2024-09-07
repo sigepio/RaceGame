@@ -8,6 +8,7 @@
 #include "Player.h"
 #include "GameCamera.h"
 #include "Lighting.h"
+#include "FadeIn.h"
 
 Title::Title() {
 
@@ -19,10 +20,11 @@ bool Title::Start() {
 	m_Sound = NewGO<Sound>(0,"sound");
 	Player* m_Player = NewGO<Player>(0, "player");
 	m_GameCamera = NewGO<GameCamera>(0, "gamecamera");
+	m_FadeIn = NewGO<FadeIn>(9, "fadein");
 	m_GameCamera->SetTitleMode(true);
 	m_Lighting = NewGO<Lighting>(0, "lighting");
 	/*CarModel.Init("Assets/modelData/Car/R35/Body.tkm");*/
-	/*CarModel.Init("Assets/modelData/Title/Main.tkm");*/
+	CarModel.Init("Assets/modelData/Title/Main.tkm");
 
 	m_TitleSprite.Init("Assets/sprite/Title/Title_Logo.DDS", 1600, 900.0f);
 	m_PressStartSprite.Init("Assets/sprite/Title/Press_any_button.DDS", 1920.0f, 1080.0f);
@@ -43,7 +45,7 @@ void Title::Update() {
 	m_PressStartSprite.SetMulColor(m_PressStartSpriteColor);
 	
 	if (g_pad[0]->IsTrigger(enButtonA)) {
-		//TimeTrialMode* m_timetrialmode = NewGO<TimeTrialMode>(0, "timetrialmode");
+		/*TimeTrialMode* m_timetrialmode = NewGO<TimeTrialMode>(0, "timetrialmode");*/
 		FadeState = 1;
 		
 	}
@@ -70,6 +72,6 @@ void Title::Render(RenderContext& rc) {
 	
 	m_TitleSprite.Draw(rc);
 	m_PressStartSprite.Draw(rc);
-	/*CarModel.SetAlwaysOnDisplay(true);
-	CarModel.Draw(rc);*/
+	CarModel.SetAlwaysOnDisplay(true);
+	CarModel.Draw(rc);
 }

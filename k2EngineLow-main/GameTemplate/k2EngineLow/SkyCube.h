@@ -71,6 +71,10 @@ namespace nsK2EngineLow {
 		{
 			return m_textureFilePaths[m_type];
 		}
+
+		void DeleteSkyCube() {
+			DeleteGO(this);
+		}
 	private:
 		ModelRender m_modelRender;
 
