@@ -26,7 +26,7 @@ bool Title::Start() {
 	/*CarModel.Init("Assets/modelData/Car/R35/Body.tkm");*/
 	CarModel.Init("Assets/modelData/Title/Main.tkm");
 
-	m_TitleSprite.Init("Assets/sprite/Title/Title_Logo.DDS", 1600, 900.0f);
+	m_TitleSprite.Init("Assets/sprite/Title/Title_Logo2.DDS", 1600, 900.0f);
 	m_PressStartSprite.Init("Assets/sprite/Title/Press_any_button.DDS", 1920.0f, 1080.0f);
 	m_FadeSprite.Init("Assets/Sprite/BlackOut.DDS", 1600.0f, 900.0f);
 	
