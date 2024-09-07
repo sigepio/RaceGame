@@ -1,5 +1,6 @@
 #pragma once
 class FrontWheelBase;
+class Player;
 
 class LeftFrontWheel:public IGameObject, Noncopyable
 {
@@ -48,7 +49,7 @@ private:
 
 
 	ModelRender m_FrontWheelModel;
-
+	Player* m_player;
 	FrontWheelBase* m_frontwheelbase;
 	
 	int m_NowCar = 0;

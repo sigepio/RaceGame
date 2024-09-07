@@ -63,12 +63,7 @@ cbuffer directionLightCb : register(b1)
 
    //ライトビュースクリーン用
     float4x4 mLVP;
-    
-    //グレースケール設定用
-    bool setGrayScale;
-    
-    int deltaTime;
-    
+        
 }
 
 
@@ -200,9 +195,8 @@ SPSIn VSSkinMain(SVSIn vsIn)
 /// ピクセルシェーダーのエントリー関数。
 float4 PSMain(SPSIn psIn) : SV_Target0
 {
-	//ディレクションライト(鏡面拡散どっちも)によるライティングを計算
+    //ディレクションライト(鏡面拡散どっちも)によるライティングを計算
     float3 directionLig = CalcLigFromDirectionLight(psIn);
-	
     //ポイントライト(鏡面拡散どっちも)によるライティングを計算
     //スポットライト(鏡面拡散どっちも)によるライティングを計算
     float3 pointLig[10];
@@ -228,23 +222,22 @@ float4 PSMain(SPSIn psIn) : SV_Target0
 	
 	//ディレクションライト、ポイントライト、スポットライト、
 	//アンビエントライト、半球ライト、法線マップ、スペキュラマップを合算して最終的な光を求める
-    float3 lig = directionLig  + ambientLight + hemLig + normalMap + specularMap;
-    for (int j = 0; j < 10; j++)
+    float3 lig = directionLig  + ambientLight /*+ hemLig + normalMap + specularMap*/;
+    /*for (int j = 0; j < 10; j++)
     {
         lig += pointLig[j];
         lig += spotLig[j];
-    }
+    }*/
     
 	//最終的な反射光にリムの反射光を合算する
-    lig += limColor;
+    //lig += limColor;
 	
 	//テクスチャからカラーをフェッチ
     float4 albedoColor = g_albedo.Sample(g_sampler, psIn.uv);
-    
     //シャドウの処理
     /////////////////////////////////////////////////////////////////////////////
     // ライトビュースクリーン空間からUV空間に座標変換
-    float2 shadowMapUV = psIn.posInLVP.xy / psIn.posInLVP.w;
+  /*  float2 shadowMapUV = psIn.posInLVP.xy / psIn.posInLVP.w;
     shadowMapUV *= float2(0.5f, -0.5f);
     shadowMapUV += 0.5f;
 
@@ -263,20 +256,13 @@ float4 PSMain(SPSIn psIn) : SV_Target0
             // 遮蔽されている
             albedoColor.xyz *= 0.5f;
         }
-    }
+    }*/
     ////////////////////////////////////////////////////////////////////////////////
-    albedoColor.xyz *= 0.5f;
-	//最終出力カラーに光を乗算する
-    albedoColor.xyz *= lig;
-    
-     //グレースケールを設定する
-    if (setGrayScale == true)
-    {
-        float Y = 0.299f * albedoColor.r + 0.587f * albedoColor.g + 0.114f * albedoColor.b;
-        
-        return Y;
-    }
-
+    //最終出力カラーに光を乗算する
+   // albedoColor.xyz *= lig;
+    // alphaが一定値以下はピクセルキル 
+    clip(albedoColor.a - 0.1f);
+   
     return albedoColor;
 }
 

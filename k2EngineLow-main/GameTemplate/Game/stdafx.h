@@ -33,6 +33,12 @@ struct VehicleInfo {
 	float MaxGear;							//最大ギア数
 	float MaxRPM;							//最大回転数
 	float IdlingRPM;						//アイドリング時の回転数
+	float CorneringPower;
+	float AccelerationFactor;	
+	std::vector<float> ShiftDownTiming;
+	float ShiftUpCorrectionValue;
+	float RevLimitGain;
+
 };
 
 //シミュレート結果
@@ -42,6 +48,7 @@ struct SimulationResults {
     float PitchAngle;						//ピッチ角度[rad]
     float RollAngle;						//ロール角度[rad]
     float CurrentRPM;						//エンジンの回転数 [rpm]
+	float ΔRPM;							//RPM の変化量[rpm]
 	float CurrentGear;						//ギア
 	float Acceleration;						//加速度
 	float TurningAngle;						//旋回角度[rad]
@@ -55,3 +62,4 @@ struct CircuitExperienceTime {
 	float SilverTime;
 	float BronzeTime;
 };
+

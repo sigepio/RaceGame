@@ -2,6 +2,8 @@
 #include "LeftFrontWheel.h"
 #include "FrontWheelBase.h"
 #include "CarBase.h"
+#include "Player.h"
+#include "PageNum.h"
 
 
 LeftFrontWheel::LeftFrontWheel() {
@@ -14,8 +16,27 @@ LeftFrontWheel::~LeftFrontWheel() {
 
 bool LeftFrontWheel::Start() {
 	m_frontwheelbase = FindGO<FrontWheelBase>("frontwheelbase");
-	m_FrontWheelModel.Init("Assets/modelData/Car/LMP2_Left.tkm");
-
+	m_player = FindGO<Player>("player");
+	switch (m_player->GetCarNum())
+	{
+	case ORECA07:
+		m_FrontWheelModel.Init("Assets/modelData/Car/LMP2_Right.tkm");
+		break;
+	case TOYOTA86GT:
+		m_FrontWheelModel.Init("Assets/modelData/Car/86GT/Tyre_Left.tkm");
+		break;
+	case TOYOTA90Supra:
+		m_FrontWheelModel.Init("Assets/modelData/Car/A90Supra/Tyre_Left.tkm");
+		break;
+	case NissanGTR_17:
+		m_FrontWheelModel.Init("Assets/modelData/Car/R35/Tyre_Left.tkm");
+		break;
+	case MazdaRX_7FD3SSpiritRTypeA:
+		m_FrontWheelModel.Init("Assets/modelData/Car/FD3S/Tyre_Left.tkm");
+		break;
+	default:
+		break;
+	}
 	
 
 	return true;

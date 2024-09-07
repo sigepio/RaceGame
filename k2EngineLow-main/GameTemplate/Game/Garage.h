@@ -1,7 +1,7 @@
 #pragma once
 class GameCamera;
 class Loading;
-class PlayerDate;
+class Player;
 class Lighting;
 
 class Garage:public IGameObject
@@ -45,7 +45,7 @@ private:
 
 	GameCamera* m_GameCamera;
 	Loading* m_Loading;
-	PlayerDate* m_PlayerDate;
+	Player* m_Player;
 	Lighting* m_Lighting;
 
 

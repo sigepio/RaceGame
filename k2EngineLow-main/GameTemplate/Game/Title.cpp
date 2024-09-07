@@ -5,7 +5,10 @@
 #include "TimeTrialMode.h"
 #include "Loading.h"
 #include "Sound.h"
-#include "PlayerDate.h"
+#include "Player.h"
+#include "GameCamera.h"
+#include "Lighting.h"
+
 Title::Title() {
 
 }
@@ -14,14 +17,20 @@ Title::~Title() {
 }
 bool Title::Start() {
 	m_Sound = NewGO<Sound>(0,"sound");
-	PlayerDate* m_PlayerDate = NewGO<PlayerDate>(20, "playerdata");
+	Player* m_Player = NewGO<Player>(0, "player");
+	m_GameCamera = NewGO<GameCamera>(0, "gamecamera");
+	m_GameCamera->SetTitleMode(true);
+	m_Lighting = NewGO<Lighting>(0, "lighting");
+	/*CarModel.Init("Assets/modelData/Car/R35/Body.tkm");*/
+	/*CarModel.Init("Assets/modelData/Title/Main.tkm");*/
 
-	m_TitleSprite.Init("Assets/sprite/Title/Title_Logo.DDS", 960.0f, 540.0f);
+	m_TitleSprite.Init("Assets/sprite/Title/Title_Logo.DDS", 1600, 900.0f);
 	m_PressStartSprite.Init("Assets/sprite/Title/Press_any_button.DDS", 1920.0f, 1080.0f);
 	m_FadeSprite.Init("Assets/Sprite/BlackOut.DDS", 1600.0f, 900.0f);
 	
 	m_PressStartSprite.SetMulColor(m_PressStartSpriteColor);
 	m_FadeSprite.SetMulColor(m_FadeColor);
+
 
 	return true;
 }
@@ -43,6 +52,8 @@ void Title::Update() {
 		if (FadeCount > 5) {
 			m_loading = NewGO<Loading>(10, "loading");
 			m_loading->SetWhereCome(TitlePage);
+			m_GameCamera->SetGameEnd(true);
+			m_Lighting->SetGameEnd(true);
 			DeleteGO(this);
 		}
 		else {
@@ -56,6 +67,9 @@ void Title::Update() {
 	m_PressStartSprite.Update();
 }
 void Title::Render(RenderContext& rc) {
+	
 	m_TitleSprite.Draw(rc);
 	m_PressStartSprite.Draw(rc);
+	/*CarModel.SetAlwaysOnDisplay(true);
+	CarModel.Draw(rc);*/
 }

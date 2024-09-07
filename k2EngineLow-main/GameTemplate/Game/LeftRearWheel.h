@@ -1,5 +1,6 @@
 #pragma once
 class FrontWheelBase;
+class Player;
 
 class LeftRearWheel :public IGameObject, Noncopyable
 {
@@ -44,7 +45,7 @@ private:
 	Quaternion m_FrontWheelRotationRotation;
 
 	FrontWheelBase* m_frontwheelbase;
-
+	Player* m_player;
 	ModelRender m_FrontWheelModel;
 
 	int m_NowCar=0;

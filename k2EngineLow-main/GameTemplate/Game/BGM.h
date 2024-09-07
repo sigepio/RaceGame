@@ -13,7 +13,9 @@ const std::map<int, const char*> BGMList = {
     {6, "Assets/sound/BGM/GoldBGM.wav"},
     {7, "Assets/sound/BGM/SilverBGM.wav"},
     {8, "Assets/sound/BGM/BronzeBGM.wav"},
-    {9, "Assets/sound/BGM/DisqualificationBGM.wav"}
+    {9, "Assets/sound/BGM/DisqualificationBGM.wav"},
+    {10, "Assets/sound/BGM/LicenseBGM.wav"},
+    {11, "Assets/sound/BGM/OptionBGM.wav"}
 };
 
 
@@ -35,7 +37,9 @@ enum BGM {
     GoldBGM,
     SilverBGM,
     BronzeBGM,
-    DisqualificationBGM
+    DisqualificationBGM,
+    LicenseMenuBGM,
+    OptionMenuBGM
 };
 
 

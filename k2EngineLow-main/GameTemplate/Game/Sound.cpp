@@ -20,6 +20,11 @@ bool Sound::Start() {
 	g_soundEngine->ResistWaveFileBank(m_RaceMenuBGM.first, m_RaceMenuBGM.second);
 	auto m_RaceLobbyBGM = getBGMFromList(BGMList, RaceLobbyBGM);
 	g_soundEngine->ResistWaveFileBank(m_RaceLobbyBGM.first, m_RaceLobbyBGM.second);
+	auto m_LicenseMenuBGM = getBGMFromList(BGMList, LicenseMenuBGM);
+	g_soundEngine->ResistWaveFileBank(m_LicenseMenuBGM.first, m_LicenseMenuBGM.second);
+	auto m_OptionMenuBGM = getBGMFromList(BGMList, OptionMenuBGM);
+	g_soundEngine->ResistWaveFileBank(m_OptionMenuBGM.first, m_OptionMenuBGM.second);
+
 
 	auto m_RaceBGM1 = getBGMFromList(BGMList, RaceBGM1);
 	g_soundEngine->ResistWaveFileBank(m_RaceBGM1.first, m_RaceBGM1.second);
@@ -51,5 +56,12 @@ bool Sound::Start() {
 	g_soundEngine->ResistWaveFileBank(105, m_ErrorSE.second);
 	auto m_ControlLineSE = getSEFromList(SEList, ControlLineSE);
 	g_soundEngine->ResistWaveFileBank(106, m_ControlLineSE.second);
+
+	//ƒGƒ“ƒWƒ“‰¹
+	g_soundEngine->ResistWaveFileBank(200, "Assets/sound/5000RPM.wav");
+	g_soundEngine->ResistWaveFileBank(201, "Assets/sound/EngineSound/86GT.wav");
+	g_soundEngine->ResistWaveFileBank(202, "Assets/sound/EngineSound/A90.wav");
+	g_soundEngine->ResistWaveFileBank(203, "Assets/sound/EngineSound/R35GTR.wav");
+	g_soundEngine->ResistWaveFileBank(204, "Assets/sound/EngineSound/RX7FD3S.wav");
 	return true;
 }

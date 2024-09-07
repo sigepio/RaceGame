@@ -185,6 +185,7 @@ float4 PSShadowMain(SPSIn psIn) : SV_Target0
     // シャドウマップにZ値を描き込む
     return float4(psIn.pos.z, psIn.pos.z, psIn.pos.z, 1.0f);
 }
+
 /// <summary>
 /// ピクセルシェーダーのエントリー関数。
 /// </summary>

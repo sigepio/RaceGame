@@ -3,7 +3,7 @@
 class RightFrontWheel;
 class LeftFrontWheel;
 class CarAFormula;
-class PlayerDate;
+class Player;
 class BackGround;
 
 class FrontWheelBase:public IGameObject,Noncopyable
@@ -33,6 +33,9 @@ public:
 	Vector3 GetForward() {
 		return m_FrontWheelForward;
 	}
+	Vector3 Getm_FrontWheelForwardCatch() {
+		return m_FrontWheelForwardCatch;
+	}
 
 	float Getm_Speed() {
 		return throttle_input;
@@ -48,6 +51,11 @@ public:
 
 	float GetTireRotation() {
 		return VelocityVector * 3600.0f * 2.5f / 1000.0f / 100.0f;
+	}
+
+
+	bool GetAutoDrive() {
+		return AutoDriveState;
 	}
 
 	//設定系関数
@@ -133,6 +141,15 @@ public:
 		GameEnd = m_GameEnd;
 	}
 
+	void SetAutoDrive(bool m_AutoDrive) {
+		AutoDriveState = m_AutoDrive;
+	}
+
+	void SetFrontWheelForward(Vector3 FrontWheelForward) {
+		m_FrontWheelForward = FrontWheelForward;
+	}
+
+
 protected:
 	//Vector3 m_FrontWheelPosition = {0.0f,-66.980f,0.0f};
 	//Vector3 m_FrontWheelPosition = { 0.0f,3000.0f,0.0f };
@@ -158,7 +175,7 @@ protected:
 	Quaternion OriginRotation;
 	Quaternion m_FrontWheelRotation;
 	Quaternion m_FrontWheelLocalRotation;
-	Quaternion needlerot;
+	Quaternion rpmneedlerot;
 	Quaternion speedneedlerot;
 
 	CharacterController m_characterController;		//キャラクターコントローラー
@@ -176,6 +193,11 @@ protected:
 	SpriteRender RPMCover;
 	SpriteRender ThrottleGage;
 	SpriteRender BrakeGage;
+	SpriteRender RPMNeedle;
+	SpriteRender SpeedNeedle;
+	SpriteRender RPMMeter;
+	SpriteRender SpeedMeter;
+	SpriteRender RedZone;
 
 	SpriteRender LapUI;
 
@@ -184,6 +206,7 @@ protected:
 	FontRender VelocityFont;
 	FontRender GearFont;
 	FontRender DebugPosFont;
+	FontRender DebugFont;
 
 	SoundSource* engine;
 	SoundSource* engine_s;
@@ -191,7 +214,7 @@ protected:
 	RightFrontWheel* m_rightfrontwheel;
 	LeftFrontWheel* m_leftfrontwheel;
 
-	PlayerDate* m_PlayerDate;
+	Player* m_Player;
 	CarAFormula* m_caraformula;
 	BackGround* m_BackGround;
 
@@ -213,13 +236,14 @@ protected:
 	float SHIFT_UP_RPM_ADJUST;					//シフトアップ時の回転数調整量(RPM)
 	float SHIFT_DOWN_RPM_ADJUST;				//シフトダウン時の回転調整量(RPM)
 	float currentRPM = 0.0f;					//今のエンジン回転数(RPM)
+	float ΔRPM = 0.0f;							//RPMの変化量
 	float velocity = 0.0f;						//今の時速(km/h)	
-	float mass;								//車重(kg)
+	float mass;									//車重(kg)
 	float wheelRadius;							//タイヤの直径(m)
-	float grade = 0.0f;						//勾配(10%->0.1)
+	float grade = 0.0f;							//勾配(10%->0.1)
 	float throttle_input = 0.0f;				//スロットル開度(1.0フルスロットル)
 	float brake_input = 0.0f;
-	std::vector<float> GEAR_RATIOS;			//ギア比
+	std::vector<float> GEAR_RATIOS;				//ギア比
 	float currentGear = 1;						//今のギア
 	int MaxGear;								//最大ギア数
 	float AirPressure;							//タイヤ空気圧
@@ -244,14 +268,21 @@ protected:
 	float EngineSound = 1.0f;
 	float IdolingRPM;
 
+	float MaxSpeed;
+	float ScaleSpeed = 0;
+
 	std::vector<std::vector<float>> data;
 	int Gear = 1;									//ギア
 
 	int m_PauseState = 0;
 	int EngineSoundStopCount = 0;
 
+	int SpeedMeterPattern = 0;					//0:240km 1:320km 2:410km 3:510km
+	int RPMMeterPattern = 0;					//0:9000rpm 1:13000rpm 2:15000rpm
+
 	VehicleInfo vehicle_info;
 
+	bool AutoDriveState = false;
 	bool Transmission = true;
 };
 

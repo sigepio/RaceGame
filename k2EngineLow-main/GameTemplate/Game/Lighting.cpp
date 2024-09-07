@@ -17,6 +17,7 @@ bool Lighting::Start() {
 	Light_Direction.Normalize();
 	//ディレクションライトの設定
 	RenderingEngine::GetInstance()->SetDirectionLight(Light_Direction, Light_Color);
+	RenderingEngine::GetInstance()->SetAmbientLight(0.5f, 0.5f, 0.5f);
 
 	
 

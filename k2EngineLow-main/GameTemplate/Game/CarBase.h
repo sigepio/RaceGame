@@ -6,6 +6,8 @@ class RightRearWheel;
 class LeftRearWheel;
 class TimeTrialMode;
 class LeftFrontWheel;
+class Player;
+class LicenseRace;
 
 class CarBase:public IGameObject,Noncopyable
 {
@@ -23,6 +25,8 @@ public:
 	void SetGameEnd(bool m_GameEnd) {
 		GameEnd = m_GameEnd;
 	}
+
+	
 
 	std::map<int, float> readLUT(std::string filename);
 
@@ -93,11 +97,22 @@ public:
 		m_PauseState = PauseState;
 	}
 
+	void SetLicenseNum(int m_LicenseNum) {
+		LicenseNum = m_LicenseNum;
+	}
+
+	void SetAutoDrive(bool m_AutoDrive) {
+		AutoDriveState = m_AutoDrive;
+	}
+
 	//その他の関数
 	float Returnm_throttle() {
 		return m_Throttle;
 	}
 
+	bool GetAutoDrive() {
+		return AutoDriveState;
+	}
 	
 protected:
 
@@ -112,11 +127,24 @@ protected:
 	Vector3 ResetVector = { 0.0f,0.0f,1.0f };
 	Vector3 CameraVector = Vector3::Zero;
 
+	Vector3 BirdsEyeViewCoordinates;								//俯瞰視点のカメラの位置
+	Vector3 BonnetViewCoordinates;									//ボンネット視点のカメラの位置
+
+	Vector3 BirdsEyeViewTargetPoint;								//俯瞰視点の視点の位置
+	Vector3 BonnetViewTargetPoint;									//ボンネット視点の視点の位置
+
+	Vector3 BirdsEyeViewViewpointDirectionCorrectionByVehicleType;	//俯瞰視点の視点方向補正値
+	Vector3 BonnetViewViewpointDirectionCorrectionByVehicleType;	//ボンネット視点の視点方向補正値
+
+	Vector4 HoodViewCoordinates;
+	
+
 	Quaternion m_PlayerRotation;									//プレイヤーローテーション
 
 	
 
 	ModelRender m_PlayerCarModel;
+	ModelRender m_CarWindowModel;
 
 	TimeTrialMode* m_timetrialmode;
 	GameCamera*m_gamecamera=nullptr;
@@ -125,11 +153,13 @@ protected:
 	FrontWheelBase* m_frontwheelbase = nullptr;
 	RightRearWheel* m_rightrearwheel = nullptr;
 	LeftRearWheel* m_leftrearwheel = nullptr;
+	Player* m_player;
+	LicenseRace* m_LicenseRace;
 
 	int m_NowCar = 0;													//今乗っている車両
 	int m_LapState = 0;												//
 	int m_PauseState = 0;
-	
+	int LicenseNum = 0;
 
 	float m_Acceleration = 0.0f;
 	float m_Throttle = 0.0f;
@@ -144,12 +174,16 @@ protected:
 	float grade = 0.0f;							//勾配(10%->0.1)
 	float throttle_input = 0.0f;				//スロットル開度(1.0フルスロットル)
 	std::vector<float> GEAR_RATIOS;				//ギア比
+	std::vector<float> ShiftDownTiming;			//シフトダウンの回転数
 	int currentGear = 1;						//今のギア
 	int MaxGear;								//最大ギア数
 	float AirPressure;							//タイヤ空気圧
 	float FinalGearRatio;						//ファイナルギア
 	float Transmission_Efficiency;				//伝達効率
 	float CameraRAngle = 0.0f;
+
+	float BirdsEyeViewViewpointHeight;
+	float BonnetViewViewpointHeight;
 
 	std::vector<std::vector<float>> data;
 
@@ -160,5 +194,9 @@ protected:
 	std::map<int, float> PowerCurve;
 
 	bool GameEnd = false;
+	
+	bool AutoDriveState = false;
+
+	bool WindowState = false;
 };
 

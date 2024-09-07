@@ -7,6 +7,7 @@
 #include <vector>
 #define _USE_MATH_DEFINES
 #include <math.h>
+#include "Player.h"
 
 
 #include "CarBase.h"
@@ -17,6 +18,7 @@
 #include "RightRearWheel.h"
 #include "LeftRearWheel.h"
 #include "TimeTrialMode.h"
+#include "LicenseRace.h"
 
 
 
@@ -25,7 +27,15 @@ bool CarBase::Start() {
 
 	m_LapState = 0;
 	m_gamecamera = FindGO<GameCamera>("gamecamera");
-	m_timetrialmode = FindGO<TimeTrialMode>("timetrialmode");
+	if (LicenseNum == 0) {
+		m_timetrialmode = FindGO<TimeTrialMode>("timetrialmode");
+	}
+	else {
+		m_LicenseRace = FindGO<LicenseRace>("licenserace");
+	}
+	
+
+	m_player = FindGO<Player>("player");
 	m_frontwheelbase = NewGO<FrontWheelBase>(1, "frontwheelbase");
 	m_rightfrontwheel = NewGO<RightFrontWheel>(2, "rightfrontwheel");
 	m_leftfrontwheel = NewGO<LeftFrontWheel>(2, "leftfrontwheel");
@@ -79,6 +89,7 @@ bool CarBase::Start() {
 
 	m_frontwheelbase->Setvehicle_info(vehicle_info);
 
+	Set();
 	return true;
 }
 
@@ -132,6 +143,7 @@ void CarBase::Update() {
 	Set();
 	
 	m_frontwheelbase->SetPauseState(m_PauseState);
+	m_frontwheelbase->SetAutoDrive(AutoDriveState);
 	m_leftfrontwheel->SetPauseState(m_PauseState);
 	m_rightfrontwheel->SetPauseState(m_PauseState);
 }
@@ -146,10 +158,42 @@ void CarBase::Set() {
 	m_gamecamera->SetRAngle(ANGLE);
 	
 	CameraVector = m_frontwheelbase->Get_DVector();
-	CameraVector.y /= 2.0f;
+	CameraVector.y /= 4.0f;
 	m_gamecamera->SetDi(CameraVector);
+	m_gamecamera->SetCarRotation(m_frontwheelbase->GetRotation());
+	m_gamecamera->SetFrontWheelForwardCatch(m_frontwheelbase->GetForward());
 	m_gamecamera->SetTarget(m_frontwheelbase->GetPosition());
-	m_timetrialmode->SetPosition(m_frontwheelbase->GetPosition());
+
+	if (LicenseNum == 0) {
+		m_timetrialmode->SetPosition(m_frontwheelbase->GetPosition());
+	}
+	else {
+		m_LicenseRace->SetPosition(m_frontwheelbase->GetPosition());
+		m_LicenseRace->SetVelocity(m_frontwheelbase->GetTireRotation());
+	}
+
+	if (m_player->GetViewpointMode() == true) {
+		m_gamecamera->SetViewpointMode(m_player->GetViewpointMode());
+		m_gamecamera->SetMAIN_TO_CAMERA_POS(BirdsEyeViewCoordinates);
+		m_gamecamera->SetViewpointHeight(BirdsEyeViewViewpointHeight);
+		m_gamecamera->SetTargetPoint(BirdsEyeViewTargetPoint);
+		m_gamecamera->SetViewpointDirectionCorrectionByVehicleType(BirdsEyeViewViewpointDirectionCorrectionByVehicleType);
+		if (g_pad[0]->IsTrigger(enButtonRB1) && (m_PauseState == 0 || m_PauseState == -1)) {
+			m_player->SetViewpointMode(false);
+		}
+	}
+	else {
+		m_gamecamera->SetViewpointMode(m_player->GetViewpointMode());
+		m_gamecamera->SetMAIN_TO_CAMERA_POS(BonnetViewCoordinates);
+		m_gamecamera->SetViewpointHeight(BonnetViewViewpointHeight);
+		m_gamecamera->SetTargetPoint(BonnetViewTargetPoint);
+		m_gamecamera->SetViewpointDirectionCorrectionByVehicleType(BonnetViewViewpointDirectionCorrectionByVehicleType);
+		if (g_pad[0]->IsTrigger(enButtonRB1) && (m_PauseState == 0 || m_PauseState == -1)) {
+			m_player->SetViewpointMode(true);
+		}
+	}
+	
+
 }
 
 void CarBase::Move() {
@@ -164,4 +208,8 @@ void CarBase::Move() {
 void CarBase::Render(RenderContext& rc) {
 	m_PlayerCarModel.SetAlwaysOnDisplay(true);
 	m_PlayerCarModel.Draw(rc);
+	if (WindowState == true) {
+		m_CarWindowModel.SetAlwaysOnDisplay(true);
+		m_CarWindowModel.Draw(rc);
+	}
 }
