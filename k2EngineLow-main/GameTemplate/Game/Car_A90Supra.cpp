@@ -44,6 +44,7 @@ Car_A90Supra::Car_A90Supra() {
     //速度伝達比設定
     GEAR_RATIOS = { 5.25, 3.360, 2.172, 1.720, 1.316, 1.000,0.822,0.640 };
     ShiftDownTiming = { 4400.0f,4500.0f,5500.0f,5300.0f,5300.0f,5300.0f,5300.0f };
+    TorqueMultiplier = { 1,1,1,1,1,1,1,1 };
 
     vehicle_info = {
     1630.0,              //車重[kg]
@@ -69,7 +70,10 @@ Car_A90Supra::Car_A90Supra() {
     14.5f,
     ShiftDownTiming,
     100,
-    200.0f
+    200.0f,
+    0,
+    0,
+    TorqueMultiplier
     };
 
 
@@ -102,8 +106,7 @@ Car_A90Supra::Car_A90Supra() {
 
     //車両モデル設定
     m_PlayerCarModel.Init("Assets/modelData/Car/A90Supra/Body.tkm");
-    m_CarWindowModel.Init("Assets/modelData/Car/A90Supra/Window.tkm");
-    WindowState = true;
+    WindowState = false;
 
     //車両データ設定
     m_NowCar = ORECA07;

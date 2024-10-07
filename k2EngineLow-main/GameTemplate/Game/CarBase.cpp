@@ -145,6 +145,8 @@ void CarBase::Update() {
 	m_frontwheelbase->SetPauseState(m_PauseState);
 	m_frontwheelbase->SetAutoDrive(AutoDriveState);
 	m_leftfrontwheel->SetPauseState(m_PauseState);
+	m_rightrearwheel->SetPauseState(m_PauseState);
+	m_leftrearwheel->SetPauseState(m_PauseState);
 	m_rightfrontwheel->SetPauseState(m_PauseState);
 }
 
@@ -201,7 +203,15 @@ void CarBase::Move() {
 	m_PlayerCarModel.SetRotation(m_frontwheelbase->GetRotation());
 	m_PlayerPosition = m_frontwheelbase->GetPosition();
 	m_PlayerCarModel.SetPosition(m_PlayerPosition);
+
 	m_PlayerCarModel.Update();
+
+	if (WindowState == true) {
+		m_CarWindowModel.SetRotation(m_frontwheelbase->GetRotation());
+		m_CarWindowModel.SetPosition(m_PlayerPosition);
+		m_CarWindowModel.Update();
+	}
+
 }
 
 

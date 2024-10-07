@@ -124,13 +124,66 @@ bool FrontWheelBase::Start() {
 	case MazdaRX_7FD3SSpiritRTypeA:
 		RedZone.Init("Assets/sprite/UI/RedZone/RX_7FD3S.DDS", 1600.f, 900.0f);
 		break;
+
+	case LexusLFA:
+		RedZone.Init("Assets/sprite/UI/RedZone/LFA.DDS", 1600.f, 900.0f);
+		break;
+	case FordMustangGT3:
+		RedZone.Init("Assets/sprite/UI/RedZone/MustangGT3.DDS", 1600.f, 900.0f);
+		break;
+	case NissanR35GT3:
+		RedZone.Init("Assets/sprite/UI/RedZone/R35GT3.DDS", 1600.f, 900.0f);
+		break;
+	case FordGTGT3GTE:
+		RedZone.Init("Assets/sprite/UI/RedZone/FordGTGT3.DDS", 1600.f, 900.0f);
+		break;
+	case FordGTLMRaceCarSpecii:
+		RedZone.Init("Assets/sprite/UI/RedZone/FordGTLM.DDS", 1600.f, 900.0f);
+		break;
+	case FordGT2006:
+		RedZone.Init("Assets/sprite/UI/RedZone/FordGT.DDS", 1600.f, 900.0f);
+		break;
+	case SauberMercedesC9:
+		RedZone.Init("Assets/sprite/UI/RedZone/C9.DDS", 1600.f, 900.0f);
+		break;
+	case BMWMHybridV8:
+		RedZone.Init("Assets/sprite/UI/RedZone/BMWMV8LMDH.DDS", 1600.f, 900.0f);
+		break;
+	case Porsche962C:
+		RedZone.Init("Assets/sprite/UI/RedZone/962C.DDS", 1600.f, 900.0f);
+		break;
+	case Porsche911GT3RSR:
+		RedZone.Init("Assets/sprite/UI/RedZone/911GT3RSR.DDS", 1600.f, 900.0f);
+		break;
+	case Porsche911GT3RS:
+		RedZone.Init("Assets/sprite/UI/RedZone/911GT3RS.DDS", 1600.f, 900.0f);
+		break;
+	case Mazda787B:
+		RedZone.Init("Assets/sprite/UI/RedZone/787B.DDS", 1600.f, 900.0f);
+		break;
+	case Ferrari499P:
+		RedZone.Init("Assets/sprite/UI/RedZone/499P.DDS", 1600.f, 900.0f);
+		break;
+	case RedBullRB19:
+		RedZone.Init("Assets/sprite/UI/RedZone/RB19.DDS", 1600.f, 900.0f);
+		break;
+	case RedBullX2010:
+		RedZone.Init("Assets/sprite/UI/RedZone/X2010.DDS", 1600.f, 900.0f);
+		break;
+	case TOYOTAGR010HYBRID:
+		RedZone.Init("Assets/sprite/UI/RedZone/GR010.DDS", 1600.f, 900.0f);
+		break;
+	case TOYOTATS050HYBRID:
+		RedZone.Init("Assets/sprite/UI/RedZone/TS050.DDS", 1600.f, 900.0f);
+		break;
 	default:
 		break;
 	}
 
 
 	engine = NewGO<SoundSource>(0);
-	engine_s = NewGO<SoundSource>(0);
+	engine_s = NewGO<SoundSource>(1);
+	MotorSound = NewGO<SoundSource>(0);
 	switch (m_Player->GetCarNum())
 	{
 	case ORECA07:
@@ -148,12 +201,79 @@ bool FrontWheelBase::Start() {
 	case MazdaRX_7FD3SSpiritRTypeA:
 		engine_s->Init(204);
 		break;
+
+	case LexusLFA:
+		engine_s->Init(205);
+		break;
+	case FordMustangGT3:
+		engine_s->Init(206);
+		break;
+	case NissanR35GT3:
+		engine_s->Init(207);
+		break;
+	case FordGTGT3GTE:
+		engine_s->Init(208);
+		break;
+	case FordGTLMRaceCarSpecii:
+		engine_s->Init(209);
+		break;
+	case FordGT2006:
+		engine_s->Init(209);
+		break;
+	case SauberMercedesC9:
+		engine_s->Init(210);
+		break;
+	case BMWMHybridV8:
+		engine_s->Init(211);
+		MotorSound->Init(222);
+		HybridSystemMounted = true;
+		break;
+	case Porsche962C:
+		engine_s->Init(212);
+		break;
+	case Porsche911GT3RSR:
+		engine_s->Init(213);
+		break;
+	case Porsche911GT3RS:
+		engine_s->Init(214);
+		break;
+	case Mazda787B:
+		engine_s->Init(215);
+		break;
+	case Ferrari499P:
+		engine_s->Init(217);
+		MotorSound->Init(222);
+		HybridSystemMounted = true;
+		break;
+	case RedBullRB19:
+		engine_s->Init(218);
+		break;
+	case RedBullX2010:
+		engine_s->Init(219);
+		break;
+	case TOYOTAGR010HYBRID:
+		engine_s->Init(220);
+		MotorSound->Init(222);
+		HybridSystemMounted = true;
+		break;
+	case TOYOTATS050HYBRID:
+		engine_s->Init(221);
+		MotorSound->Init(222);
+		HybridSystemMounted = true;
+		break;
 	default:
 		break;
 	}
 	
 	engine_s->Play(true);
+	
 	engine_s->SetVolume(m_Player->GetEngineSoundVolume());
+
+	if (HybridSystemMounted == true) {
+		MotorSound->Play(true);
+		MotorSound->SetVolume(0.0f);
+	}
+
 	EngineSoundStopCount++;
 	return true;
 }
@@ -181,6 +301,12 @@ void FrontWheelBase::Update() {
 	SimulationResults ReturnSimulationResults;
 	if (m_PauseState == 1 || m_PauseState == 3) {
 		engine_s->SetVolume(0.0f);
+		if (HybridSystemMounted == true) {
+			MotorSound->SetVolume(0.0f);
+		}
+	}
+	else if(m_PauseState == 0 || m_PauseState == -1) {
+		engine_s->SetVolume(m_Player->GetEngineSoundVolume());
 	}
 	if (m_PauseState == -1) {
 		/*DifferenceVector = { 0.0f,0.0f,1.0f };*/
@@ -196,13 +322,15 @@ void FrontWheelBase::Update() {
 	if (GameEnd == true) {
 		DeleteGO(engine);
 		DeleteGO(engine_s);
+		if (HybridSystemMounted == true) {
+			DeleteGO(MotorSound);
+		}
 		DeleteGO(this);
 	}
 	//いったん凍結
 	//Move();
 	Vector3 stickL;
 	if (m_PauseState == 0|| m_PauseState==-1) {
-		engine_s->SetVolume(1.0f);
 		//アクセルボタンの入力量の取得
 		m_throttle = 0.0f;
 
@@ -237,6 +365,65 @@ void FrontWheelBase::Update() {
 			Transmission = m_Player->GetTransmission();
 		}
 
+		//ハイブリッドシステムのオンオフ
+		//LMP1の場合
+		if (vehicle_info.HybridType == 1) {
+			if (ScaleSpeed < 50.0f) {
+				EngineSystem = false;
+				engine_s->SetVolume(0.0f);
+			}
+			else {
+				EngineSystem = true;
+				engine_s->SetVolume(m_Player->GetEngineSoundVolume());
+			}
+			if (ScaleSpeed < 250.0f) {
+				HybridSystem = true;
+			}
+			else {
+				HybridSystem = false;
+			}
+		}
+		//LMH/LMDHの場合
+		else if (vehicle_info.HybridType == 2) {
+			if (ScaleSpeed > 120.0f) {
+				HybridSystem = true;
+			}
+			else {
+				HybridSystem = false;
+			}
+		}
+
+		//モーター音の制御
+		if (HybridSystemMounted == true) {
+			//加速時
+			if (throttle_input != 0.0f) {
+				if (vehicle_info.HybridType == 1) {
+					if (ScaleSpeed < 250.0f) {
+						MotorSound->SetVolume(m_Player->GetEngineSoundVolume());
+					}
+					else {
+						MotorSound->SetVolume(0.0f);
+					}
+				}
+				if (vehicle_info.HybridType == 2) {
+					if (ScaleSpeed > 120.0f) {
+						MotorSound->SetVolume(m_Player->GetEngineSoundVolume());
+					}
+					else {
+						MotorSound->SetVolume(0.0f);
+					}
+				}
+			}
+			else {
+				if (ScaleSpeed != 0.0f) {
+					MotorSound->SetVolume(m_Player->GetEngineSoundVolume());
+				}
+				else {
+					MotorSound->SetVolume(0.0f);
+				}
+			}
+		}
+
 		ReturnSimulationResults = m_caraformula->CarSimulation(
 			vehicle_info,
 			m_FrontWheelPosition,
@@ -262,7 +449,9 @@ void FrontWheelBase::Update() {
 			m_FrontWheelForward,
 			FrontWheelOrientationVector,
 			Transmission,
-			ΔRPM
+			ΔRPM,
+			HybridSystem,
+			EngineSystem
 		);
 
 		m_FrontWheelPosition = ReturnSimulationResults.Position;
@@ -283,6 +472,9 @@ void FrontWheelBase::Update() {
 
 		//エンジン音のピッチ調整
 		engine_s->SetFrequencyRatio(calculateScaledValue(currentRPM, vehicle_info.IdlingRPM, vehicle_info.MaxRPM));
+		if (HybridSystemMounted == true) {
+			MotorSound->SetFrequencyRatio(calculateScaledValue(ScaleSpeed, -1.0f, 350.0f));
+		}
 
 		RPMGageColor.y = -2 * RPMGagescale + 2;
 		RPMGageColor.z = -2 * RPMGagescale + 2;
@@ -318,7 +510,7 @@ void FrontWheelBase::Update() {
 		//上下の移動速度を退避させる
 		float y = m_moveSpeed.y;
 		m_moveSpeed = m_FrontWheelForward * VelocityVector;
-		m_moveSpeed.y = y - 980.0f * g_gameTime->GetFrameDeltaTime(); // 重力
+		m_moveSpeed.y = y - 14000.0f * g_gameTime->GetFrameDeltaTime(); // 重力
 		if (m_characterController.IsOnGround()) {
 			//地面についた。
 			m_moveSpeed.y = 0.0f;

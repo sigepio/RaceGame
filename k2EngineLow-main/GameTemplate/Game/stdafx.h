@@ -38,6 +38,9 @@ struct VehicleInfo {
 	std::vector<float> ShiftDownTiming;
 	float ShiftUpCorrectionValue;
 	float RevLimitGain;
+	int HybridType;							//ハイブリッドの種類 0:Non 1:LMP1 2:LMH/LMDH
+	float HybridTorque;						//ハイブリッドシステムのトルク
+	std::vector<float> TorqueMultiplier;
 
 };
 

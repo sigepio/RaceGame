@@ -210,6 +210,7 @@ protected:
 
 	SoundSource* engine;
 	SoundSource* engine_s;
+	SoundSource* MotorSound;
 
 	RightFrontWheel* m_rightfrontwheel;
 	LeftFrontWheel* m_leftfrontwheel;
@@ -220,6 +221,7 @@ protected:
 
 	bool TurnRightState = false;
 	bool GameEnd = false;
+	bool HybridSystemMounted = false;
 
 	float m_throttle;
 	float m_brake;
@@ -284,5 +286,7 @@ protected:
 
 	bool AutoDriveState = false;
 	bool Transmission = true;
+	bool HybridSystem = false;
+	bool EngineSystem = true;
 };
 

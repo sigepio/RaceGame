@@ -120,10 +120,10 @@ private:
 							 {MazdaRX_7FD3SSpiritRTypeA,MazdaRX_7FD3SSpiritRTypeA,MazdaRX_7FD3SSpiritRTypeA,MazdaRX_7FD3SSpiritRTypeA,MazdaRX_7FD3SSpiritRTypeA}
 };
 	int LicenseCourse[5][5] = { { AutodromoNazionaleDiMonza,AutodromoNazionaleDiMonza,AutodromoNazionaleDiMonza,AutodromoNazionaleDiMonza,sebring},
-							    {Silverstone,Silverstone,Silverstone,Silverstone,Silverstone},
-								{Silverstone,Silverstone,Silverstone,Silverstone,Silverstone},
-								{Silverstone,Silverstone,Silverstone,Silverstone,Silverstone},
-								{Silverstone,Silverstone,Silverstone,Silverstone,Silverstone}
+							    {SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit},
+								{SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit},
+								{SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit},
+								{SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit}
 	};
 
 	int NextPage = 0;

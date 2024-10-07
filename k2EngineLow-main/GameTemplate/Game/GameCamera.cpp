@@ -65,7 +65,14 @@ void GameCamera::Update() {
 	if (GameEnd == true) {
 		DeleteGO(this);
 	}
-	if (TitleMode == true) {
+	if (GarageMode == true) {
+		m_target = { 0.0f,20.0f,50.0f };
+		titlepos = { -175.0f,40.0f,50.0f };
+		g_camera3D->SetTarget(m_target);
+		g_camera3D->SetPosition(titlepos);
+		g_camera3D->Update();
+	}
+	else if (TitleMode == true) {
 		if (TitleState == 0) {
 			if (TitleCount == 4000) {
 				TitleState++;
@@ -135,6 +142,40 @@ void GameCamera::Update() {
 					if (LobbyCount <= 1800) {
 						m_target += {0.92, 0.0, 9.96};
 						m_cameraPosition += {0.92, 0.0, 9.96};
+						g_camera3D->SetTarget(m_target);
+						g_camera3D->SetPosition(m_cameraPosition);
+						LobbyCount++;
+					}
+					else {
+						Vector3 m_target = Vector3::Zero;
+						LobbyCount = 0;
+					}
+				}
+				else if (m_player->GetNowCourse() == 3) {
+					if (LobbyCount == 0) {
+						m_target = { 0.0f,-100.0f,2000.0f };
+						m_cameraPosition = { 0.0f,-100.0f,2100.0f };
+					}
+					if (LobbyCount <= 1800) {
+						m_target += {0, 0.0, -1.0};
+						m_cameraPosition += {0.0, 0.0, -1.0};
+						g_camera3D->SetTarget(m_target);
+						g_camera3D->SetPosition(m_cameraPosition);
+						LobbyCount++;
+					}
+					else {
+						Vector3 m_target = Vector3::Zero;
+						LobbyCount = 0;
+					}
+				}
+				else if (m_player->GetNowCourse() == 4) {
+					if (LobbyCount == 0) {
+						m_target = { -15229.0f,-3259.0f,-1000.0f };
+						m_cameraPosition = { -15229.0f,-3259.0f,1100.0f };
+					}
+					if (LobbyCount <= 1800) {
+						m_target += {0, 0.0, -1.0};
+						m_cameraPosition += {0.0, 0.0, -1.0};
 						g_camera3D->SetTarget(m_target);
 						g_camera3D->SetPosition(m_cameraPosition);
 						LobbyCount++;

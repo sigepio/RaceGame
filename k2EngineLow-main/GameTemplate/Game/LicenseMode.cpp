@@ -15,6 +15,7 @@ LicenseMode::~LicenseMode() {
 bool LicenseMode::Start() {
 	m_Player = FindGO<Player>("player");
 
+	m_Player->SetRideCarNum(m_Player->GetRideCarCache());
 	FadeSprite.Init("Assets/sprite/BlackOut.DDS", 1600.0f, 900.0f);
 
 	//ライセンスクリア状況の初期化
@@ -339,6 +340,7 @@ void LicenseMode::FadeIn() {
 			m_Loading->SetWhereCome(LicenseModePage);
 			m_Loading->SetWhereGo(RaceLobbyPage);
 			m_Loading->SetCar(LicensedCar[LicensePage][ArrowPoint]);
+			m_Player->SetRideCarCache(m_Player->GetCarNum());
 			m_Player->SetRideCarNum(LicensedCar[LicensePage][ArrowPoint]);
 			m_Player->SetNowCourse(LicenseCourse[LicensePage][ArrowPoint]);
 			m_Loading->SetCourse(LicenseCourse[LicensePage][ArrowPoint]);

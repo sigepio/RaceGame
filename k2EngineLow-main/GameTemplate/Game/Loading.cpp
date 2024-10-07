@@ -15,6 +15,9 @@
 #include <map>
 #include <random>
 #include "BackGround.h"
+#include "PageNum.h"
+#include "CarChange.h"
+#include "ModeSelect.h"
 
 //このクラスの呼び出しは一番重くする。
 
@@ -84,6 +87,58 @@ std::vector<const char*> collectAllTips() {
         allTips.push_back(tip.second);
     }
 
+    for (const auto& tip : LFATipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : MustangGT3TipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : R35GT3TipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : FordGTLMTipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : FordGTGT3TipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : FordGTTipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : C9TipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : BMWMHybridV8TipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : Porsche962CTipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : Porsche911GT3RSRTipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : Porsche911GT3RSTipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : Mazda787BTipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip :Ferrari499PTipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip :RB19TipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : X2010TipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : GR010TipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : TS050TipsList) {
+        allTips.push_back(tip.second);
+    }
+
     return allTips;
 }
 
@@ -114,7 +169,17 @@ const char* getLoadingScreenTip(int course, int car) {
             else if (course == 2) {
                 tip = getRandomTip(MonzaTipsList);
             }
-
+            else if (course == 3) {
+                tip = getRandomTip(ImolaTipsList);
+            }
+            else if (course == 4) {
+                tip = getRandomTip(SilverStoneTipsList);
+            }
+            //なかった場合
+            else {
+                // コースと車の情報がない場合はすべてのTipsからランダムに選択
+                tip = getRandomTipFromAll();
+            }
         }
         else {
             // 車種のTipsを選択
@@ -134,6 +199,63 @@ const char* getLoadingScreenTip(int course, int car) {
                 tip = getRandomTip(FD3STipsList);
             }
 
+            else if (car == LexusLFA) {
+                tip = getRandomTip(LFATipsList);
+            }
+            else if (car == FordMustangGT3) {
+                tip = getRandomTip(MustangGT3TipsList);
+            }
+            else if (car == NissanR35GT3) {
+                tip = getRandomTip(R35GT3TipsList);
+            }
+            else if (car == FordGTLMRaceCarSpecii) {
+                tip = getRandomTip(FordGTLMTipsList);
+            }
+            else if (car == FordGTGT3GTE) {
+                tip = getRandomTip(FordGTGT3TipsList);
+            }
+            else if (car == FordGT2006) {
+                tip = getRandomTip(FordGTTipsList);
+            }
+            else if (car == SauberMercedesC9) {
+                tip = getRandomTip(C9TipsList);
+            }
+            else if (car == BMWMHybridV8) {
+                tip = getRandomTip(BMWMHybridV8TipsList);
+            }
+            else if (car == Porsche962C) {
+                tip = getRandomTip(Porsche962CTipsList);
+            }
+            else if (car == Porsche911GT3RSR) {
+                tip = getRandomTip(Porsche911GT3RSRTipsList);
+            }
+            else if (car == Porsche911GT3RS) {
+                tip = getRandomTip(Porsche911GT3RSTipsList);
+            }
+            else if (car == Mazda787B) {
+                tip = getRandomTip(Mazda787BTipsList);
+            }
+            else if (car == Ferrari499P) {
+                tip = getRandomTip(Ferrari499PTipsList);
+            }
+            else if (car == RedBullRB19) {
+                tip = getRandomTip(RB19TipsList);
+            }
+            else if (car == RedBullX2010) {
+                tip = getRandomTip(X2010TipsList);
+            }
+            else if (car == TOYOTAGR010HYBRID) {
+                tip = getRandomTip(GR010TipsList);
+            }
+            else if (car == TOYOTATS050HYBRID) {
+                tip = getRandomTip(TS050TipsList);
+            }
+
+            //なかった場合
+            else {
+                // コースと車の情報がない場合はすべてのTipsからランダムに選択
+                tip = getRandomTipFromAll();
+            }
         }
     }
     else {
@@ -169,6 +291,58 @@ void Loading::SetTips(int CarState, int CourseState) {
         case MazdaRX_7FD3SSpiritRTypeA:
             CarLogo.Init("Assets/Sprite/Loading/MAZDALogo.DDS", 1600.0f, 900.0f);
             break;
+
+        case LexusLFA:
+            CarLogo.Init("Assets/Sprite/Loading/LexusLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case FordMustangGT3:
+            CarLogo.Init("Assets/Sprite/Loading/FordLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case NissanR35GT3:
+            CarLogo.Init("Assets/Sprite/Loading/NISSANLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case FordGTLMRaceCarSpecii:
+            CarLogo.Init("Assets/Sprite/Loading/FordLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case FordGTGT3GTE:
+            CarLogo.Init("Assets/Sprite/Loading/FordLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case FordGT2006:
+            CarLogo.Init("Assets/Sprite/Loading/FordLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case SauberMercedesC9:
+            CarLogo.Init("Assets/Sprite/Loading/MercedesLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case BMWMHybridV8:
+            CarLogo.Init("Assets/Sprite/Loading/BMWLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case Porsche962C:
+            CarLogo.Init("Assets/Sprite/Loading/PorscheLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case Porsche911GT3RSR:
+            CarLogo.Init("Assets/Sprite/Loading/PorscheLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case Porsche911GT3RS:
+            CarLogo.Init("Assets/Sprite/Loading/PorscheLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case Mazda787B:
+            CarLogo.Init("Assets/Sprite/Loading/MAZDALogo.DDS", 1600.0f, 900.0f);
+            break;
+        case Ferrari499P:
+            CarLogo.Init("Assets/Sprite/Loading/FerrariLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case RedBullRB19:
+            CarLogo.Init("Assets/Sprite/Loading/RedBullLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case RedBullX2010:
+            CarLogo.Init("Assets/Sprite/Loading/RedBullLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case TOYOTAGR010HYBRID:
+            CarLogo.Init("Assets/Sprite/Loading/TOYOTALogo.DDS", 1600.0f, 900.0f);
+            break;
+        case TOYOTATS050HYBRID:
+            CarLogo.Init("Assets/Sprite/Loading/TOYOTALogo.DDS", 1600.0f, 900.0f);
+            break;
         default:
             break;
         }
@@ -185,6 +359,12 @@ void Loading::SetTips(int CarState, int CourseState) {
             break;
         case AutodromoNazionaleDiMonza:
             CourseLogo.Init("Assets/Sprite/Loading/MonzaLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case SilverstoneCircuit:
+            CourseLogo.Init("Assets/Sprite/Loading/SilverStoneLogo.DDS", 1600.0f, 900.0f);
+            break;
+        case ImolaCircuit:
+            CourseLogo.Init("Assets/Sprite/Loading/ImolaLogo.DDS", 1600.0f, 900.0f);
             break;
         default:
             break;
@@ -234,6 +414,12 @@ void Loading::HandleSceneTransition() {
     case OptionPage:
         HandleOptionPageTransition();
         break;
+    case CarChangePage:
+        HandleCarChangePageTransition();
+        break;
+    case ModeSelectPage:
+        HandleModeSelectPageTransition();
+        break;
     default:
         break;
     }
@@ -249,11 +435,11 @@ void Loading::HandleTitlePageTransition() {
 
 //メインメニュー(ワールドメニュー)から
 void Loading::HandleWorldMenuPageTransition() {
-    //レースメニューへ
-    if (WhereGo == RaceMenuPage) {
-        if (FadeCount == 0) 
-            m_racemenu = NewGO<RaceMenu>(0, "racemenu");
-           HandleFadeOutTransition();
+    //モード選択へ
+    if (WhereGo == ModeSelectPage) {
+        if (FadeCount == 0)
+            m_ModeSelect = NewGO<ModeSelect>(0, "modeselect");
+        HandleFadeOutTransition();
     }
     else if (WhereGo == LicenseModePage) {
         if (FadeCount == 0)
@@ -283,6 +469,31 @@ void Loading::HandleGaragePageTransition() {
             m_menu = NewGO<Menu>(1, "menu");
         HandleFadeOutTransition();
     }
+    //乗り換えページへ
+    if (WhereGo == CarChangePage) {
+        if (FadeCount == 0)
+            m_CarChange = NewGO<CarChange>(1, "carchange");
+        HandleFadeOutTransition();
+    }
+}
+
+//モード選択から
+void Loading::HandleModeSelectPageTransition() {
+    //レースメニューへ
+    if (WhereGo == RaceMenuPage) {
+        if (FadeCount == 0) {
+            m_racemenu = NewGO<RaceMenu>(0, "racemenu");
+            m_racemenu->SetModeState(ModeState);
+        }
+        HandleFadeOutTransition();
+    }
+    //ワールドメニューへ戻る
+    if (WhereGo == WorldMenuPage) {
+        if (FadeCount == 0)
+            m_menu = NewGO<Menu>(1, "menu");
+        HandleFadeOutTransition();
+    }
+    
 }
 
 //レースメニューから
@@ -293,16 +504,17 @@ void Loading::HandleRaceMenuPageTransition() {
             m_MainRaceManager = NewGO<MainRaceManager>(0, "mainracemanager");
             m_MainRaceManager->SetCourseNum(CourseState);
             m_MainRaceManager->SetCarInformation(CarState);
+            m_MainRaceManager->SetModeState(ModeState);
         }
             HandleFadeOutTransition();
     }
     
-    //ワールドメニューへ戻る
-    if (WhereGo == WorldMenuPage) {
+    //モード選択へ
+    if (WhereGo == ModeSelectPage) {
         if (FadeCount == 0)
-            m_menu = NewGO<Menu>(1, "menu");
+            m_ModeSelect = NewGO<ModeSelect>(0, "modeselect");
         HandleFadeOutTransition();
-    } 
+    }
 }
 
 //ライセンスモードから
@@ -333,7 +545,7 @@ void Loading::HandleRaceLobbyPageTransition() {
             m_gamecamera = FindGO<GameCamera>("gamecamera");
             if (LicenseNum == 0) {
                 m_TimeTrialMode = NewGO<TimeTrialMode>(0, "timetrialmode");
-                m_TimeTrialMode->SetGameMode(CircuitExperience);
+                m_TimeTrialMode->SetGameMode(ModeState);
             }
             else {
                 m_LicenseRace = NewGO<LicenseRace>(0, "licenserace");
@@ -401,6 +613,16 @@ void Loading::HandleOptionPageTransition() {
     if (WhereGo == WorldMenuPage) {
         if (FadeCount == 0)
             m_menu = NewGO<Menu>(1, "menu");
+        HandleFadeOutTransition();
+    }
+}
+
+//乗り換えページから
+void Loading::HandleCarChangePageTransition() {
+    //ガレージへ
+    if (WhereGo == GaragePage) {
+        if (FadeCount == 0)
+            m_Garage = NewGO<Garage>(0, "garage");
         HandleFadeOutTransition();
     }
 }

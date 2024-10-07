@@ -18,7 +18,11 @@ WorldMode::~WorldMode() {
 
 bool WorldMode::Start() {
 	m_player = FindGO<Player>("player");
+	
 	m_player->Save();
+	m_player->SetRideCarCache(m_player->GetCarNum());
+	
+
 	Sound* mSound = FindGO<Sound>("sound");
 
 	BaseSprite.Init("Assets/Sprite/MyHome/Base.DDS", 1632.0f, 918.0f);
@@ -78,12 +82,12 @@ void WorldMode::Update() {
 		if (ErrorWindowFlag == 0) {
 			if (g_pad[0]->IsTrigger(enButtonA)) {
 
-				ErrorSE = NewGO<SoundSource>(0);
-				ErrorSE->Init(105);
-				ErrorSE->SetVolume(m_player->GetSEVolume());
-				ErrorSE->Play(false);
-				WindowCount = 0;
-				ErrorWindowFlag = 1;
+				DecisionSE = NewGO<SoundSource>(0);
+				DecisionSE->Init(101);
+				DecisionSE->SetVolume(m_player->GetSEVolume());
+				DecisionSE->Play(false);
+				FadeSate = 1;
+				FadeCount = 0;
 			}
 			if (g_pad[0]->IsTrigger(enButtonRight)) {
 				CursorSE = NewGO<SoundSource>(0);
@@ -427,7 +431,7 @@ void WorldMode::Update() {
 				case 1:
 					m_loading = NewGO<Loading>(10, "loading");
 					m_loading->SetWhereCome(WorldMenuPage);
-					m_loading->SetWhereGo(RaceMenuPage);
+					m_loading->SetWhereGo(ModeSelectPage);
 					DeleteGO(BGM);
 					DeleteGO(this);
 					break;

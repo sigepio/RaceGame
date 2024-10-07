@@ -15,6 +15,24 @@
 #include "Car_RX7FD.h"
 #include "Car_A90Supra.h"
 #include "Car_GTRR35.h"
+#include "Car_LFA.h"
+#include "Car_MustangGT3.h"
+#include "Car_R35GT3.h"
+#include "Car_FordGTLM.h"
+#include "Car_FordGTGT3.h"
+#include "Car_FordGT.h"
+#include "Car_C9.h"
+#include "Car_BMWMV8LMDh.h"
+#include "Car_962C.h"
+#include "Car_911GT3RSR.h"
+#include "Car_911GT3RS.h"
+#include "Car_787B.h"
+#include "Car_499P.h"
+#include "Car_RB19.h"
+#include "Car_X2010.h"
+#include "Car_GR010.h"
+#include "Car_TS050.h"
+
 #include "Player.h"
 #define _USE_MATH_DEFINES
 
@@ -25,6 +43,81 @@ TimeTrialMode::TimeTrialMode() {
 
 TimeTrialMode::~TimeTrialMode() {
 	DeleteGO(BGM);
+}
+
+void TimeTrialMode::CarSetGameEnd() {
+	switch (CarNum)
+	{
+	case ORECA07:
+		m_Oreca07->SetGameEnd(GameEnd);
+		break;
+	case TOYOTA86GT:
+		m_86GT->SetGameEnd(GameEnd);
+		break;
+	case TOYOTA90Supra:
+		m_A90Supra->SetGameEnd(GameEnd);
+		break;
+	case NissanGTR_17:
+		m_GTRR35->SetGameEnd(GameEnd);
+		break;
+	case MazdaRX_7FD3SSpiritRTypeA:
+		m_FD3S->SetGameEnd(GameEnd);
+		break;
+	case LexusLFA:
+		m_LFA->SetGameEnd(GameEnd);
+		break;
+	case FordMustangGT3:
+		m_MustangGT3->SetGameEnd(GameEnd);
+		break;
+	case NissanR35GT3:
+		m_R35GT3->SetGameEnd(GameEnd);
+		break;
+	
+	case FordGTLMRaceCarSpecii:
+		m_FordGTLM->SetGameEnd(GameEnd);
+		break;
+	case FordGTGT3GTE:
+		m_FordGTGT3->SetGameEnd(GameEnd);
+		break;
+	case FordGT2006:
+		m_FordGT->SetGameEnd(GameEnd);
+		break;
+	case SauberMercedesC9:
+		m_C9->SetGameEnd(GameEnd);
+		break;
+	case BMWMHybridV8:
+		m_BMWMV8LMDH->SetGameEnd(GameEnd);
+		break;
+	case Porsche962C:
+		m_962C->SetGameEnd(GameEnd);
+		break;
+	case Porsche911GT3RSR:
+		m_911GT3RSR->SetGameEnd(GameEnd);
+		break;
+	case Porsche911GT3RS:
+		m_911GT3RS->SetGameEnd(GameEnd);
+		break;
+	case Mazda787B:
+		m_787B->SetGameEnd(GameEnd);
+		break;
+	case Ferrari499P:
+		m_499P->SetGameEnd(GameEnd);
+		break;
+	case RedBullRB19:
+		m_RB19->SetGameEnd(GameEnd);
+		break;
+	case RedBullX2010:
+		m_X2010->SetGameEnd(GameEnd);
+		break;
+	case TOYOTAGR010HYBRID:
+		m_GR010->SetGameEnd(GameEnd);
+		break;
+	case TOYOTATS050HYBRID:
+		m_TS050->SetGameEnd(GameEnd);
+		break;
+	default:
+		break;
+	}
 }
 
 bool TimeTrialMode::Start() {
@@ -43,11 +136,16 @@ bool TimeTrialMode::Start() {
 		ClearTime = { 80.500f,83.200f,90.000f };
 		break;
 	case 2:
-		ClearTime = { 16.200,17.500,20.000 };
+		ClearTime = { 80.500f,83.200f,90.000f };
 		break;
 	case 3:
-		ClearTime = { 32.500,34.200,36.000 };
+		ClearTime = { 80.500f,83.200f,90.000f };
 		break;
+	case 4:
+		ClearTime = { 80.500f,83.200f,90.000f };
+		break;
+	case 5:
+		ClearTime = { 80.500f,83.200f,90.000f };
 	default:
 		break;
 	}
@@ -76,6 +174,57 @@ bool TimeTrialMode::Start() {
 	case MazdaRX_7FD3SSpiritRTypeA:
 		m_FD3S = NewGO<Car_RX7FD>(2, "car_rx7fd");
 		break;
+	case LexusLFA:
+		m_LFA = NewGO<Car_LFA>(2, "car_lfa");
+	    break;
+	case FordMustangGT3:
+		m_MustangGT3 = NewGO<Car_MustangGT3>(2, "car_mustanggt3");
+		break;
+	case NissanR35GT3:
+		m_R35GT3 = NewGO<Car_R35GT3>(2, "car_r35gt3");
+		break;
+	case FordGTLMRaceCarSpecii:
+		m_FordGTLM = NewGO<Car_FordGTLM>(2, "car_fordgtlm");
+		break;
+	case FordGTGT3GTE:
+		m_FordGTGT3 = NewGO<Car_FordGTGT3>(2, "car_fordgtgt3");
+		break;
+	case FordGT2006:
+		m_FordGT = NewGO<Car_FordGT>(2, "car_fordgt");
+		break;
+	case SauberMercedesC9:
+		m_C9 = NewGO<Car_C9>(2, "car_c9");
+		break;
+	case BMWMHybridV8:
+		m_BMWMV8LMDH = NewGO<Car_BMWMV8LMDh>(2, "car_bmwmv8lmdh");
+		break;
+	case Porsche962C:
+		m_962C = NewGO<Car_962C>(2, "car_962c");
+		break;
+	case Porsche911GT3RSR:
+		m_911GT3RSR = NewGO<Car_911GT3RSR>(2, "car_911gt3rsr");
+		break;
+	case Porsche911GT3RS:
+		m_911GT3RS = NewGO<Car_911GT3RS>(2, "car_911gt3rs");
+		break;
+	case Mazda787B:
+		m_787B = NewGO<Car_787B>(2, "car_787b");
+		break;
+	case Ferrari499P:
+		m_499P = NewGO<Car_499P>(2, "car_499p");
+		break;
+	case RedBullRB19:
+		m_RB19 = NewGO<Car_RB19>(2, "car_rb19");
+		break;
+	case RedBullX2010:
+		m_X2010 = NewGO<Car_X2010>(2, "car_x2010");
+		break;
+	case TOYOTAGR010HYBRID:
+		m_GR010 = NewGO<Car_GR010>(2, "car_gr010");
+		break;
+	case TOYOTATS050HYBRID:
+		m_TS050 = NewGO<Car_TS050>(2, "car_ts050");
+		break;
 	default:
 		break;
 	}
@@ -98,6 +247,12 @@ bool TimeTrialMode::Start() {
 		break;
 	case AutodromoNazionaleDiMonza:
 		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUIMonza.DDS", 1600.0f, 900.0f);
+		break;
+	case SilverstoneCircuit:
+		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUISilverStone.DDS", 1600.0f, 900.0f);
+		break;
+	case ImolaCircuit:
+		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUIImola.DDS", 1600.0f, 900.0f);
 		break;
 	default:
 		break;
@@ -290,26 +445,7 @@ void TimeTrialMode::Update() {
 			DeleteGO(BGM);
 
 			GameEnd = true;
-			switch (CarNum)
-			{
-			case ORECA07:
-				m_Oreca07->SetGameEnd(GameEnd);
-				break;
-			case TOYOTA86GT:
-				m_86GT->SetGameEnd(GameEnd);
-				break;
-			case TOYOTA90Supra:
-				m_A90Supra->SetGameEnd(GameEnd);
-				break;
-			case NissanGTR_17:
-				m_GTRR35->SetGameEnd(GameEnd);
-				break;
-			case MazdaRX_7FD3SSpiritRTypeA:
-				m_FD3S->SetGameEnd(GameEnd);
-				break;
-			default:
-				break;
-			}
+			CarSetGameEnd();
 			m_caraformula->SetGameEnd(GameEnd);
 			DeleteGO(this);
 		}
@@ -324,32 +460,13 @@ void TimeTrialMode::Update() {
 
 			GameEnd = true;
 			m_gamecamera->SetGameEnd(GameEnd);
-			switch (CarNum)
-			{
-			case ORECA07:
-				m_Oreca07->SetGameEnd(GameEnd);
-				break;
-			case TOYOTA86GT:
-				m_86GT->SetGameEnd(GameEnd);
-				break;
-			case TOYOTA90Supra:
-				m_A90Supra->SetGameEnd(GameEnd);
-				break;
-			case NissanGTR_17:
-				m_GTRR35->SetGameEnd(GameEnd);
-				break;
-			case MazdaRX_7FD3SSpiritRTypeA:
-				m_FD3S->SetGameEnd(GameEnd);
-				break;
-			default:
-				break;
-			}
+			CarSetGameEnd();
 
-			m_lighting->SetGameEnd(GameEnd);
+			/*m_lighting->SetGameEnd(GameEnd);
 			m_caraformula->SetGameEnd(GameEnd);
-			m_background->SetGameEnd(GameEnd);
+			m_background->SetGameEnd(GameEnd);*/
 			DeleteGO(BGM);
-			DeleteGO(m_skyCube);
+			/*DeleteGO(m_skyCube);*/
 			DeleteGO(this);
 		}
 		else if (g_pad[0]->IsTrigger(enButtonRight) && PauseWindowState >= 0 && PauseWindowState < 2) {
@@ -413,26 +530,7 @@ void TimeTrialMode::Update() {
 
 	TimeFont.SetText(Time);
 	//ラップの処理
-	switch (CarNum)
-	{
-	case ORECA07:
-		NowLap = m_Oreca07->Getm_LapState();
-		break;
-	case TOYOTA86GT:
-		NowLap = m_86GT->Getm_LapState();
-		break;
-	case TOYOTA90Supra:
-		NowLap = m_A90Supra->Getm_LapState();
-		break;
-	case NissanGTR_17:
-		NowLap = m_GTRR35->Getm_LapState();
-		break;
-	case MazdaRX_7FD3SSpiritRTypeA:
-		NowLap = m_FD3S->Getm_LapState();
-		break;
-	default:
-		break;
-	}
+
 	switch (m_player->GetNowCourse())
 	{
 	case sebring:
@@ -495,9 +593,45 @@ void TimeTrialMode::Update() {
 			}
 		}
 		break;
-	case Silverstone:
+	case ImolaCircuit:
+		//1セクターの処理
+		if (NowLap == 0) {
+			if (m_NowPPosition.x >= 15000.0 && m_NowPPosition.z >= -32103.0f) {
+				NowLap++;
+			}
+		}
+		//2セクターの処理
+		if (NowLap == 1) {
+			if (m_NowPPosition.x <= 0.0f && m_NowPPosition.z >= 0.0f) {
+				NowLap++;
+			}
+		}
+		//コントロールライン
+		if (NowLap == 2) {
+			if (m_NowPPosition.x <= -10000.0f && m_NowPPosition.z <= 100.0f) {
+				NowLap++;
+			}
+		}
 		break;
-	case Imola:
+	case SilverstoneCircuit:
+		//1セクターの処理
+		if (NowLap == 0) {
+			if (m_NowPPosition.x <= -1200.0f && m_NowPPosition.z >= 30000.0f) {
+				NowLap++;
+			}
+		}
+		//2セクターの処理
+		if (NowLap == 1) {
+			if (m_NowPPosition.x >= 0.0f && m_NowPPosition.z <= 8000.0f) {
+				NowLap++;
+			}
+		}
+		//コントロールライン
+		if (NowLap == 2) {
+			if (m_NowPPosition.x <= 10000.0f && m_NowPPosition.z >= 0.0f) {
+				NowLap++;
+			}
+		}
 		break;
 	default:
 		break;
@@ -535,10 +669,62 @@ void TimeTrialMode::Update() {
 		case MazdaRX_7FD3SSpiritRTypeA:
 			m_FD3S->Setm_LapState(0);
 			break;
+		case LexusLFA:
+			m_LFA->Setm_LapState(0);
+			break;
+		case FordMustangGT3:
+			m_MustangGT3->Setm_LapState(0);
+			break;
+		case NissanR35GT3:
+			m_R35GT3->Setm_LapState(0);
+			break;
+		case FordGTLMRaceCarSpecii:
+			m_FordGTLM->Setm_LapState(0);
+			break;
+		case FordGTGT3GTE:
+			m_FordGTGT3->Setm_LapState(0);
+			break;
+		case FordGT2006:
+			m_FordGT->Setm_LapState(0);
+			break;
+		case SauberMercedesC9:
+			m_C9->Setm_LapState(0);
+			break;
+		case BMWMHybridV8:
+			m_BMWMV8LMDH->Setm_LapState(0);
+			break;
+		case Porsche962C:
+			m_962C->Setm_LapState(0);
+			break;
+		case Porsche911GT3RSR:
+			m_911GT3RSR->Setm_LapState(0);
+			break;
+		case Porsche911GT3RS:
+			m_911GT3RS->Setm_LapState(0);
+			break;
+		case Mazda787B:
+			m_787B->Setm_LapState(0);
+			break;
+		case Ferrari499P:
+			m_499P->Setm_LapState(0);
+			break;
+		case RedBullRB19:
+			m_RB19->Setm_LapState(0);
+			break;
+		case RedBullX2010:
+			m_X2010->Setm_LapState(0);
+			break;
+		case TOYOTAGR010HYBRID:
+			m_GR010->Setm_LapState(0);
+			break;
+		case TOYOTATS050HYBRID:
+			m_TS050->Setm_LapState(0);
+			break;
 		default:
 			break;
 		}
 
+		NowLap = 0;
 		LapCount++;
 		ControlLineSE = NewGO<SoundSource>(0);
 		ControlLineSE->Init(106);
@@ -553,8 +739,14 @@ void TimeTrialMode::Update() {
 
 	}
 
-	wchar_t m_LapCount[256];
-	swprintf_s(m_LapCount, 256, L"%d/3\n", LapCount+1);
+	wchar_t m_LapCount[256]; 
+	if (GameMode == 0) {
+		swprintf_s(m_LapCount, 256, L" %d\n", LapCount + 1);
+	}
+	else if (GameMode == 1) {
+		swprintf_s(m_LapCount, 256, L"%d/3\n", LapCount + 1);
+	}
+	//swprintf_s(m_LapCount, 256, L"%d/3\n", NowLap);
 	LapCountFont.SetText(m_LapCount);
 	LapCountFont.SetPosition(-870.0f,440.0f, 0.0f);
 	
@@ -726,6 +918,57 @@ void TimeTrialMode::Update() {
 	case MazdaRX_7FD3SSpiritRTypeA:
 		m_FD3S->SetPauseState(PauseState);
 		break;
+	case LexusLFA:
+		m_LFA->SetPauseState(PauseState);
+		break;
+	case FordMustangGT3:
+		m_MustangGT3->SetPauseState(PauseState);
+		break;
+	case NissanR35GT3:
+		m_R35GT3->SetPauseState(PauseState);
+		break;
+	case FordGTLMRaceCarSpecii:
+		m_FordGTLM->SetPauseState(PauseState);
+		break;
+	case FordGTGT3GTE:
+		m_FordGTGT3->SetPauseState(PauseState);
+		break;
+	case FordGT2006:
+		m_FordGT->SetPauseState(PauseState);
+		break;
+	case SauberMercedesC9:
+		m_C9->SetPauseState(PauseState);
+		break;
+	case BMWMHybridV8:
+		m_BMWMV8LMDH->SetPauseState(PauseState);
+		break;
+	case Porsche962C:
+		m_962C->SetPauseState(PauseState);
+		break;
+	case Porsche911GT3RSR:
+		m_911GT3RSR->SetPauseState(PauseState);
+		break;
+	case Porsche911GT3RS:
+		m_911GT3RS->SetPauseState(PauseState);
+		break;
+	case Mazda787B:
+		m_787B->SetPauseState(PauseState);
+		break;
+	case Ferrari499P:
+		m_499P->SetPauseState(PauseState);
+		break;
+	case RedBullRB19:
+		m_RB19->SetPauseState(PauseState);
+		break;
+	case RedBullX2010:
+		m_X2010->SetPauseState(PauseState);
+		break;
+	case TOYOTAGR010HYBRID:
+		m_GR010->SetPauseState(PauseState);
+		break;
+	case TOYOTATS050HYBRID:
+		m_TS050->SetPauseState(PauseState);
+		break;
 	default:
 		break;
 	}
@@ -752,26 +995,7 @@ void TimeTrialMode::ResultSelect() {
 			m_Loading->SetWhereGo(PlayPage);
 
 			GameEnd = true;
-			switch (CarNum)
-			{
-			case ORECA07:
-				m_Oreca07->SetGameEnd(GameEnd);
-				break;
-			case TOYOTA86GT:
-				m_86GT->SetGameEnd(GameEnd);
-				break;
-			case TOYOTA90Supra:
-				m_A90Supra->SetGameEnd(GameEnd);
-				break;
-			case NissanGTR_17:
-				m_GTRR35->SetGameEnd(GameEnd);
-				break;
-			case MazdaRX_7FD3SSpiritRTypeA:
-				m_FD3S->SetGameEnd(GameEnd);
-				break;
-			default:
-				break;
-			}
+			CarSetGameEnd();
 			m_caraformula->SetGameEnd(GameEnd);
 			DeleteGO(this);
 		}
@@ -795,30 +1019,12 @@ void TimeTrialMode::ResultSelect() {
 			GameEnd = true;
 			m_gamecamera->SetGameEnd(GameEnd);
 
-			switch (CarNum)
-			{
-			case ORECA07:
-				m_Oreca07->SetGameEnd(GameEnd);
-				break;
-			case TOYOTA86GT:
-				m_86GT->SetGameEnd(GameEnd);
-				break;
-			case TOYOTA90Supra:
-				m_A90Supra->SetGameEnd(GameEnd);
-				break;
-			case NissanGTR_17:
-				m_GTRR35->SetGameEnd(GameEnd);
-				break;
-			case MazdaRX_7FD3SSpiritRTypeA:
-				m_FD3S->SetGameEnd(GameEnd);
-				break;
-			default:
-				break;
-			}
-			m_lighting->SetGameEnd(GameEnd);
+			CarSetGameEnd();
+			/*m_lighting->SetGameEnd(GameEnd);
 			m_caraformula->SetGameEnd(GameEnd);
 			m_background->SetGameEnd(GameEnd);
-			DeleteGO(m_skyCube);
+			DeleteGO(m_skyCube);*/
+			DeleteGO(BGM);
 			DeleteGO(this);
 		}
 	}

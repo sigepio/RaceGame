@@ -4,6 +4,8 @@
 #include "LeMans.h"
 #include "PageNum.h"
 #include "Monza.h"
+#include "Imola.h"
+#include "SilverStone.h"
 
 BackGround::BackGround()
 {
@@ -28,11 +30,21 @@ bool BackGround::Start()
         case CircuitDeLaSarthe:
             m_LeMans = NewGO<LeMans>(0, "lemans");
             StartPosition = m_LeMans->GetStartPosition();
-            StartForward = { 0.0f,0.0f,1.0f };
+            StartForward = { -0.316f,0.0f,0.949f };
             break;
         case AutodromoNazionaleDiMonza:
             m_Monza = NewGO<Monza>(0, "monza");
             StartPosition = m_Monza->GetStartPosition();
+            StartForward = { 0.0f,0.0f,1.0f };
+            break;
+        case ImolaCircuit:
+            m_Imola = NewGO<Imola>(0, "imola");
+            StartPosition = m_Imola->GetStartPosition();
+            StartForward = { 0.0f,0.0f,-1.0f };
+            break;
+        case SilverstoneCircuit:
+            m_SilverStone = NewGO<SilverStone>(0, "silverstone");
+            StartPosition = m_SilverStone->GetStartPosition();
             StartForward = { 0.0f,0.0f,1.0f };
             break;
         default:
@@ -71,6 +83,12 @@ void BackGround::Update()
         }
         if (m_Monza) {
             m_Monza->SetGameEnd(GameEnd);
+        }
+        if (m_Imola) {
+            m_Imola->SetGameEnd(GameEnd);
+        }
+        if (m_SilverStone) {
+            m_SilverStone->SetGameEnd(GameEnd);
         }
         DeleteGO(this);
     }

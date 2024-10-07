@@ -38,6 +38,10 @@ public:
 		WhereComePage = m_WhereComePage;
 	}
 
+	void SetModeState(int m_ModeState) {
+		ModeState = m_ModeState;
+	}
+
 private:
 	Vector4 BlackOutColor = { 1.0f,1.0f,1.0f,1.0f };
 	Vector4 LicenseContentsColor = { 1.0f,1.0f,1.0f,0.0f };
@@ -89,6 +93,8 @@ private:
 	int LicenseCount = 0;
 
 	int WhereComePage = 0;
+
+	int ModeState = 0;
 	
 
 	int SelectPoint = 0;//0:スタート 1:exit

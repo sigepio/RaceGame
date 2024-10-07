@@ -13,6 +13,24 @@ class Player;
 class Car_RX7FD;
 class Car_A90Supra;
 class Car_GTRR35;
+class Car_LFA;
+class Car_MustangGT3;
+class Car_R35GT3;
+class Car_FordGTLM;
+class Car_FordGTGT3;
+class Car_FordGT;
+class Car_C9;
+class Car_BMWMV8LMDh;
+class Car_962C;
+class Car_911GT3RSR;
+class Car_911GT3RS;
+class Car_787B;
+class Car_296GT3;
+class Car_499P;
+class Car_RB19;
+class Car_X2010;
+class Car_TS050;
+class Car_GR010;
 
 
 
@@ -24,6 +42,7 @@ public:
 	bool Start();
 	void Update();
 	void Render(RenderContext& rc);
+	void CarSetGameEnd();
 
 	void SetPosition(Vector3 position) {
 		m_NowPPosition = position;
@@ -34,8 +53,6 @@ public:
 	}
 
 	void ResultSelect();
-
-	
 
 private:
 	Vector4 m_Pausecolor = { 1.0f,1.0f,1.0f,0.0f };
@@ -72,6 +89,25 @@ private:
 	Car_RX7FD* m_FD3S;
 	Car_A90Supra* m_A90Supra;
 	Car_GTRR35* m_GTRR35;
+	Car_LFA* m_LFA;
+	Car_MustangGT3* m_MustangGT3;
+	Car_R35GT3* m_R35GT3;
+	Car_FordGTLM* m_FordGTLM;
+	Car_FordGTGT3* m_FordGTGT3;
+	Car_FordGT* m_FordGT;
+	Car_C9* m_C9;
+	Car_BMWMV8LMDh* m_BMWMV8LMDH;
+	Car_962C* m_962C;
+	Car_911GT3RSR* m_911GT3RSR;
+	Car_911GT3RS* m_911GT3RS;
+	Car_787B* m_787B;
+	Car_296GT3* m_296GT3;
+	Car_499P* m_499P;
+	Car_RB19* m_RB19;
+	Car_X2010* m_X2010;
+	Car_GR010* m_GR010;
+	Car_TS050* m_TS050;
+
 	SkyCube* m_skyCube = nullptr;
 	CarAFormula* m_caraformula;
 	Loading* m_Loading;

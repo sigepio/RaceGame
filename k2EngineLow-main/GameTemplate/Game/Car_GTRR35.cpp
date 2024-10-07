@@ -36,6 +36,7 @@ Car_GTRR35::Car_GTRR35() {
     //ë¨ìxì`íBî‰ê›íË
     GEAR_RATIOS = { 4.056, 	2.301, 1.595, 1.248, 1.001, 0.796 };
     ShiftDownTiming = { 4000.0f,4800.0f,5400.0f,5500.0f,5600.0f};
+    TorqueMultiplier = { 1,1,1,1,1,1 };
 
     vehicle_info = {
     1770.0,              //é‘èd[kg]
@@ -61,7 +62,10 @@ Car_GTRR35::Car_GTRR35() {
     16.0f,
     ShiftDownTiming,
     50,
-    200.0f
+    200.0f,
+    0,
+    0,
+    TorqueMultiplier
     };
 
 

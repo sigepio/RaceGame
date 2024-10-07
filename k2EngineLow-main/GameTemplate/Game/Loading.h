@@ -9,6 +9,8 @@ class LicenseMode;
 class LicenseRace;
 class OptionMenu;
 class BackGround;
+class CarChange;
+class ModeSelect;
 
 class Loading:public IGameObject
 {
@@ -30,6 +32,8 @@ public:
 	void HandlePlayPageTransition();
 	void HandleGaragePageTransition();
 	void HandleOptionPageTransition();
+	void HandleCarChangePageTransition();
+	void HandleModeSelectPageTransition();
 
 	void SetWhereCome(int m_WhereCome) {
 		WhereCome = m_WhereCome;
@@ -55,6 +59,10 @@ public:
 		LicenseNum = m_LicenseNum;
 	}
 
+	void SetModeState(int m_ModeState) {
+		ModeState = m_ModeState;
+	}
+
 
 private:
 
@@ -77,6 +85,8 @@ private:
 	OptionMenu* m_OptionMenu;
 	SkyCube* m_skyCube = nullptr;
 	BackGround* m_BackGround;
+	CarChange* m_CarChange;
+	ModeSelect* m_ModeSelect;
 
 	int WhereCome = 0;			//0:タイトル
 	int WhereGo = 0;			//0:タイトル
@@ -89,6 +99,8 @@ private:
 
 	int FadeCount;
 	int LoadCount = 0;
+
+	int ModeState = 0;
 
 };
 

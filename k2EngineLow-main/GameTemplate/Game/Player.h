@@ -1,4 +1,6 @@
 #pragma once
+#include "PageNum.h"
+
 class Player:public IGameObject
 {
 public:
@@ -85,6 +87,10 @@ public:
 		EngineSoundVolume = m_EngineSoundVolume;
 	}
 
+	void SetRideCarCache(int m_RideCarCache) {
+		RideCarCache = m_RideCarCache;
+	}
+
 	int GetCarNum() {
 		return RideCarNum;
 	}
@@ -116,9 +122,15 @@ public:
 		return EngineSoundVolume;
 	}
 
+	int GetRideCarCache() {
+		return RideCarCache;
+	}
+
 private:
-	int RideCarNum = 1;
-	std::vector<int> PossessionCar = { 0 };
+	int RideCarNum = 0;
+	int RideCarCache = 0;
+
+	std::vector<int> PossessionCar = { 0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21};
 
 	float Money=0.0f;
 
