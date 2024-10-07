@@ -55,6 +55,7 @@ Car_Oreca07::Car_Oreca07() {
     //ë¨ìxì`íBî‰ê›íË
     GEAR_RATIOS = { 1.593, 1.231, 0.989, 0.831, 0.704, 0.606 };
     ShiftDownTiming = { 6200.0f,6500.0f,6800.0f,6850.0f,6850.0f };
+    TorqueMultiplier = { 1,1,1,1,1,1 };
 
     vehicle_info = {
     930.0,              //é‘èd[kg]
@@ -80,7 +81,10 @@ Car_Oreca07::Car_Oreca07() {
     18.0f,
     ShiftDownTiming,
     100,
-    200.0f
+    200.0f,
+    0,
+    0,
+    TorqueMultiplier
     };
 
 	

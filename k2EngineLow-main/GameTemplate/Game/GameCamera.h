@@ -76,6 +76,10 @@ public:
 		TitleMode = m_TitleMode;
 	}
 
+	void SetGarageMode(bool m_GarageMode) {
+		GarageMode = m_GarageMode;
+	}
+
 	/// <summary>
 	/// カメラのポジションを返す
 	/// </summary>
@@ -141,5 +145,6 @@ private:
 	bool GameEnd = false;
 
 	bool TitleMode = false;
+	bool GarageMode = false;
 };
 

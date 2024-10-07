@@ -16,12 +16,18 @@ public:
     void Update();
     void Render(RenderContext& rc);
 
+    void SetModeState(int m_ModeState) {
+        SelectRaceMode = m_ModeState;
+    }
+
 private:
     Vector4 m_FadeColor = { 1.0f,1.0f,1.0f,1.0f };
 
     Vector3 SebringPosition = { -620.0f,-290.0f,0.0f };
     Vector3 LeMansPosition = { -310.0f,-290.0f,0.0f };
     Vector3 MonzaPosition = { 0.0f,-290.0f,0.0f };
+    Vector3 ImolaPosition = { 310.0f,-290.0f,0.0f };
+    Vector3 SilverStonePosition = { 620.0f,-290.0f,0.0f };
 
     Vector3 CEPosition = { -160.0f,-290.0f,0.0f };
     Vector3 TTPosition = { 160.0f, -290.0f,0.0f };
@@ -39,17 +45,23 @@ private:
     SpriteRender Main_Sebring;
     SpriteRender Main_LeMans;
     SpriteRender Main_Monza;
+    SpriteRender Main_Imola;
+    SpriteRender Main_SilverStone;
     SpriteRender Base;
     //情報
     SpriteRender CourseExclusive_Sebring;
     SpriteRender CourseExclusive_LeMans;
     SpriteRender CourseExclusive_Monza;
+    SpriteRender CourseExclusive_Imola;
+    SpriteRender CourseExclusive_SilverStone;
     //黄土色
     SpriteRender CourseSelect;
     //灰色
     SpriteRender CourseSelectBase_Sebring;          
     SpriteRender CourseSelectBase_LeMans;
     SpriteRender CourseSelectBase_Monza;
+    SpriteRender CourseSelectBase_Imola;
+    SpriteRender CourseSelectBase_SilverStone;
 
     SpriteRender ModeSelectBase_CE;
     SpriteRender ModeSelectBase_TT;
@@ -57,6 +69,8 @@ private:
     SpriteRender CourseSelect_Sebring;
     SpriteRender CourseSelect_LeMans;
     SpriteRender CourseSelect_Monza;
+    SpriteRender CourseSelect_Imola;
+    SpriteRender CourseSelect_SilverStone;
 
     SpriteRender ModeSelect_CE;
     SpriteRender ModeSelect_TT;
@@ -73,7 +87,7 @@ private:
     int MaxMode = 2;
     int SelectArea = 0;         //0:コース選択 1:モード選択
 
-    int MaxCourseNum = 3;
+    int MaxCourseNum = 5;
 
     int RideCar = 0;
 

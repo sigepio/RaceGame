@@ -1,8 +1,11 @@
 #pragma once
+#include "sound/SoundSource.h"
+
 class GameCamera;
 class Loading;
 class Player;
 class Lighting;
+
 
 class Garage:public IGameObject
 {
@@ -41,16 +44,25 @@ private:
 
 	float test = 0;
 
+	bool AlphaState = false;
+	bool FadeState = false;
+	bool CarChangeState = false;
+
 	std::vector<int> PossessionCar;
 
 	GameCamera* m_GameCamera;
 	Loading* m_Loading;
 	Player* m_Player;
 	Lighting* m_Lighting;
+	SoundSource* BGM;
+	SoundSource* CursorSE;
+	SoundSource* DecisionSE;
+	SoundSource* CancelSE;
 
 
 	ModelRender BaseModel;
 	ModelRender NowCarModel;
+	ModelRender AlphaModel;
 
 	SpriteRender BaseSprite;
 	SpriteRender CarInformationSprite;

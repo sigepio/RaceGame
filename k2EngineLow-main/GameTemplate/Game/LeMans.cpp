@@ -6,7 +6,7 @@ LeMans::LeMans() {
 }
 
 LeMans::~LeMans() {
-
+	g_engine->TResourceBankRelease();
 }
 
 bool LeMans::Start() {

@@ -44,6 +44,27 @@
     <ClCompile Include="LicenseRace.cpp" />
     <ClCompile Include="OptionMenu.cpp" />
     <ClCompile Include="FadeIn.cpp" />
+    <ClCompile Include="Car_TS050.cpp" />
+    <ClCompile Include="Car_GR010.cpp" />
+    <ClCompile Include="Car_X2010.cpp" />
+    <ClCompile Include="Car_RB19.cpp" />
+    <ClCompile Include="Car_499P.cpp" />
+    <ClCompile Include="Car_787B.cpp" />
+    <ClCompile Include="Car_911GT3RS.cpp" />
+    <ClCompile Include="Car_911GT3RSR.cpp" />
+    <ClCompile Include="Car_962C.cpp" />
+    <ClCompile Include="Car_BMWMV8LMDh.cpp" />
+    <ClCompile Include="Car_C9.cpp" />
+    <ClCompile Include="Car_FordGT.cpp" />
+    <ClCompile Include="Car_FordGTLM.cpp" />
+    <ClCompile Include="Car_FordGTGT3.cpp" />
+    <ClCompile Include="Car_LFA.cpp" />
+    <ClCompile Include="Car_MustangGT3.cpp" />
+    <ClCompile Include="Car_R35GT3.cpp" />
+    <ClCompile Include="Imola.cpp" />
+    <ClCompile Include="SilverStone.cpp" />
+    <ClCompile Include="CarChange.cpp" />
+    <ClCompile Include="ModeSelect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="stdafx.h" />
@@ -86,5 +107,26 @@
     <ClInclude Include="LicenseRace.h" />
     <ClInclude Include="OptionMenu.h" />
     <ClInclude Include="FadeIn.h" />
+    <ClInclude Include="Car_TS050.h" />
+    <ClInclude Include="Car_GR010.h" />
+    <ClInclude Include="Car_X2010.h" />
+    <ClInclude Include="Car_RB19.h" />
+    <ClInclude Include="Car_499P.h" />
+    <ClInclude Include="Car_787B.h" />
+    <ClInclude Include="Car_911GT3RS.h" />
+    <ClInclude Include="Car_911GT3RSR.h" />
+    <ClInclude Include="Car_962C.h" />
+    <ClInclude Include="Car_BMWMV8LMDh.h" />
+    <ClInclude Include="Car_C9.h" />
+    <ClInclude Include="Car_FordGT.h" />
+    <ClInclude Include="Car_FordGTLM.h" />
+    <ClInclude Include="Car_FordGTGT3.h" />
+    <ClInclude Include="Car_LFA.h" />
+    <ClInclude Include="Car_MustangGT3.h" />
+    <ClInclude Include="Car_R35GT3.h" />
+    <ClInclude Include="Imola.h" />
+    <ClInclude Include="SilverStone.h" />
+    <ClInclude Include="CarChange.h" />
+    <ClInclude Include="ModeSelect.h" />
   </ItemGroup>
 </Project>

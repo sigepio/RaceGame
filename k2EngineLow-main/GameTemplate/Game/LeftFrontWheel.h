@@ -49,6 +49,7 @@ private:
 
 
 	ModelRender m_FrontWheelModel;
+	ModelRender m_NonRFrontWheelModel;
 	Player* m_player;
 	FrontWheelBase* m_frontwheelbase;
 	
@@ -56,5 +57,6 @@ private:
 	int m_PauseState = 0;
 
 	bool GameEnd = false;
+	bool BreakState = false;
 };
 

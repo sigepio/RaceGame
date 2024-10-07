@@ -68,7 +68,7 @@ Car_86GT::Car_86GT() {
     //速度伝達比設定
     GEAR_RATIOS = { 3.626, 2.188, 1.541, 1.213, 1.000, 0.767 };
     ShiftDownTiming = {4400.0f,5200.0f,5700.0f,6100.0f,5600.0f};
-    
+    TorqueMultiplier = { 1,1,1,1,1,1 };
 
     vehicle_info = {
     1470.0,              //車重[kg]
@@ -94,7 +94,10 @@ Car_86GT::Car_86GT() {
     14.0f,
     ShiftDownTiming,
     100,
-    350.0f
+    350.0f,
+    0,
+    0,
+    TorqueMultiplier
     };
 
 
@@ -127,8 +130,8 @@ Car_86GT::Car_86GT() {
 
     //車両モデル設定
     m_PlayerCarModel.Init("Assets/modelData/Car/86GT/Body.tkm");
-    m_CarWindowModel.Init("Assets/modelData/Car/86GT/Window.tkm");
-    WindowState = true;
+    /*m_CarWindowModel.Init("Assets/modelData/Car/86GT/Window.tkm");
+    WindowState = true;*/
 
     //車両データ設定
     m_NowCar = ORECA07;

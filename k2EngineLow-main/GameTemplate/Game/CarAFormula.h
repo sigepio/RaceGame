@@ -34,7 +34,9 @@ public:
 					Vector3 SteeringFrontVector,			//ステアリングの正面ベクトル(正規化済みのみ)
 					Vector3 FrontWheelOrientationVector,	//前輪向きを表現している単位ベクトル
 					bool Transmission,						//ATかMTか
-					float ΔRPM							//RPMの変化量
+					float ΔRPM,							    //RPMの変化量
+					bool HybridSystem,                      //ハイブリッドシステムのオンオフ
+					bool EngineSystem                       //エンジンのオンオフ(LMP1の発進時(50km/h)以下の時はオフ)
 	);	
 	void ShiftChange();
 

@@ -23,6 +23,7 @@ private:
 	GameCamera* m_GameCamera;
 	Lighting* m_Lighting;
 	FadeIn* m_FadeIn;
+	SkyCube* m_skyCube;
 
 	ModelRender CarModel;
 
@@ -32,7 +33,8 @@ private:
 
 	Vector4 m_PressStartSpriteColor = { 1.0f,1.0f,1.0f,1.0f };
 	Vector4 m_FadeColor = { 1.0f,1.0f,1.0f,0.0f };
-	
+
+	int m_skyCubeType = enSkyCubeType_Day;
 	int m_PressColorTime=0;
 	int m_PressDirection=1;
 	int FadeState = 0;

@@ -47,10 +47,12 @@ private:
 	FrontWheelBase* m_frontwheelbase;
 	Player* m_player;
 	ModelRender m_FrontWheelModel;
+	ModelRender m_NonRFrontWheelModel;
 
 	int m_NowCar=0;
 	int m_PauseState = 0;
 
 	bool GameEnd = false;
+	bool BreakState = false;
 };
 

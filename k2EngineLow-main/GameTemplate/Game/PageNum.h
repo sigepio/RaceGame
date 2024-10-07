@@ -10,15 +10,17 @@ enum PageNum {
 	MaintenancePage,
 	RaceLobbyPage,
 	PlayPage,
-	OptionPage
+	OptionPage,
+	CarChangePage,
+	ModeSelectPage
 };
 
 enum CourseNum {
 	sebring,
 	CircuitDeLaSarthe,
 	AutodromoNazionaleDiMonza,
-	Silverstone,
-	Imola
+	SilverstoneCircuit,
+	ImolaCircuit
 };
 
 enum CarNum {
@@ -26,7 +28,24 @@ enum CarNum {
 	TOYOTA86GT,
 	TOYOTA90Supra,
 	NissanGTR_17,
-	MazdaRX_7FD3SSpiritRTypeA
+	MazdaRX_7FD3SSpiritRTypeA,
+	LexusLFA,
+	FordMustangGT3,
+	NissanR35GT3,
+	FordGTGT3GTE,
+	FordGTLMRaceCarSpecii,
+	FordGT2006,
+	SauberMercedesC9,
+	BMWMHybridV8,
+	Porsche962C,
+	Porsche911GT3RSR,
+	Porsche911GT3RS,
+	Mazda787B,
+	Ferrari499P,
+	RedBullRB19,
+	RedBullX2010,
+	TOYOTAGR010HYBRID,
+	TOYOTATS050HYBRID
 };
 
 enum GameMode {

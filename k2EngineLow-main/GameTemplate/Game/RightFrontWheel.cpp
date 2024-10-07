@@ -33,6 +33,88 @@ bool RightFrontWheel::Start() {
 	case MazdaRX_7FD3SSpiritRTypeA:
 		m_FrontWheelModel.Init("Assets/modelData/Car/FD3S/Tyre_Right.tkm");
 		break;
+
+	case LexusLFA:
+		m_FrontWheelModel.Init("Assets/modelData/Car/LFA/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/LFA/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
+	case FordMustangGT3:
+		m_FrontWheelModel.Init("Assets/modelData/Car/MustangGT3/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/MustangGT3/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
+	case NissanR35GT3:
+		m_FrontWheelModel.Init("Assets/modelData/Car/R35GT3/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/R35GT3/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
+	case FordGTLMRaceCarSpecii:
+		m_FrontWheelModel.Init("Assets/modelData/Car/FordGTLM/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/FordGTLM/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
+	case FordGTGT3GTE:
+		m_FrontWheelModel.Init("Assets/modelData/Car/FordGTGT3/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/FordGTGT3/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
+	case FordGT2006:
+		m_FrontWheelModel.Init("Assets/modelData/Car/FordGT/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/FordGT/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
+	case SauberMercedesC9:
+		m_FrontWheelModel.Init("Assets/modelData/Car/C9/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/C9/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
+	case BMWMHybridV8:
+		m_FrontWheelModel.Init("Assets/modelData/Car/BMWMV8LMDh/TyreRolRightFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/BMWMV8LMDh/TyreRightFront.tkm");
+		BreakState = true;
+		break;
+	case Porsche962C:
+		m_FrontWheelModel.Init("Assets/modelData/Car/962C/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/962C/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
+	case Porsche911GT3RSR:
+		m_FrontWheelModel.Init("Assets/modelData/Car/911GT3RSR/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/911GT3RSR/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
+	case Porsche911GT3RS:
+		m_FrontWheelModel.Init("Assets/modelData/Car/911GT3RS/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/911GT3RS/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
+	case Mazda787B:
+		m_FrontWheelModel.Init("Assets/modelData/Car/787B/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/787B/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
+	case Ferrari499P:
+		m_FrontWheelModel.Init("Assets/modelData/Car/499P/TyreRolRightFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/499P/TyreRightFront.tkm");
+		BreakState = true;
+		break;
+	case RedBullRB19:
+		m_FrontWheelModel.Init("Assets/modelData/Car/RB19/TyreRolLeftFront.tkm");
+		break;
+	case RedBullX2010:
+		m_FrontWheelModel.Init("Assets/modelData/Car/X2010/TyreRolLeftFront.tkm");
+		break;
+	case TOYOTAGR010HYBRID:
+		m_FrontWheelModel.Init("Assets/modelData/Car/GR010/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/GR010/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
+	case TOYOTATS050HYBRID:
+		m_FrontWheelModel.Init("Assets/modelData/Car/TS050/TyreRolLeftFront.tkm");
+		m_NonRFrontWheelModel.Init("Assets/modelData/Car/TS050/TyreLeftFront.tkm");
+		BreakState = true;
+		break;
 	default:
 		break;
 	}
@@ -75,12 +157,15 @@ void RightFrontWheel::Update() {
 		m_FrontWheelModel.SetRotation(m_FrontWheelRotation);
 		m_FrontWheelModel.Update();
 
+
+		m_NonRFrontWheelModel.SetPosition(m_FrontWheelPosition);
+		m_NonRFrontWheelModel.SetRotation(m_FrontWheelRotation);
+		m_NonRFrontWheelModel.Update();
 		//Move();
 		
-		if (m_PauseState == 0) {
+		if (m_PauseState == 0 || m_PauseState == -1) {
 			Rotation();
 		}
-	
 }
 
 void RightFrontWheel::Move() {
@@ -155,4 +240,8 @@ void RightFrontWheel::Rotation() {
 void RightFrontWheel::Render(RenderContext& rc) {
 	m_FrontWheelModel.SetAlwaysOnDisplay(true);
 	m_FrontWheelModel.Draw(rc);
+	if (BreakState == true) {
+		m_NonRFrontWheelModel.SetAlwaysOnDisplay(true);
+		m_NonRFrontWheelModel.Draw(rc);
+	}
 }

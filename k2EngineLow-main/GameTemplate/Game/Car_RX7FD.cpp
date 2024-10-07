@@ -69,6 +69,7 @@ Car_RX7FD::Car_RX7FD() {
     //ë¨ìxì`íBî‰ê›íË
     GEAR_RATIOS = { 3.483, 2.015, 1.319, 1.000, 0.762};
     ShiftDownTiming = { 5000.0f,5700.0f,6500.0f,6500.0f};
+    TorqueMultiplier = { 1,1,1,1,1 };
 
     vehicle_info = {
     1270.0,              //é‘èd[kg]
@@ -94,7 +95,10 @@ Car_RX7FD::Car_RX7FD() {
     14.0f,
     ShiftDownTiming,
     200,
-    100.0f
+    100.0f,
+    0,
+    0,
+    TorqueMultiplier
     };
 
 

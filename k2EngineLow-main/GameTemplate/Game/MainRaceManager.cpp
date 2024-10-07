@@ -23,7 +23,7 @@ bool MainRaceManager::Start(){
 		m_background->SetCourse(CourseInformation);
 		m_background->SetLicenseNum(LicenseNum);
 		// Œ»İ‚Ì‹ó‚ğ”jŠüB
-		m_skyCube = NewGO<SkyCube>(0, "skycube");
+		m_skyCube = FindGO<SkyCube>("skycube");
 
 		m_skyCube->SetLuminance(1.0f);
 		m_skyCube->SetType((EnSkyCubeType)m_skyCubeType);
@@ -55,6 +55,12 @@ bool MainRaceManager::Start(){
 			break;
 		case AutodromoNazionaleDiMonza:
 			CourseSprite.Init("Assets/Sprite/Lobby/Monza.DDS", 1600.0f, 900.0f);
+			break;
+		case SilverstoneCircuit:
+			CourseSprite.Init("Assets/Sprite/Lobby/Silverstone.DDS", 1600.0f, 900.0f);
+			break;
+		case ImolaCircuit:
+			CourseSprite.Init("Assets/Sprite/Lobby/Imola.DDS", 1600.0f, 900.0f);
 			break;
 		default:
 			break;
@@ -234,6 +240,7 @@ void MainRaceManager::Update() {
 			m_Loading->SetWhereCome(RaceLobbyPage);
 			m_Loading->SetWhereGo(PlayPage);
 			m_Loading->SetLicenseNum(LicenseNum);
+			m_Loading->SetModeState(ModeState);
 			
 			DeleteGO(BGM);
 			DeleteGO(this);
@@ -261,7 +268,6 @@ void MainRaceManager::Update() {
 			}
 			
 			DeleteGO(m_gamecamera);
-			DeleteGO(m_skyCube);
 			DeleteGO(m_lighting);
 			DeleteGO(BGM);
 			DeleteGO(this);

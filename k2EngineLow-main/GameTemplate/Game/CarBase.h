@@ -175,6 +175,7 @@ protected:
 	float throttle_input = 0.0f;				//スロットル開度(1.0フルスロットル)
 	std::vector<float> GEAR_RATIOS;				//ギア比
 	std::vector<float> ShiftDownTiming;			//シフトダウンの回転数
+	std::vector<float> TorqueMultiplier;			//Torqueの倍率
 	int currentGear = 1;						//今のギア
 	int MaxGear;								//最大ギア数
 	float AirPressure;							//タイヤ空気圧

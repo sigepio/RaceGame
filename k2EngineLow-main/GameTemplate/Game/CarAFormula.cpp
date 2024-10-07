@@ -80,16 +80,25 @@ SimulationResults CarAFormula::CarSimulation(
     Vector3 SteeringFrontVector,			//ステアリングの正面ベクトル(正規化済みのみ)
     Vector3 FrontWheelOrientationVector,	//前輪向きを表現している単位ベクトル
     bool Transmission,						//ATかMTか
-    float ΔRPM							    //RPMの変化量
+    float ΔRPM,							    //RPMの変化量
+    bool HybridSystem,                      //ハイブリッドシステムのオンオフ
+    bool EngineSystem                       //エンジンのオンオフ(LMP1の発進時(50km/h)以下の時はオフ)
 ) {
     //ステップ0:準備フェーズ
     //リターン用の構造体の宣言
     SimulationResults simulationresults;
 
     //エンジントルクを線形補完で計算
-    float engineTorque = EngineTorque(CurrentRPM, vehicleinfo.data);
-    engineTorque *= AcceleratorOpening;
+    float engineTorque = 0.0f;
+    if (EngineSystem == true) {
+        engineTorque += EngineTorque(CurrentRPM, vehicleinfo.data);
+        
+    }
+    if (HybridSystem == true) {
+        engineTorque += vehicleinfo.HybridTorque;
+    }
 
+    engineTorque *= AcceleratorOpening * vehicleinfo.TorqueMultiplier[CurrentGear-1];
     //シフトチェンジフラグ
     bool ShiftChangeFlag = false;
 

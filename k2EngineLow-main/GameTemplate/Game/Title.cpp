@@ -17,6 +17,11 @@ Title::~Title() {
 
 }
 bool Title::Start() {
+	m_skyCube = NewGO<SkyCube>(0, "skycube");
+	m_skyCube->SetLuminance(1.0f);
+	m_skyCube->SetType((EnSkyCubeType)m_skyCubeType);
+	m_skyCube->SetScale(50000.0f);
+
 	m_Sound = NewGO<Sound>(0,"sound");
 	Player* m_Player = NewGO<Player>(0, "player");
 	m_GameCamera = NewGO<GameCamera>(0, "gamecamera");

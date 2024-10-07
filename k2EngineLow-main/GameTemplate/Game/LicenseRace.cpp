@@ -150,6 +150,12 @@ bool LicenseRace::Start() {
 	case AutodromoNazionaleDiMonza:
 		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUIMonza.DDS", 1600.0f, 900.0f);
 		break;
+	case SilverstoneCircuit:
+		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUISilverStone.DDS", 1600.0f, 900.0f);
+		break;
+	case ImolaCircuit:
+		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUIImola.DDS", 1600.0f, 900.0f);
+		break;
 	default:
 		break;
 	}
