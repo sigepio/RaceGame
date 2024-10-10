@@ -31,7 +31,6 @@
     <ClCompile Include="Car_Oreca07.cpp" />
     <ClCompile Include="Loading.cpp" />
     <ClCompile Include="Sound.cpp" />
-    <ClCompile Include="Sebring.cpp" />
     <ClCompile Include="Garage.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="LeMans.cpp" />
@@ -94,7 +93,6 @@
     <ClInclude Include="Tips.h" />
     <ClInclude Include="BGM.h" />
     <ClInclude Include="Sound.h" />
-    <ClInclude Include="Sebring.h" />
     <ClInclude Include="Garage.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="LeMans.h" />

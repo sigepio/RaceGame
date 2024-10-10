@@ -132,6 +132,9 @@ bool TimeTrialMode::Start() {
 	//クリアタイムの設定
 	switch (m_player->GetNowCourse())
 	{
+	case 0:
+		ClearTime = { 80.500f,83.200f,90.000f };
+		break;
 	case 1:
 		ClearTime = { 80.500f,83.200f,90.000f };
 		break;
@@ -139,12 +142,6 @@ bool TimeTrialMode::Start() {
 		ClearTime = { 80.500f,83.200f,90.000f };
 		break;
 	case 3:
-		ClearTime = { 80.500f,83.200f,90.000f };
-		break;
-	case 4:
-		ClearTime = { 80.500f,83.200f,90.000f };
-		break;
-	case 5:
 		ClearTime = { 80.500f,83.200f,90.000f };
 	default:
 		break;
@@ -239,9 +236,7 @@ bool TimeTrialMode::Start() {
 	//コース図の設定
 	switch (m_player->GetNowCourse())
 	{
-	case sebring:
-		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUI.DDS", 1600.0f, 900.0f);
-		break;
+
 	case CircuitDeLaSarthe:
 		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUILeMans.DDS", 1600.0f, 900.0f);
 		break;
@@ -533,26 +528,6 @@ void TimeTrialMode::Update() {
 
 	switch (m_player->GetNowCourse())
 	{
-	case sebring:
-		//1セクターの処理
-		if (NowLap == 0) {
-			if (m_NowPPosition.x >= -10700.0f && m_NowPPosition.z <= -4500.0f) {
-				NowLap++;
-			}
-		}
-		//2セクターの処理
-		if (NowLap == 1) {
-			if (m_NowPPosition.x >= 5300.0f && m_NowPPosition.z >= 30000.0f) {
-				NowLap++;
-			}
-		}
-		//コントロールライン
-		if (NowLap == 2) {
-			if (m_NowPPosition.z >= 4000.0f && m_NowPPosition.x <= 120.0f) {
-				NowLap++;
-			}
-		}
-		break;
 	case CircuitDeLaSarthe:
 		//1セクターの処理
 		if (NowLap == 0) {

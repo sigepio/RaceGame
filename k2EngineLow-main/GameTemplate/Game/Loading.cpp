@@ -61,9 +61,6 @@ std::vector<const char*> collectAllTips() {
     std::vector<const char*> allTips;
 
     // コースのTipsを集める
-    for (const auto& tip : SebringTipsList) {
-        allTips.push_back(tip.second);
-    }
     for (const auto& tip : LeMansTipsList) {
         allTips.push_back(tip.second);
     }
@@ -160,10 +157,7 @@ const char* getLoadingScreenTip(int course, int car) {
 
         if (choice == 0) {
             // コースのTipsを選択
-            if (course == 0) {
-                tip = getRandomTip(SebringTipsList);
-            }
-            else if (course == 1) {
+           if (course == 1) {
                 tip = getRandomTip(LeMansTipsList);
             }
             else if (course == 2) {
@@ -351,9 +345,6 @@ void Loading::SetTips(int CarState, int CourseState) {
     if (CourseState != -1) {
         switch (CourseState)
         {
-        case sebring:
-            CourseLogo.Init("Assets/Sprite/Loading/SebringLogo.DDS", 1600.0f, 900.0f);
-            break;
         case CircuitDeLaSarthe:
             CourseLogo.Init("Assets/Sprite/Loading/LeMansLogo.DDS", 1600.0f, 900.0f);
             break;

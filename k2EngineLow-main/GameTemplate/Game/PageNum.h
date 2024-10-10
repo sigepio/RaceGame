@@ -16,7 +16,6 @@ enum PageNum {
 };
 
 enum CourseNum {
-	sebring,
 	CircuitDeLaSarthe,
 	AutodromoNazionaleDiMonza,
 	SilverstoneCircuit,

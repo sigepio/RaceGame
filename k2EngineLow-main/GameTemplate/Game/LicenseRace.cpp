@@ -141,9 +141,6 @@ bool LicenseRace::Start() {
 	//ÉRÅ[ÉXê}ÇÃê›íË
 	switch (CourseNum)
 	{
-	case sebring:
-		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUI.DDS", 1600.0f, 900.0f);
-		break;
 	case CircuitDeLaSarthe:
 		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUILeMans.DDS", 1600.0f, 900.0f);
 		break;

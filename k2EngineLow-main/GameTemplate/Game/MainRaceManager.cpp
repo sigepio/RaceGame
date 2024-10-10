@@ -47,9 +47,6 @@ bool MainRaceManager::Start(){
 	if (LicenseNum == 0) {
 		switch (CourseInformation)
 		{
-		case sebring:
-			CourseSprite.Init("Assets/Sprite/Lobby/Sebring.DDS", 1600.0f, 900.0f);
-			break;
 		case CircuitDeLaSarthe:
 			CourseSprite.Init("Assets/Sprite/Lobby/LeMans.DDS", 1600.0f, 900.0f);
 			break;
