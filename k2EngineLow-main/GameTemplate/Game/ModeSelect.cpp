@@ -24,6 +24,18 @@ bool ModeSelect::Start() {
 	WorldChallengeSelect.Init("Assets/Sprite/ModeSelect/WorldChallengeSelect.DDS", 1600.0f, 900.0f);
 	RedBullXChallengeSelect.Init("Assets/Sprite/ModeSelect/RedBullXChallengeSelect.DDS", 1600.0f, 900.0f);
 
+	ErrorWindowSprite.Init("Assets/Sprite/MyHome/ErrorWindow.DDS", 1632.0f, 918.0f);
+	WindowBottonOKSprite.Init("Assets/Sprite/MyHome/WindowBottonOK.DDS", 1632.0f, 918.0f);
+
+	ErrorWindowSprite.SetMulColor(m_WindowSpriteColor);
+	WindowBottonOKSprite.SetMulColor(m_WindowSpriteColor);
+
+	ErrorWindowSprite.SetPosition(m_WindowSpritePosition);
+	WindowBottonOKSprite.SetPosition(m_WindowSpritePosition);
+
+	ErrorWindowSprite.Update();
+	WindowBottonOKSprite.Update();
+
 	BGM = NewGO<SoundSource>(0);
 	BGM->Init(14);
 	BGM->SetVolume(m_Player->GetBGMVolume());
@@ -41,53 +53,63 @@ void ModeSelect::Update() {
 		FadeCount++;
 	}
 	else {
-		if (g_pad[0]->IsTrigger(enButtonRight)&&SelectPointX==0) {
-			CursorSE = NewGO<SoundSource>(0);
-			CursorSE->Init(100);
-			CursorSE->SetVolume(m_Player->GetSEVolume());
-			CursorSE->Play(false);
-			SelectPointX++;
-		}
-		else if (g_pad[0]->IsTrigger(enButtonLeft) && SelectPointX == 1) {
-			CursorSE = NewGO<SoundSource>(0);
-			CursorSE->Init(100);
-			CursorSE->SetVolume(m_Player->GetSEVolume());
-			CursorSE->Play(false);
-			SelectPointX--;
-		}
-		else if (g_pad[0]->IsTrigger(enButtonUp) && SelectPointY == 1) {
-			CursorSE = NewGO<SoundSource>(0);
-			CursorSE->Init(100);
-			CursorSE->SetVolume(m_Player->GetSEVolume());
-			CursorSE->Play(false);
-			SelectPointY--;
-		}
-		else if (g_pad[0]->IsTrigger(enButtonDown) && SelectPointY == 0) {
-			CursorSE = NewGO<SoundSource>(0);
-			CursorSE->Init(100);
-			CursorSE->SetVolume(m_Player->GetSEVolume());
-			CursorSE->Play(false);
-			SelectPointY++;
-		}
-		else if (g_pad[0]->IsTrigger(enButtonA)) {
-			if (SelectPointY == 0) {
-				DecisionSE = NewGO<SoundSource>(0);
-				DecisionSE->Init(101);
-				DecisionSE->SetVolume(m_Player->GetSEVolume());
-				DecisionSE->Play(false);
-				FadeCount = 0;
-				GoState = true;
-				FadeState = true;
+		if (ErrorWindowFlag == 0) {
+			if (g_pad[0]->IsTrigger(enButtonRight) && SelectPointX == 0) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->SetVolume(m_Player->GetSEVolume());
+				CursorSE->Play(false);
+				SelectPointX++;
 			}
-		}
-		else  if (g_pad[0]->IsTrigger(enButtonB)) {
-			CancelSE = NewGO<SoundSource>(0);
-			CancelSE->Init(102);
-			CancelSE->SetVolume(m_Player->GetSEVolume());
-			CancelSE->Play(false);
-			FadeCount = 0;
-			FadeState = true;
+			else if (g_pad[0]->IsTrigger(enButtonLeft) && SelectPointX == 1) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->SetVolume(m_Player->GetSEVolume());
+				CursorSE->Play(false);
+				SelectPointX--;
+			}
+			else if (g_pad[0]->IsTrigger(enButtonUp) && SelectPointY == 1) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->SetVolume(m_Player->GetSEVolume());
+				CursorSE->Play(false);
+				SelectPointY--;
+			}
+			else if (g_pad[0]->IsTrigger(enButtonDown) && SelectPointY == 0) {
+				CursorSE = NewGO<SoundSource>(0);
+				CursorSE->Init(100);
+				CursorSE->SetVolume(m_Player->GetSEVolume());
+				CursorSE->Play(false);
+				SelectPointY++;
+			}
+			else if (g_pad[0]->IsTrigger(enButtonA)) {
+				if (SelectPointY == 0) {
+					DecisionSE = NewGO<SoundSource>(0);
+					DecisionSE->Init(101);
+					DecisionSE->SetVolume(m_Player->GetSEVolume());
+					DecisionSE->Play(false);
+					FadeCount = 0;
+					GoState = true;
+					FadeState = true;
+				}
+				else if (SelectPointY == 1) {
+					ErrorSE = NewGO<SoundSource>(0);
+					ErrorSE->Init(105);
+					ErrorSE->SetVolume(m_Player->GetSEVolume());
+					ErrorSE->Play(false);
+					WindowCount = 0;
+					ErrorWindowFlag = 1;
+				}
+			}
+			else  if (g_pad[0]->IsTrigger(enButtonB)) {
+				CancelSE = NewGO<SoundSource>(0);
+				CancelSE->Init(102);
+				CancelSE->SetVolume(m_Player->GetSEVolume());
+				CancelSE->Play(false);
+				FadeCount = 0;
+				FadeState = true;
 
+			}
 		}
 
 		if (FadeState == true) {
@@ -116,6 +138,48 @@ void ModeSelect::Update() {
 			}
 		}
 	}
+
+	if (ErrorWindowFlag == 1) {
+		m_WindowSpriteColor.w += 0.1f;
+		m_WindowSpritePosition.y += 5.0f;
+
+		ErrorWindowSprite.SetMulColor(m_WindowSpriteColor);
+		WindowBottonOKSprite.SetMulColor(m_WindowSpriteColor);
+
+		ErrorWindowSprite.SetPosition(m_WindowSpritePosition);
+		WindowBottonOKSprite.SetPosition(m_WindowSpritePosition);
+		WindowCount++;
+		if (WindowCount == 10) {
+			ErrorWindowFlag = 2;
+		}
+	}
+	else if (ErrorWindowFlag == 2) {
+		if (g_pad[0]->IsTrigger(enButtonA)) {
+			DecisionSE = NewGO<SoundSource>(0);
+			DecisionSE->Init(101);
+			DecisionSE->SetVolume(m_Player->GetSEVolume());
+			DecisionSE->Play(false);
+			ErrorWindowFlag = 3;
+			WindowCount = 0;
+		}
+	}
+	else if (ErrorWindowFlag == 3) {
+		m_WindowSpriteColor.w -= 0.2f;
+		m_WindowSpritePosition.y -= 10.0f;
+
+		ErrorWindowSprite.SetMulColor(m_WindowSpriteColor);
+		WindowBottonOKSprite.SetMulColor(m_WindowSpriteColor);
+
+		ErrorWindowSprite.SetPosition(m_WindowSpritePosition);
+		WindowBottonOKSprite.SetPosition(m_WindowSpritePosition);
+		WindowCount++;
+		if (WindowCount == 5) {
+			ErrorWindowFlag = 0;
+			WindowCount = 0;
+		}
+	}
+	ErrorWindowSprite.Update();
+	WindowBottonOKSprite.Update();
 }
 
 void ModeSelect::Render(RenderContext& rc) {
@@ -136,7 +200,8 @@ void ModeSelect::Render(RenderContext& rc) {
 			RedBullXChallengeSelect.Draw(rc);
 		}
 	}
-
+	ErrorWindowSprite.Draw(rc);
+	WindowBottonOKSprite.Draw(rc);
 	FadeSprite.Draw(rc);
 }
 

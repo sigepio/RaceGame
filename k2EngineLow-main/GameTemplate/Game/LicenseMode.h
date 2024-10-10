@@ -27,6 +27,11 @@ private:
 	Vector4 LicenseDetails4SpriteColor{ 1.0f,1.0f,1.0f,0.0f };
 	Vector4 LicenseDetails5SpriteColor{ 1.0f,1.0f,1.0f,0.0f };
 
+	Vector4 m_WindowSpriteColor = { 1.0f,1.0f,1.0f,0.0f };
+
+	Vector3 m_WindowSpritePosition = { 0.0f,-50.0f,0.0f };
+
+
 	Vector3 BaseDomesticBPosition{ 0.0f,-120.0f,0.0f };
 
 	Vector3 LicenseDetails1SpritePosition = { -650.0f,-95.0f,0.0f };
@@ -74,7 +79,8 @@ private:
 
 	SpriteRender B_5Sprite;
 
-
+	SpriteRender ErrorWindowSprite;				//エラー時のポップアップウィンドウ
+	SpriteRender WindowBottonOKSprite;			//ウィンドウのOKボタン
 
 	SpriteRender AllGoldClearSprite;
 	SpriteRender AllSilverClearSprite;
@@ -90,6 +96,7 @@ private:
 	SoundSource* CursorSE;
 	SoundSource* DecisionSE;
 	SoundSource* CancelSE;
+	SoundSource* ErrorSE;
 
 
 	bool AllGoldState = false;
@@ -119,7 +126,7 @@ private:
 							 {MazdaRX_7FD3SSpiritRTypeA,MazdaRX_7FD3SSpiritRTypeA,MazdaRX_7FD3SSpiritRTypeA,MazdaRX_7FD3SSpiritRTypeA,MazdaRX_7FD3SSpiritRTypeA},
 							 {MazdaRX_7FD3SSpiritRTypeA,MazdaRX_7FD3SSpiritRTypeA,MazdaRX_7FD3SSpiritRTypeA,MazdaRX_7FD3SSpiritRTypeA,MazdaRX_7FD3SSpiritRTypeA}
 };
-	int LicenseCourse[5][5] = { { AutodromoNazionaleDiMonza,AutodromoNazionaleDiMonza,AutodromoNazionaleDiMonza,AutodromoNazionaleDiMonza,sebring},
+	int LicenseCourse[5][5] = { { AutodromoNazionaleDiMonza,AutodromoNazionaleDiMonza,AutodromoNazionaleDiMonza,AutodromoNazionaleDiMonza,0},
 							    {SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit},
 								{SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit},
 								{SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit,SilverstoneCircuit},
@@ -129,6 +136,8 @@ private:
 	int NextPage = 0;
 	int LastPage = -1;
 	int LicenseNum = 0;//1～5:B 6～10:A 11～15:IB 16～20:IA 21～25:S
+	int ErrorWindowFlag = 0;//0:非表示 1:表示遷移 2:表示中 3:非表示遷移
+	int WindowCount = 0;
 
 	float ArrowXMoveDistance = 0;
 	float ArrowYMoveDistance = 0;

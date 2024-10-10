@@ -20,7 +20,7 @@ bool RaceMenu::Start() {
 
 	Base.Init("Assets/Sprite/RaceMenu/Base.DDS", 1600.0f, 900.0f);
 
-	CourseSelectBase_Sebring.Init("Assets/Sprite/RaceMenu/NonSelect.DDS", 298.0f, 206.0f);
+
 	CourseSelectBase_LeMans.Init("Assets/Sprite/RaceMenu/NonSelect.DDS", 298.0f, 206.0f);
 	CourseSelectBase_Monza.Init("Assets/Sprite/RaceMenu/NonSelect.DDS", 298.0f, 206.0f);
 	CourseSelectBase_Imola.Init("Assets/Sprite/RaceMenu/NonSelect.DDS", 298.0f, 206.0f);
@@ -31,7 +31,7 @@ bool RaceMenu::Start() {
 	
 	CourseSelect.Init("Assets/Sprite/RaceMenu/Select.DDS", 298.0f, 206.0f);
 
-	CourseSelect_Sebring.Init("Assets/Sprite/RaceMenu/SebringSelect.DDS", 298.0f, 206.0f);
+
 	CourseSelect_LeMans.Init("Assets/Sprite/RaceMenu/LeMansSelect.DDS", 298.0f, 206.0f);
 	CourseSelect_Monza.Init("Assets/Sprite/RaceMenu/MonzaSelect.DDS", 298.0f, 206.0f);
 	CourseSelect_Imola.Init("Assets/Sprite/RaceMenu/ImolaSelect.DDS", 298.0f, 206.0f);
@@ -45,14 +45,14 @@ bool RaceMenu::Start() {
 
 	m_FadeSprite.SetMulColor(m_FadeColor);
 
-	CourseSelectBase_Sebring.SetPosition(SebringPosition);
+
 	CourseSelectBase_LeMans.SetPosition(LeMansPosition);
 	CourseSelectBase_Monza.SetPosition(MonzaPosition);
 	CourseSelectBase_Imola.SetPosition(ImolaPosition);
 	CourseSelectBase_SilverStone.SetPosition(SilverStonePosition);
 
 	CourseSelect.SetPosition(SelectPosition);
-	CourseSelect_Sebring.SetPosition(SebringPosition);
+
 	CourseSelect_LeMans.SetPosition(LeMansPosition);
 	CourseSelect_Monza.SetPosition(MonzaPosition);
 	CourseSelect_Imola.SetPosition(ImolaPosition);
@@ -61,13 +61,13 @@ bool RaceMenu::Start() {
 	CourseInformationinit(CourseSelectPoint);
 
 	
-	CourseSelectBase_Sebring.Update();
+
 	CourseSelectBase_LeMans.Update();
 	CourseSelectBase_Monza.Update();
 	CourseSelectBase_Imola.Update();
 	CourseSelectBase_SilverStone.Update();
 	CourseSelect.Update();
-	CourseSelect_Sebring.Update();
+
 	CourseSelect_LeMans.Update();
 	CourseSelect_Monza.Update();
 	CourseSelect_Imola.Update();
@@ -82,8 +82,7 @@ bool RaceMenu::Start() {
 }
 
 void RaceMenu::CourseInformationinit(int CourseSelect) {
-		Main_Sebring.Init("Assets/Sprite/RaceMenu/test.DDS", 1600.0f, 900.0f);
-		CourseExclusive_Sebring.Init("Assets/Sprite/RaceMenu/Sebring.DDS", 1600.0f, 900.0f);
+
 		Main_LeMans.Init("Assets/Sprite/RaceMenu/test_LeMans.DDS", 1600.0f, 900.0f);
 		CourseExclusive_LeMans.Init("Assets/Sprite/RaceMenu/LeMans.DDS", 1600.0f, 900.0f);
 		Main_Monza.Init("Assets/Sprite/RaceMenu/test_Monza.DDS", 1600.0f, 900.0f);
@@ -206,22 +205,18 @@ void RaceMenu::Update() {
 			switch (CourseSelectPoint)
 			{
 			case 0:
-				m_Loading->SetCourse(sebring);
-				m_player->SetNowCourse(sebring);
-				break;
-			case 1:
 				m_Loading->SetCourse(CircuitDeLaSarthe);
 				m_player->SetNowCourse(CircuitDeLaSarthe);
 				break;
-			case 2:
+			case 1:
 				m_Loading->SetCourse(AutodromoNazionaleDiMonza);
 				m_player->SetNowCourse(AutodromoNazionaleDiMonza);
 				break;
-			case 3:
+			case 2:
 				m_Loading->SetCourse(ImolaCircuit);
 				m_player->SetNowCourse(ImolaCircuit);
 				break;
-			case 4:
+			case 3:
 				m_Loading->SetCourse(SilverstoneCircuit);
 				m_player->SetNowCourse(SilverstoneCircuit);
 				break;
@@ -261,55 +256,44 @@ void RaceMenu::Render(RenderContext& rc) {
 		switch (CourseSelectPoint)
 		{
 		case 0:
-			Main_Sebring.Draw(rc);
+			Main_LeMans.Draw(rc);
 			Base.Draw(rc);
-			CourseExclusive_Sebring.Draw(rc);
+			CourseExclusive_LeMans.Draw(rc);
 			if (SelectArea == 0) {
-				CourseSelectBase_LeMans.Draw(rc);
+
 				CourseSelectBase_Monza.Draw(rc);
 				CourseSelectBase_Imola.Draw(rc);
 				CourseSelectBase_SilverStone.Draw(rc);
 			}
 			break;
 		case 1:
-			Main_LeMans.Draw(rc);
+			Main_Monza.Draw(rc);
 			Base.Draw(rc);
-			CourseExclusive_LeMans.Draw(rc);
+			CourseExclusive_Monza.Draw(rc);
 			if (SelectArea == 0) {
-				CourseSelectBase_Sebring.Draw(rc);
-				CourseSelectBase_Monza.Draw(rc);
+
+				CourseSelectBase_LeMans.Draw(rc);
 				CourseSelectBase_Imola.Draw(rc);
 				CourseSelectBase_SilverStone.Draw(rc);
 			}
 			break;
 		case 2:
-			Main_Monza.Draw(rc);
-			Base.Draw(rc);
-			CourseExclusive_Monza.Draw(rc);
-			if (SelectArea == 0) {
-				CourseSelectBase_Sebring.Draw(rc);
-				CourseSelectBase_LeMans.Draw(rc);
-				CourseSelectBase_Imola.Draw(rc);
-				CourseSelectBase_SilverStone.Draw(rc);
-			}
-			break;
-		case 3:
 			Main_Imola.Draw(rc);
 			Base.Draw(rc);
 			CourseExclusive_Imola.Draw(rc);
 			if (SelectArea == 0) {
-				CourseSelectBase_Sebring.Draw(rc);
+
 				CourseSelectBase_LeMans.Draw(rc);
 				CourseSelectBase_Monza.Draw(rc);
 				CourseSelectBase_SilverStone.Draw(rc);
 			}
 			break;
-		case 4:
+		case 3:
 			Main_SilverStone.Draw(rc);
 			Base.Draw(rc);
 			CourseExclusive_SilverStone.Draw(rc);
 			if (SelectArea == 0) {
-				CourseSelectBase_Sebring.Draw(rc);
+
 				CourseSelectBase_LeMans.Draw(rc);
 				CourseSelectBase_Monza.Draw(rc);
 				CourseSelectBase_Imola.Draw(rc);
@@ -321,7 +305,7 @@ void RaceMenu::Render(RenderContext& rc) {
 	
 	CourseSelect.Draw(rc);
 
-	CourseSelect_Sebring.Draw(rc);
+
 	CourseSelect_LeMans.Draw(rc);
 	CourseSelect_Monza.Draw(rc);
 	CourseSelect_Imola.Draw(rc);
