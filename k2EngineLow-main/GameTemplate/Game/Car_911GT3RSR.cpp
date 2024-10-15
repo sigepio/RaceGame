@@ -123,7 +123,7 @@ Car_911GT3RSR::Car_911GT3RSR() {
     BonnetViewTargetPoint = { 0.0f, 40.0f, 200.0f };
 
     BirdsEyeViewViewpointDirectionCorrectionByVehicleType = { 50,0,25 };
-    BonnetViewViewpointDirectionCorrectionByVehicleType = { 75,0,75 };
+    BonnetViewViewpointDirectionCorrectionByVehicleType = { 75,0,125 };
 }
 
 Car_911GT3RSR::~Car_911GT3RSR() {

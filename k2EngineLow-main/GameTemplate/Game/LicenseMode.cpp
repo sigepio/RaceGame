@@ -49,6 +49,18 @@ void LicenseMode::SpriteSet() {
 	ArrowXMoveDistance = ArrowDiffPos.x / 50.0f;
 	ArrowYMoveDistance = ArrowDiffPos.y / 50.0f;
 
+	ErrorWindowSprite.Init("Assets/Sprite/MyHome/ErrorWindow.DDS", 1632.0f, 918.0f);
+	WindowBottonOKSprite.Init("Assets/Sprite/MyHome/WindowBottonOK.DDS", 1632.0f, 918.0f);
+
+	ErrorWindowSprite.SetMulColor(m_WindowSpriteColor);
+	WindowBottonOKSprite.SetMulColor(m_WindowSpriteColor);
+
+	ErrorWindowSprite.SetPosition(m_WindowSpritePosition);
+	WindowBottonOKSprite.SetPosition(m_WindowSpritePosition);
+
+	ErrorWindowSprite.Update();
+	WindowBottonOKSprite.Update();
+
 	//ライセンスタイプに応じて背景の一部を変更するため読み込み
 	BaseDomesticB.Init("Assets/sprite/LicenseMode/BaseDomesticB.DDS", 1600.0f, 900.0f);
 
@@ -109,97 +121,97 @@ void LicenseMode::SpriteSet() {
 	LicenseDetailsDomesticB_4Sprite.SetMulColor(LicenseDetails4SpriteColor);
 	LicenseDetailsDomesticB_5Sprite.SetMulColor(LicenseDetails5SpriteColor);
 
-	//ライセンスごとのクリア状況の設定
-	//国内B級
-	//B-1
-	if (LicenseClearStatus[0][0] == 3) {
-		B_1Sprite.Init("Assets/sprite/LicenseMode/B-1Gold.DDS", 209.0f, 465.0f);
-	}
-	else if (LicenseClearStatus[0][0] == 2) {
-		B_1Sprite.Init("Assets/sprite/LicenseMode/B-1Silver.DDS", 209.0f, 465.0f);
-	}
-	else if (LicenseClearStatus[0][0] == 1) {
-		B_1Sprite.Init("Assets/sprite/LicenseMode/B-1Bronze.DDS", 209.0f, 465.0f);
-	}
-	B_1Sprite.SetPosition(LicenseDetails1SpritePosition);
-	B_1Sprite.SetMulColor(LicenseDetails1SpriteColor);
-	//B-2
-	if (LicenseClearStatus[0][1] == 3) {
-		B_2Sprite.Init("Assets/sprite/LicenseMode/B-2Gold.DDS", 209.0f, 465.0f);
-	}
-	else if (LicenseClearStatus[0][1] == 2) {
-		B_2Sprite.Init("Assets/sprite/LicenseMode/B-2Silver.DDS", 209.0f, 465.0f);
-	}
-	else if (LicenseClearStatus[0][1] == 1) {
-		B_2Sprite.Init("Assets/sprite/LicenseMode/B-2Bronze.DDS", 209.0f, 465.0f);
-	}
-	B_2Sprite.SetPosition(LicenseDetails2SpritePosition);
-	B_2Sprite.SetMulColor(LicenseDetails2SpriteColor);
-	//B-3
-	if (LicenseClearStatus[0][2] == 3) {
-		B_3Sprite.Init("Assets/sprite/LicenseMode/B-3Gold.DDS", 209.0f, 465.0f);
-	}
-	else if (LicenseClearStatus[0][2] == 2) {
-		B_3Sprite.Init("Assets/sprite/LicenseMode/B-3Silver.DDS", 209.0f, 465.0f);
-	}
-	else if (LicenseClearStatus[0][2] == 1) {
-		B_3Sprite.Init("Assets/sprite/LicenseMode/B-3Bronze.DDS", 209.0f, 465.0f);
-	}
-	B_3Sprite.SetPosition(LicenseDetails3SpritePosition);
-	B_3Sprite.SetMulColor(LicenseDetails3SpriteColor);
-	//B-4
-	if (LicenseClearStatus[0][3] == 3) {
-		B_4Sprite.Init("Assets/sprite/LicenseMode/B-4Gold.DDS", 209.0f, 465.0f);
-	}
-	else if (LicenseClearStatus[0][3] == 2) {
-		B_4Sprite.Init("Assets/sprite/LicenseMode/B-4Silver.DDS", 209.0f, 465.0f);
-	}
-	else if (LicenseClearStatus[0][3] == 1) {
-		B_4Sprite.Init("Assets/sprite/LicenseMode/B-4Bronze.DDS", 209.0f, 465.0f);
-	}
-	B_4Sprite.SetPosition(LicenseDetails4SpritePosition);
-	B_4Sprite.SetMulColor(LicenseDetails4SpriteColor);
-	//B-5
-	if (LicenseClearStatus[0][4] == 3) {
-		B_5Sprite.Init("Assets/sprite/LicenseMode/B-5Gold.DDS", 209.0f, 465.0f);
-	}
-	else if (LicenseClearStatus[0][4] == 2) {
-		B_5Sprite.Init("Assets/sprite/LicenseMode/B-5Silver.DDS", 209.0f, 465.0f);
-	}
-	else if (LicenseClearStatus[0][4] == 1) {
-		B_5Sprite.Init("Assets/sprite/LicenseMode/B-5Bronze.DDS", 209.0f, 465.0f);
-	}
-	B_5Sprite.SetPosition(LicenseDetails5SpritePosition);
-	B_5Sprite.SetMulColor(LicenseDetails5SpriteColor);
+//ライセンスごとのクリア状況の設定
+//国内B級
+//B-1
+if (LicenseClearStatus[0][0] == 3) {
+	B_1Sprite.Init("Assets/sprite/LicenseMode/B-1Gold.DDS", 209.0f, 465.0f);
+}
+else if (LicenseClearStatus[0][0] == 2) {
+	B_1Sprite.Init("Assets/sprite/LicenseMode/B-1Silver.DDS", 209.0f, 465.0f);
+}
+else if (LicenseClearStatus[0][0] == 1) {
+	B_1Sprite.Init("Assets/sprite/LicenseMode/B-1Bronze.DDS", 209.0f, 465.0f);
+}
+B_1Sprite.SetPosition(LicenseDetails1SpritePosition);
+B_1Sprite.SetMulColor(LicenseDetails1SpriteColor);
+//B-2
+if (LicenseClearStatus[0][1] == 3) {
+	B_2Sprite.Init("Assets/sprite/LicenseMode/B-2Gold.DDS", 209.0f, 465.0f);
+}
+else if (LicenseClearStatus[0][1] == 2) {
+	B_2Sprite.Init("Assets/sprite/LicenseMode/B-2Silver.DDS", 209.0f, 465.0f);
+}
+else if (LicenseClearStatus[0][1] == 1) {
+	B_2Sprite.Init("Assets/sprite/LicenseMode/B-2Bronze.DDS", 209.0f, 465.0f);
+}
+B_2Sprite.SetPosition(LicenseDetails2SpritePosition);
+B_2Sprite.SetMulColor(LicenseDetails2SpriteColor);
+//B-3
+if (LicenseClearStatus[0][2] == 3) {
+	B_3Sprite.Init("Assets/sprite/LicenseMode/B-3Gold.DDS", 209.0f, 465.0f);
+}
+else if (LicenseClearStatus[0][2] == 2) {
+	B_3Sprite.Init("Assets/sprite/LicenseMode/B-3Silver.DDS", 209.0f, 465.0f);
+}
+else if (LicenseClearStatus[0][2] == 1) {
+	B_3Sprite.Init("Assets/sprite/LicenseMode/B-3Bronze.DDS", 209.0f, 465.0f);
+}
+B_3Sprite.SetPosition(LicenseDetails3SpritePosition);
+B_3Sprite.SetMulColor(LicenseDetails3SpriteColor);
+//B-4
+if (LicenseClearStatus[0][3] == 3) {
+	B_4Sprite.Init("Assets/sprite/LicenseMode/B-4Gold.DDS", 209.0f, 465.0f);
+}
+else if (LicenseClearStatus[0][3] == 2) {
+	B_4Sprite.Init("Assets/sprite/LicenseMode/B-4Silver.DDS", 209.0f, 465.0f);
+}
+else if (LicenseClearStatus[0][3] == 1) {
+	B_4Sprite.Init("Assets/sprite/LicenseMode/B-4Bronze.DDS", 209.0f, 465.0f);
+}
+B_4Sprite.SetPosition(LicenseDetails4SpritePosition);
+B_4Sprite.SetMulColor(LicenseDetails4SpriteColor);
+//B-5
+if (LicenseClearStatus[0][4] == 3) {
+	B_5Sprite.Init("Assets/sprite/LicenseMode/B-5Gold.DDS", 209.0f, 465.0f);
+}
+else if (LicenseClearStatus[0][4] == 2) {
+	B_5Sprite.Init("Assets/sprite/LicenseMode/B-5Silver.DDS", 209.0f, 465.0f);
+}
+else if (LicenseClearStatus[0][4] == 1) {
+	B_5Sprite.Init("Assets/sprite/LicenseMode/B-5Bronze.DDS", 209.0f, 465.0f);
+}
+B_5Sprite.SetPosition(LicenseDetails5SpritePosition);
+B_5Sprite.SetMulColor(LicenseDetails5SpriteColor);
 
-	//国内A級
+//国内A級
 
 
-	//オールクリア状況
-	AllBronzeClearSprite.Init("Assets/sprite/LicenseMode/AllBronzeClear.DDS", 1600.0f, 900.0f);
-	AllSilverClearSprite.Init("Assets/sprite/LicenseMode/AllSilverClear.DDS", 1600.0f, 900.0f);
-	AllGoldClearSprite.Init("Assets/sprite/LicenseMode/AllGoldClear.DDS", 1600.0f, 900.0f);
+//オールクリア状況
+AllBronzeClearSprite.Init("Assets/sprite/LicenseMode/AllBronzeClear.DDS", 1600.0f, 900.0f);
+AllSilverClearSprite.Init("Assets/sprite/LicenseMode/AllSilverClear.DDS", 1600.0f, 900.0f);
+AllGoldClearSprite.Init("Assets/sprite/LicenseMode/AllGoldClear.DDS", 1600.0f, 900.0f);
 
-	AllBronzeClearSprite.SetPosition(BaseDomesticBPosition);
-	AllSilverClearSprite.SetPosition(BaseDomesticBPosition);
-	AllGoldClearSprite.SetPosition(BaseDomesticBPosition);
-	//スプライトのアップデート
-	ArrowSprite.Update();
-	B_1Sprite.Update();
-	B_2Sprite.Update();
-	B_3Sprite.Update();
-	B_4Sprite.Update();
-	B_5Sprite.Update();
+AllBronzeClearSprite.SetPosition(BaseDomesticBPosition);
+AllSilverClearSprite.SetPosition(BaseDomesticBPosition);
+AllGoldClearSprite.SetPosition(BaseDomesticBPosition);
+//スプライトのアップデート
+ArrowSprite.Update();
+B_1Sprite.Update();
+B_2Sprite.Update();
+B_3Sprite.Update();
+B_4Sprite.Update();
+B_5Sprite.Update();
 
-	AllGoldClearSprite.Update();
-	AllSilverClearSprite.Update();
-	AllBronzeClearSprite.Update();
+AllGoldClearSprite.Update();
+AllSilverClearSprite.Update();
+AllBronzeClearSprite.Update();
 
-	LicenseDetailsDomesticB_1Sprite.Update();
-	LicenseDetailsDomesticB_2Sprite.Update();
-	LicenseDetailsDomesticB_3Sprite.Update();
-	LicenseDetailsDomesticB_4Sprite.Update();
-	LicenseDetailsDomesticB_5Sprite.Update();
+LicenseDetailsDomesticB_1Sprite.Update();
+LicenseDetailsDomesticB_2Sprite.Update();
+LicenseDetailsDomesticB_3Sprite.Update();
+LicenseDetailsDomesticB_4Sprite.Update();
+LicenseDetailsDomesticB_5Sprite.Update();
 }
 
 void LicenseMode::StateSet(int m_LicensePage) {
@@ -207,16 +219,18 @@ void LicenseMode::StateSet(int m_LicensePage) {
 	switch (m_LicensePage)
 	{
 	case 0:
-		if (LicenseClearStatus[m_LicensePage][0] == LicenseClearStatus[m_LicensePage][1] == LicenseClearStatus[m_LicensePage][2] == LicenseClearStatus[m_LicensePage][3] == LicenseClearStatus[m_LicensePage][4] == 3) {
-			AllGoldState = true;
-		}
-		if (LicenseClearStatus[m_LicensePage][0] == LicenseClearStatus[m_LicensePage][1] == LicenseClearStatus[m_LicensePage][2] == LicenseClearStatus[m_LicensePage][3] == LicenseClearStatus[m_LicensePage][4] == 2) {
-			AllSilverState = true;
-		}
-		if (LicenseClearStatus[m_LicensePage][0] == LicenseClearStatus[m_LicensePage][1] == LicenseClearStatus[m_LicensePage][2] == LicenseClearStatus[m_LicensePage][3] == LicenseClearStatus[m_LicensePage][4] == 1) {
+		if (LicenseClearStatus[m_LicensePage][0] == 1 && LicenseClearStatus[m_LicensePage][1] == 1 && LicenseClearStatus[m_LicensePage][2] == 1 && LicenseClearStatus[m_LicensePage][3] == 1 && LicenseClearStatus[m_LicensePage][4] == 1)
+		{
 			AllBronzeState = true;
+			if (LicenseClearStatus[m_LicensePage][0] == 2 && LicenseClearStatus[m_LicensePage][1] == 2 && LicenseClearStatus[m_LicensePage][2] == 2 && LicenseClearStatus[m_LicensePage][3] == 2 && LicenseClearStatus[m_LicensePage][4] == 2)
+			{
+				AllSilverState = true;
+				if (LicenseClearStatus[m_LicensePage][0] == 3 && LicenseClearStatus[m_LicensePage][1] == 3 && LicenseClearStatus[m_LicensePage][2] == 3 && LicenseClearStatus[m_LicensePage][3] == 3 && LicenseClearStatus[m_LicensePage][4] == 3)
+				{
+					AllGoldState = true;
+				}
+			}
 		}
-
 		break;
 	case 1:
 		break;
@@ -272,56 +286,111 @@ void LicenseMode::Update() {
 			ArrowMoveCount++;
 		}
 		else {
-			if (g_pad[0]->IsTrigger(enButtonA)) {
-				DecisionSE = NewGO<SoundSource>(0);
-				DecisionSE->Init(101);
-				DecisionSE->SetVolume(m_Player->GetSEVolume());
-				DecisionSE->Play(false);
-				TransitionStatus = true;
-				LicenseNum = (LicensePage + 1) * (ArrowPoint + 1);
-				NextPage = 5;
-				FadeCount = 0;
-			}
-			else if (g_pad[0]->IsTrigger(enButtonB)) {
-				CancelSE = NewGO<SoundSource>(0);
-				CancelSE->Init(102);
-				CancelSE->SetVolume(m_Player->GetSEVolume());
-				CancelSE->Play(false);
-				TransitionStatus = true;
-				NextPage = -1;
-				FadeCount = 0;
-			}
-			else if (g_pad[0]->IsTrigger(enButtonRight) && ArrowPoint < 4) {
-				CursorSE = NewGO<SoundSource>(0);
-				CursorSE->Init(100);
-				CursorSE->SetVolume(m_Player->GetSEVolume());
-				CursorSE->Play(false);
-				ArrowMoveRight = true;
-				ArrowMoveCount = 0;
-				ArrowPoint++;
-			}
-			else if (g_pad[0]->IsTrigger(enButtonLeft) && ArrowPoint > 0) {
-				CursorSE = NewGO<SoundSource>(0);
-				CursorSE->Init(100);
-				CursorSE->SetVolume(m_Player->GetSEVolume());
-				CursorSE->Play(false);
-				ArrowMoveLeft = true;
-				ArrowMoveCount = 0;
-				ArrowPoint--;
-			}
-			else if (g_pad[0]->IsTrigger(enButtonLB1)) {
+			if (ErrorWindowFlag == 0) {
+				if (g_pad[0]->IsTrigger(enButtonA)) {
+					if (ArrowPoint != 4) {
+						DecisionSE = NewGO<SoundSource>(0);
+						DecisionSE->Init(101);
+						DecisionSE->SetVolume(m_Player->GetSEVolume());
+						DecisionSE->Play(false);
+						TransitionStatus = true;
+						LicenseNum = (LicensePage + 1) * (ArrowPoint + 1);
+						NextPage = 5;
+						FadeCount = 0;
+					}
+					else if (ArrowPoint == 4) {
+						if (ErrorWindowFlag == 0) {
+							ErrorSE = NewGO<SoundSource>(0);
+							ErrorSE->Init(105);
+							ErrorSE->SetVolume(m_Player->GetSEVolume());
+							ErrorSE->Play(false);
+							WindowCount = 0;
+							ErrorWindowFlag = 1;
+						}
+					}
+				}
+				else if (g_pad[0]->IsTrigger(enButtonB)) {
+					CancelSE = NewGO<SoundSource>(0);
+					CancelSE->Init(102);
+					CancelSE->SetVolume(m_Player->GetSEVolume());
+					CancelSE->Play(false);
+					TransitionStatus = true;
+					NextPage = -1;
+					FadeCount = 0;
+				}
+				else if (g_pad[0]->IsTrigger(enButtonRight) && ArrowPoint < 4) {
+					CursorSE = NewGO<SoundSource>(0);
+					CursorSE->Init(100);
+					CursorSE->SetVolume(m_Player->GetSEVolume());
+					CursorSE->Play(false);
+					ArrowMoveRight = true;
+					ArrowMoveCount = 0;
+					ArrowPoint++;
+				}
+				else if (g_pad[0]->IsTrigger(enButtonLeft) && ArrowPoint > 0) {
+					CursorSE = NewGO<SoundSource>(0);
+					CursorSE->Init(100);
+					CursorSE->SetVolume(m_Player->GetSEVolume());
+					CursorSE->Play(false);
+					ArrowMoveLeft = true;
+					ArrowMoveCount = 0;
+					ArrowPoint--;
+				}
+				else if (g_pad[0]->IsTrigger(enButtonLB1)) {
 
-			}
-			else if (g_pad[0]->IsTrigger(enButtonRB1)) {
+				}
+				else if (g_pad[0]->IsTrigger(enButtonRB1)) {
 
+				}
 			}
 		}
 	}
 
+	if (ErrorWindowFlag == 1) {
+		m_WindowSpriteColor.w += 0.1f;
+		m_WindowSpritePosition.y += 5.0f;
+
+		ErrorWindowSprite.SetMulColor(m_WindowSpriteColor);
+		WindowBottonOKSprite.SetMulColor(m_WindowSpriteColor);
+
+		ErrorWindowSprite.SetPosition(m_WindowSpritePosition);
+		WindowBottonOKSprite.SetPosition(m_WindowSpritePosition);
+		WindowCount++;
+		if (WindowCount == 10) {
+			ErrorWindowFlag = 2;
+		}
+	}
+	else if (ErrorWindowFlag == 2) {
+		if (g_pad[0]->IsTrigger(enButtonA)) {
+			DecisionSE = NewGO<SoundSource>(0);
+			DecisionSE->Init(101);
+			DecisionSE->SetVolume(m_Player->GetSEVolume());
+			DecisionSE->Play(false);
+			ErrorWindowFlag = 3;
+			WindowCount = 0;
+		}
+	}
+	else if (ErrorWindowFlag == 3) {
+		m_WindowSpriteColor.w -= 0.2f;
+		m_WindowSpritePosition.y -= 10.0f;
+
+		ErrorWindowSprite.SetMulColor(m_WindowSpriteColor);
+		WindowBottonOKSprite.SetMulColor(m_WindowSpriteColor);
+
+		ErrorWindowSprite.SetPosition(m_WindowSpritePosition);
+		WindowBottonOKSprite.SetPosition(m_WindowSpritePosition);
+		WindowCount++;
+		if (WindowCount == 5) {
+			ErrorWindowFlag = 0;
+			WindowCount = 0;
+		}
+	}
 	
 	//スプライト関係のアップデート
 	ArrowSprite.Update();
 	FadeSprite.Update();
+	ErrorWindowSprite.Update();
+	WindowBottonOKSprite.Update();
 }
 
 void LicenseMode::FadeIn() {
@@ -437,6 +506,8 @@ void LicenseMode::DomesticBlicenseDisplayTransition() {
 		TransitionStatus = false;
 	}
 
+	
+
 	//カウントの更新
 	TransitionCount++;
 
@@ -521,6 +592,7 @@ void LicenseMode::Render(RenderContext& rc) {
 		AllBronzeClearSprite.Draw(rc);
 	}
 
-	
+	ErrorWindowSprite.Draw(rc);
+	WindowBottonOKSprite.Draw(rc);
 	FadeSprite.Draw(rc);
 }

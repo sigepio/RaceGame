@@ -102,22 +102,7 @@ void GameCamera::Update() {
 		if (PlayFlag == false) {
 			//ロビー時
 			if (MainRaceManagerFlag == true) {
-				//セブリング
 				if (m_player->GetNowCourse() == 0) {
-					if (LobbyCount <= 1800) {
-						m_target = { 0.0f,0.0f,10000.0f };
-						g_camera3D->SetTarget(m_target);
-						m_cameraPosition.z += 10.0f;
-						g_camera3D->SetPosition(m_cameraPosition);
-						LobbyCount++;
-					}
-					else {
-						Vector3 m_target = Vector3::Zero;
-						LobbyCount = 0;
-						m_cameraPosition = { -150.0f,10.0f,0.0f };
-					}
-				}
-				else if (m_player->GetNowCourse() == 1) {
 					if (LobbyCount == 0) {
 						m_target = { 24056,2471,41436 };
 						m_cameraPosition = { 24056,2471,41536 };
@@ -134,7 +119,7 @@ void GameCamera::Update() {
 						LobbyCount = 0;
 					}
 				}
-				else if (m_player->GetNowCourse() == 2) {
+				else if (m_player->GetNowCourse() == 1) {
 					if (LobbyCount == 0) {
 						m_target = { -17671.0f,-197.0f,-41603.0f };
 						m_cameraPosition = { -17671.0f,-197.0f,-41703.0f };
@@ -151,7 +136,7 @@ void GameCamera::Update() {
 						LobbyCount = 0;
 					}
 				}
-				else if (m_player->GetNowCourse() == 3) {
+				else if (m_player->GetNowCourse() == 2) {
 					if (LobbyCount == 0) {
 						m_target = { 0.0f,-100.0f,2000.0f };
 						m_cameraPosition = { 0.0f,-100.0f,2100.0f };
@@ -168,7 +153,7 @@ void GameCamera::Update() {
 						LobbyCount = 0;
 					}
 				}
-				else if (m_player->GetNowCourse() == 4) {
+				else if (m_player->GetNowCourse() == 3) {
 					if (LobbyCount == 0) {
 						m_target = { -15229.0f,-3259.0f,-1000.0f };
 						m_cameraPosition = { -15229.0f,-3259.0f,1100.0f };
@@ -197,7 +182,7 @@ void GameCamera::Update() {
 		}
 		else {
 			
-			m_toCameraPos.Set(MAIN_TO_CAMERA_POS);
+			
 			////カメラを更新。
 
 			float x = g_pad[0]->GetRStickXF();
@@ -230,6 +215,8 @@ void GameCamera::Update() {
 					ViewpointDirectionCorrection = g_vec3Zero;
 				}
 			}
+			m_toCameraPos.Set(MAIN_TO_CAMERA_POS);
+
 			float magnitude = m_toCameraPos.Length();
 			float Target_magnitude = TargetPoint.Length();
 			pos = m_target;

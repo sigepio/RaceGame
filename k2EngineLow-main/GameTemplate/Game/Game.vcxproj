@@ -271,7 +271,6 @@
     <ClCompile Include="RaceMenu.cpp" />
     <ClCompile Include="RightFrontWheel.cpp" />
     <ClCompile Include="RightRearWheel.cpp" />
-    <ClCompile Include="Sebring.cpp" />
     <ClCompile Include="SilverStone.cpp" />
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="stdafx.cpp">
@@ -335,7 +334,6 @@
     <ClInclude Include="RaceMenu.h" />
     <ClInclude Include="RightFrontWheel.h" />
     <ClInclude Include="RightRearWheel.h" />
-    <ClInclude Include="Sebring.h" />
     <ClInclude Include="SilverStone.h" />
     <ClInclude Include="Sound.h" />
     <ClInclude Include="stdafx.h" />

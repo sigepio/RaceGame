@@ -127,7 +127,7 @@ Car_MustangGT3::Car_MustangGT3() {
     BonnetViewTargetPoint = { 0.0f, 40.0f, 200.0f };
 
     BirdsEyeViewViewpointDirectionCorrectionByVehicleType = { 50,0,25 };
-    BonnetViewViewpointDirectionCorrectionByVehicleType = { 75,0,75 };
+    BonnetViewViewpointDirectionCorrectionByVehicleType = { 75,0,150 };
 }
 
 Car_MustangGT3::~Car_MustangGT3() {
