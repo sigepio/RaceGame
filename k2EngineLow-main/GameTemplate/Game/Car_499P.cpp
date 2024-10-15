@@ -131,7 +131,7 @@ Car_499P::Car_499P() {
     BonnetViewTargetPoint = { 0.0f, 40.0f, 200.0f };
 
     BirdsEyeViewViewpointDirectionCorrectionByVehicleType = { 50,0,25 };
-    BonnetViewViewpointDirectionCorrectionByVehicleType = { 75,0,75 };
+    BonnetViewViewpointDirectionCorrectionByVehicleType = { 75,0,125 };
 }
 
 Car_499P::~Car_499P() {

@@ -182,7 +182,7 @@ void GameCamera::Update() {
 		}
 		else {
 			
-			m_toCameraPos.Set(MAIN_TO_CAMERA_POS);
+			
 			////カメラを更新。
 
 			float x = g_pad[0]->GetRStickXF();
@@ -215,6 +215,8 @@ void GameCamera::Update() {
 					ViewpointDirectionCorrection = g_vec3Zero;
 				}
 			}
+			m_toCameraPos.Set(MAIN_TO_CAMERA_POS);
+
 			float magnitude = m_toCameraPos.Length();
 			float Target_magnitude = TargetPoint.Length();
 			pos = m_target;
