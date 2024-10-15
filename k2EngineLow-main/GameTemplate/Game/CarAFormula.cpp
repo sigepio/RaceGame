@@ -10,14 +10,14 @@
 
 using namespace std;
 
-ofstream outputfile("test.txt");
+//ofstream outputfile("test.txt");
 CarAFormula::CarAFormula() {
     
 }
 
 CarAFormula::~CarAFormula() {
-    outputfile << "end\n";
-    outputfile.close();
+    /*outputfile << "end\n";
+    outputfile.close();*/
 }
 
 bool CarAFormula::Start() {
@@ -253,7 +253,7 @@ SimulationResults CarAFormula::CarSimulation(
         
         
     }
-    outputfile << "Gear:" << CurrentGear << "_抵抗:" << Tload << "_時速:"<<NewVelocityVector * 3600.0f * 2.5f / 1000.0f / 100.0f <<"_RPM:"<<NewRPM<<"_ΔRPM"<< fabsf(NewRPM - CurrentRPM)<<"_トルク:"<< OriginEngineTorue << "\n";
+    //outputfile << "Gear:" << CurrentGear << "_抵抗:" << Tload << "_時速:"<<NewVelocityVector * 3600.0f * 2.5f / 1000.0f / 100.0f <<"_RPM:"<<NewRPM<<"_ΔRPM"<< fabsf(NewRPM - CurrentRPM)<<"_トルク:"<< OriginEngineTorue << "\n";
     //ステップ2:空気抵抗の計算
     //float Faero = 0.0f;
 
