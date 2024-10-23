@@ -256,7 +256,6 @@
     <ClCompile Include="Imola.cpp" />
     <ClCompile Include="LeftFrontWheel.cpp" />
     <ClCompile Include="LeftRearWheel.cpp" />
-    <ClCompile Include="LeMans.cpp" />
     <ClCompile Include="LicenseMode.cpp" />
     <ClCompile Include="LicenseRace.cpp" />
     <ClCompile Include="Lighting.cpp" />
@@ -319,7 +318,6 @@
     <ClInclude Include="Imola.h" />
     <ClInclude Include="LeftFrontWheel.h" />
     <ClInclude Include="LeftRearWheel.h" />
-    <ClInclude Include="LeMans.h" />
     <ClInclude Include="LicenseMode.h" />
     <ClInclude Include="LicenseRace.h" />
     <ClInclude Include="Lighting.h" />

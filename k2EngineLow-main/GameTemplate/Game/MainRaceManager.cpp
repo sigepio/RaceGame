@@ -47,9 +47,6 @@ bool MainRaceManager::Start(){
 	if (LicenseNum == 0) {
 		switch (CourseInformation)
 		{
-		case CircuitDeLaSarthe:
-			CourseSprite.Init("Assets/Sprite/Lobby/LeMans.DDS", 1600.0f, 900.0f);
-			break;
 		case AutodromoNazionaleDiMonza:
 			CourseSprite.Init("Assets/Sprite/Lobby/Monza.DDS", 1600.0f, 900.0f);
 			break;

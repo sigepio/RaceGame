@@ -236,10 +236,6 @@ bool TimeTrialMode::Start() {
 	//コース図の設定
 	switch (m_player->GetNowCourse())
 	{
-
-	case CircuitDeLaSarthe:
-		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUILeMans.DDS", 1600.0f, 900.0f);
-		break;
 	case AutodromoNazionaleDiMonza:
 		CourseMapUISprite.Init("Assets/sprite/UI/CourseMapUIMonza.DDS", 1600.0f, 900.0f);
 		break;
@@ -528,26 +524,6 @@ void TimeTrialMode::Update() {
 
 	switch (m_player->GetNowCourse())
 	{
-	case CircuitDeLaSarthe:
-		//1セクターの処理
-		if (NowLap == 0) {
-			if (m_NowPPosition.x >= 20000.0f && m_NowPPosition.z <= 45500.0f) {
-				NowLap++;
-			}
-		}
-		//2セクターの処理
-		if (NowLap == 1) {
-			if (m_NowPPosition.x <= -10000.0f && m_NowPPosition.z >= -97765.0f) {
-				NowLap++;
-			}
-		}
-		//コントロールライン
-		if (NowLap == 2) {
-			if (m_NowPPosition.x <= -34000.0f && m_NowPPosition.z >= 17700.0f) {
-				NowLap++;
-			}
-		}
-		break;
 	case AutodromoNazionaleDiMonza:
 		//1セクターの処理
 		if (NowLap == 0) {

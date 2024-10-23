@@ -21,7 +21,7 @@ bool RaceMenu::Start() {
 	Base.Init("Assets/Sprite/RaceMenu/Base.DDS", 1600.0f, 900.0f);
 
 
-	CourseSelectBase_LeMans.Init("Assets/Sprite/RaceMenu/NonSelect.DDS", 298.0f, 206.0f);
+	
 	CourseSelectBase_Monza.Init("Assets/Sprite/RaceMenu/NonSelect.DDS", 298.0f, 206.0f);
 	CourseSelectBase_Imola.Init("Assets/Sprite/RaceMenu/NonSelect.DDS", 298.0f, 206.0f);
 	CourseSelectBase_SilverStone.Init("Assets/Sprite/RaceMenu/NonSelect.DDS", 298.0f, 206.0f);
@@ -32,7 +32,7 @@ bool RaceMenu::Start() {
 	CourseSelect.Init("Assets/Sprite/RaceMenu/Select.DDS", 298.0f, 206.0f);
 
 
-	CourseSelect_LeMans.Init("Assets/Sprite/RaceMenu/LeMansSelect.DDS", 298.0f, 206.0f);
+
 	CourseSelect_Monza.Init("Assets/Sprite/RaceMenu/MonzaSelect.DDS", 298.0f, 206.0f);
 	CourseSelect_Imola.Init("Assets/Sprite/RaceMenu/ImolaSelect.DDS", 298.0f, 206.0f);
 	CourseSelect_SilverStone.Init("Assets/Sprite/RaceMenu/SilverStoneSelect.DDS", 298.0f, 206.0f);
@@ -46,14 +46,14 @@ bool RaceMenu::Start() {
 	m_FadeSprite.SetMulColor(m_FadeColor);
 
 
-	CourseSelectBase_LeMans.SetPosition(LeMansPosition);
+
 	CourseSelectBase_Monza.SetPosition(MonzaPosition);
 	CourseSelectBase_Imola.SetPosition(ImolaPosition);
 	CourseSelectBase_SilverStone.SetPosition(SilverStonePosition);
 
 	CourseSelect.SetPosition(SelectPosition);
 
-	CourseSelect_LeMans.SetPosition(LeMansPosition);
+
 	CourseSelect_Monza.SetPosition(MonzaPosition);
 	CourseSelect_Imola.SetPosition(ImolaPosition);
 	CourseSelect_SilverStone.SetPosition(SilverStonePosition);
@@ -62,13 +62,12 @@ bool RaceMenu::Start() {
 
 	
 
-	CourseSelectBase_LeMans.Update();
 	CourseSelectBase_Monza.Update();
 	CourseSelectBase_Imola.Update();
 	CourseSelectBase_SilverStone.Update();
 	CourseSelect.Update();
 
-	CourseSelect_LeMans.Update();
+
 	CourseSelect_Monza.Update();
 	CourseSelect_Imola.Update();
 	CourseSelect_SilverStone.Update();
@@ -83,8 +82,7 @@ bool RaceMenu::Start() {
 
 void RaceMenu::CourseInformationinit(int CourseSelect) {
 
-		Main_LeMans.Init("Assets/Sprite/RaceMenu/test_LeMans.DDS", 1600.0f, 900.0f);
-		CourseExclusive_LeMans.Init("Assets/Sprite/RaceMenu/LeMans.DDS", 1600.0f, 900.0f);
+
 		Main_Monza.Init("Assets/Sprite/RaceMenu/test_Monza.DDS", 1600.0f, 900.0f);
 		CourseExclusive_Monza.Init("Assets/Sprite/RaceMenu/Monza.DDS", 1600.0f, 900.0f);
 
@@ -205,18 +203,14 @@ void RaceMenu::Update() {
 			switch (CourseSelectPoint)
 			{
 			case 0:
-				m_Loading->SetCourse(CircuitDeLaSarthe);
-				m_player->SetNowCourse(CircuitDeLaSarthe);
-				break;
-			case 1:
 				m_Loading->SetCourse(AutodromoNazionaleDiMonza);
 				m_player->SetNowCourse(AutodromoNazionaleDiMonza);
 				break;
-			case 2:
+			case 1:
 				m_Loading->SetCourse(ImolaCircuit);
 				m_player->SetNowCourse(ImolaCircuit);
 				break;
-			case 3:
+			case 2:
 				m_Loading->SetCourse(SilverstoneCircuit);
 				m_player->SetNowCourse(SilverstoneCircuit);
 				break;
@@ -256,49 +250,34 @@ void RaceMenu::Render(RenderContext& rc) {
 		switch (CourseSelectPoint)
 		{
 		case 0:
-			Main_LeMans.Draw(rc);
-			Base.Draw(rc);
-			CourseExclusive_LeMans.Draw(rc);
-			if (SelectArea == 0) {
-
-				CourseSelectBase_Monza.Draw(rc);
-				CourseSelectBase_Imola.Draw(rc);
-				CourseSelectBase_SilverStone.Draw(rc);
-			}
-			break;
-		case 1:
 			Main_Monza.Draw(rc);
 			Base.Draw(rc);
 			CourseExclusive_Monza.Draw(rc);
 			if (SelectArea == 0) {
 
-				CourseSelectBase_LeMans.Draw(rc);
 				CourseSelectBase_Imola.Draw(rc);
 				CourseSelectBase_SilverStone.Draw(rc);
 			}
 			break;
-		case 2:
+		case 1:
 			Main_Imola.Draw(rc);
 			Base.Draw(rc);
 			CourseExclusive_Imola.Draw(rc);
 			if (SelectArea == 0) {
 
-				CourseSelectBase_LeMans.Draw(rc);
 				CourseSelectBase_Monza.Draw(rc);
 				CourseSelectBase_SilverStone.Draw(rc);
 			}
 			break;
-		case 3:
+		case 2:
 			Main_SilverStone.Draw(rc);
 			Base.Draw(rc);
 			CourseExclusive_SilverStone.Draw(rc);
 			if (SelectArea == 0) {
 
-				CourseSelectBase_LeMans.Draw(rc);
 				CourseSelectBase_Monza.Draw(rc);
 				CourseSelectBase_Imola.Draw(rc);
 			}
-			break;
 		default:
 			break;
 		}
@@ -306,7 +285,6 @@ void RaceMenu::Render(RenderContext& rc) {
 	CourseSelect.Draw(rc);
 
 
-	CourseSelect_LeMans.Draw(rc);
 	CourseSelect_Monza.Draw(rc);
 	CourseSelect_Imola.Draw(rc);
 	CourseSelect_SilverStone.Draw(rc);
