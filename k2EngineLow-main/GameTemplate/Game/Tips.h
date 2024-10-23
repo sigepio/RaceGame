@@ -1,17 +1,5 @@
 #pragma once
 // 各コースのTipsを保持する連想配列
-const std::map<int, const char*> SebringTipsList = {
-	{0, "Assets/Sprite/Loading/SebringTips01.DDS"},
-	{1, "Assets/Sprite/Loading/SebringTips02.DDS"},
-	{2, "Assets/Sprite/Loading/SebringTips03.DDS"},
-	{3, "Assets/Sprite/Loading/SebringTips04.DDS"}
-}; 
-const std::map<int, const char*> LeMansTipsList = {
-	{0, "Assets/Sprite/Loading/LeMansTips01.DDS"},
-	{1, "Assets/Sprite/Loading/LeMansTips02.DDS"},
-	{2, "Assets/Sprite/Loading/LeMansTips03.DDS"},
-	{3, "Assets/Sprite/Loading/LeMansTips04.DDS"}
-};
 const std::map<int, const char*> MonzaTipsList = {
 	{0, "Assets/Sprite/Loading/MonzaTips01.DDS"},
 	{1, "Assets/Sprite/Loading/MonzaTips02.DDS"},

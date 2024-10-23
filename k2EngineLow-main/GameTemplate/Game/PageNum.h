@@ -16,7 +16,6 @@ enum PageNum {
 };
 
 enum CourseNum {
-	CircuitDeLaSarthe,
 	AutodromoNazionaleDiMonza,
 	SilverstoneCircuit,
 	ImolaCircuit

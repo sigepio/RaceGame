@@ -1,7 +1,6 @@
 #pragma once
 
 class Sebring;
-class LeMans;
 class Monza;
 class Imola;
 class SilverStone;
@@ -56,7 +55,6 @@ private:
     
     float FinishLineHigh = 0.0f;
     Sebring* m_Sebring;
-    LeMans* m_LeMans;
     Monza* m_Monza;
     Imola* m_Imola;
     SilverStone* m_SilverStone;

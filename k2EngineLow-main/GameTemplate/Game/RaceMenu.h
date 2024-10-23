@@ -23,10 +23,9 @@ public:
 private:
     Vector4 m_FadeColor = { 1.0f,1.0f,1.0f,1.0f };
 
-    Vector3 LeMansPosition = { -620.0f,-290.0f,0.0f };
-    Vector3 MonzaPosition = { -310.0f,-290.0f,0.0f };
-    Vector3 ImolaPosition = { 0.0f,-290.0f,0.0f };
-    Vector3 SilverStonePosition = { 310.0f,-290.0f,0.0f };
+    Vector3 MonzaPosition = { -620.0f,-290.0f,0.0f };
+    Vector3 ImolaPosition = { -310.0f,-290.0f,0.0f };
+    Vector3 SilverStonePosition = { 0.0f,-290.0f,0.0f };
 
     Vector3 CEPosition = { -160.0f,-290.0f,0.0f };
     Vector3 TTPosition = { 160.0f, -290.0f,0.0f };
@@ -41,20 +40,20 @@ private:
     Player* m_player;
 
     //îwåi
-    SpriteRender Main_LeMans;
+
     SpriteRender Main_Monza;
     SpriteRender Main_Imola;
     SpriteRender Main_SilverStone;
     SpriteRender Base;
     //èÓïÒ
-    SpriteRender CourseExclusive_LeMans;
+  
     SpriteRender CourseExclusive_Monza;
     SpriteRender CourseExclusive_Imola;
     SpriteRender CourseExclusive_SilverStone;
     //â©ìyêF
     SpriteRender CourseSelect;
     //äDêF     
-    SpriteRender CourseSelectBase_LeMans;
+
     SpriteRender CourseSelectBase_Monza;
     SpriteRender CourseSelectBase_Imola;
     SpriteRender CourseSelectBase_SilverStone;
@@ -62,7 +61,7 @@ private:
     SpriteRender ModeSelectBase_CE;
     SpriteRender ModeSelectBase_TT;
     //â∫ÇÃògì‡
-    SpriteRender CourseSelect_LeMans;
+
     SpriteRender CourseSelect_Monza;
     SpriteRender CourseSelect_Imola;
     SpriteRender CourseSelect_SilverStone;

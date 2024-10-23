@@ -33,7 +33,6 @@
     <ClCompile Include="Sound.cpp" />
     <ClCompile Include="Garage.cpp" />
     <ClCompile Include="Player.cpp" />
-    <ClCompile Include="LeMans.cpp" />
     <ClCompile Include="LicenseMode.cpp" />
     <ClCompile Include="Car_86GT.cpp" />
     <ClCompile Include="Monza.cpp" />
@@ -95,7 +94,6 @@
     <ClInclude Include="Sound.h" />
     <ClInclude Include="Garage.h" />
     <ClInclude Include="Player.h" />
-    <ClInclude Include="LeMans.h" />
     <ClInclude Include="LicenseMode.h" />
     <ClInclude Include="Car_86GT.h" />
     <ClInclude Include="Monza.h" />

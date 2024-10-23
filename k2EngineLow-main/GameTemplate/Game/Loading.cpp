@@ -61,10 +61,13 @@ std::vector<const char*> collectAllTips() {
     std::vector<const char*> allTips;
 
     // コースのTipsを集める
-    for (const auto& tip : LeMansTipsList) {
+    for (const auto& tip : MonzaTipsList) {
         allTips.push_back(tip.second);
     }
-    for (const auto& tip : MonzaTipsList) {
+    for (const auto& tip : ImolaTipsList) {
+        allTips.push_back(tip.second);
+    }
+    for (const auto& tip : SilverStoneTipsList) {
         allTips.push_back(tip.second);
     }
     // 車種のTipsを集める
@@ -157,16 +160,13 @@ const char* getLoadingScreenTip(int course, int car) {
 
         if (choice == 0) {
             // コースのTipsを選択
-           if (course == 1) {
-                tip = getRandomTip(LeMansTipsList);
-            }
-            else if (course == 2) {
+            if (course == 0) {
                 tip = getRandomTip(MonzaTipsList);
             }
-            else if (course == 3) {
+            else if (course == 1) {
                 tip = getRandomTip(ImolaTipsList);
             }
-            else if (course == 4) {
+            else if (course == 2) {
                 tip = getRandomTip(SilverStoneTipsList);
             }
             //なかった場合
@@ -345,9 +345,6 @@ void Loading::SetTips(int CarState, int CourseState) {
     if (CourseState != -1) {
         switch (CourseState)
         {
-        case CircuitDeLaSarthe:
-            CourseLogo.Init("Assets/Sprite/Loading/LeMansLogo.DDS", 1600.0f, 900.0f);
-            break;
         case AutodromoNazionaleDiMonza:
             CourseLogo.Init("Assets/Sprite/Loading/MonzaLogo.DDS", 1600.0f, 900.0f);
             break;

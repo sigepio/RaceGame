@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "BackGround.h"
 
-#include "LeMans.h"
+
 #include "PageNum.h"
 #include "Monza.h"
 #include "Imola.h"
@@ -22,11 +22,6 @@ bool BackGround::Start()
     if (LicenseNum == 0) {
         switch (CourseNum)
         {
-        case CircuitDeLaSarthe:
-            m_LeMans = NewGO<LeMans>(0, "lemans");
-            StartPosition = m_LeMans->GetStartPosition();
-            StartForward = { -0.316f,0.0f,0.949f };
-            break;
         case AutodromoNazionaleDiMonza:
             m_Monza = NewGO<Monza>(0, "monza");
             StartPosition = m_Monza->GetStartPosition();
@@ -64,9 +59,6 @@ bool BackGround::Start()
 void BackGround::Update()
 {
     if (GameEnd == true) {
-        if (m_LeMans) {
-            m_LeMans->SetGameEnd(GameEnd);
-        }
         if (m_Monza) {
             m_Monza->SetGameEnd(GameEnd);
         }
